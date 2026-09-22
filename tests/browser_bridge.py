@@ -9,12 +9,12 @@ import re,json,urllib.request,urllib.error,http.cookiejar,base64,hashlib,uuid,os
 root=Path(__file__).resolve().parents[1]
 (root/'docs/screenshots').mkdir(parents=True,exist_ok=True)
 origin=os.environ.get('TEST_ORIGIN','http://127.0.0.1:8787')
-html=(root/'public/index.html').read_text()
+html=(root/'public/index.html').read_text(encoding='utf-8')
 html=re.sub(r'<link[^>]+>', '',html)
 html=re.sub(r'<script[^>]+></script>', '',html)
-html=html.replace('</head>','<style>'+(root/'public/brand/brand.css').read_text()+'</style></head>')
-html=html.replace('</head>','<style>'+(root/'public/game.css').read_text()+'</style></head>')
-modules={str(p.relative_to(root/'public')):p.read_text() for p in (root/'public').rglob('*.js')}
+html=html.replace('</head>','<style>'+(root/'public/brand/brand.css').read_text(encoding='utf-8')+'</style></head>')
+html=html.replace('</head>','<style>'+(root/'public/game.css').read_text(encoding='utf-8')+'</style></head>')
+modules={p.relative_to(root/'public').as_posix():p.read_text(encoding='utf-8') for p in (root/'public').rglob('*.js')}
 results={'harness':'Offline asset injection with real loopback API bridge; no browser network navigation','errors':[]}
 with sync_playwright() as p:
     browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),headless=True,args=['--no-sandbox'])
