@@ -407,8 +407,8 @@ async function switchTab(tab) {
 }
 function bind() {
   createBoard('human-board'); createBoard('jev-board');
-  $('difficulty').value = store.get('difficulty', 'normal');
-  if (!$('difficulty').value) $('difficulty').value = 'normal';
+  $('difficulty').value = store.get('difficulty', 'jev');
+  if (!$('difficulty').value) $('difficulty').value = 'jev';
   $('telemetry-toggle').checked = telemetryEnabled;
   $('evidence-toggle').checked = store.get('evidence', 'true') === 'true';
   $('decision-content').hidden = !$('evidence-toggle').checked;
