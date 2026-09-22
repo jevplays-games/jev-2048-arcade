@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "events": 25,
+  "head": "92c332166290a646ffb2e6f00e3f087953dcb6b4f6b8a8313c615f8abe0034dc",
+  "rounds": 4,
+  "state": {
+    "game": "2048",
+    "rulesVersion": "duel-2048-v1",
+    "matchId": "a193063899de5bed96f0ce6b74ce97e4",
+    "revision": 4,
+    "round": 4,
+    "moveLimit": 4,
+    "human": {
+      "cells": [
+        0,
+        0,
+        2,
+        2,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "score": 8,
+      "moves": 4,
+      "reached2048": false,
+      "status": "move_cap"
+    },
+    "jev": {
+      "cells": [
+        0,
+        2,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "score": 4,
+      "moves": 4,
+      "reached2048": false,
+      "status": "move_cap"
+    },
+    "status": "complete",
+    "winner": "human"
+  },
+  "nativeDecisions": 4,
+  "seedVerified": true,
+  "complete": true,
+  "rankedEligible": false,
+  "replayMethod": "recorded-actions; no provider calls"
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-22T05:28:07.937Z",
+  "split": "development",
+  "seeds": 3,
+  "replicates": 1,
+  "moveLimit": 64,
+  "policies": [
+    "random",
+    "greedy",
+    "heuristic"
+  ],
+  "baseline": "greedy",
+  "liveProviderRequested": false,
+  "build": {
+    "version": "1.0.0",
+    "sourceSHA256": "6957d5ea277c84b18ae972441b386c2dd6a83ff03b81d34e3941f95f6ec3e2d3"
+  },
+  "baseSeed": "2048-benchmark-v1"
+}

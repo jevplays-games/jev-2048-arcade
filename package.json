@@ -1,0 +1,22 @@
+{
+  "name": "jev-2048-arcade",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Two-board 2048 with JEV, Discord and auditable analytics",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/local.js",
+    "test": "node --test tests/*.test.js",
+    "test:coverage": "node --experimental-test-coverage --test tests/*.test.js",
+    "bench": "node --env-file-if-exists=.env bench/run.js",
+    "verify": "node scripts/verify.js",
+    "export": "node scripts/export.js",
+    "discord:register": "node --env-file-if-exists=.env scripts/register-discord.js",
+    "secrets": "node scripts/secrets.js",
+    "fingerprint": "node scripts/fingerprint.js",
+    "maintenance": "node scripts/maintenance.js"
+  }
+}

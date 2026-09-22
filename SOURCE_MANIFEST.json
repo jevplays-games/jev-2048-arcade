@@ -1,0 +1,207 @@
+{
+  "formatVersion": 1,
+  "algorithm": "SHA-256",
+  "sourceSHA256": "6957d5ea277c84b18ae972441b386c2dd6a83ff03b81d34e3941f95f6ec3e2d3",
+  "files": [
+    {
+      "path": "bench/run.js",
+      "bytes": 8847,
+      "sha256": "9da1f4c23fd0d2fa8d619cc47aab1319eebf6c718fc2aab53ee2e3b30f5d3152"
+    },
+    {
+      "path": "migrations/001_initial.sql",
+      "bytes": 3810,
+      "sha256": "3bd63b4591ca138b1034307a2e22250ae2852909362dd65d2b92b95d1dde62df"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 249,
+      "sha256": "73b7aaba7d02c2e0433b9506acb0386c16abf47206ed7ee8fc835b25840fb12a"
+    },
+    {
+      "path": "package.json",
+      "bytes": 788,
+      "sha256": "7d9f7d69c416ce670530b9dd027745b017012c9125a230966915dfd13b703ca8"
+    },
+    {
+      "path": "public/_headers",
+      "bytes": 375,
+      "sha256": "b89688e95e2404ba5ec91161df8b5582dc592da56d90b9cab0340bc2f607d0a4"
+    },
+    {
+      "path": "public/core/analytics.js",
+      "bytes": 14653,
+      "sha256": "d1e39420684493018795bb2043b65c87bdd18fd2fa5da3fb87d5597a574bc8a6"
+    },
+    {
+      "path": "public/core/audit.js",
+      "bytes": 9447,
+      "sha256": "cc2aaaf358f24248785452ffcd3f8235b70f1c74d6f7d06d68dab420b2b85222"
+    },
+    {
+      "path": "public/core/crypto.js",
+      "bytes": 4128,
+      "sha256": "aa17b58c3550179967cced56ed73a3aa8816c5c029ff9a50a61d5ac6140fb7de"
+    },
+    {
+      "path": "public/core/evaluate.js",
+      "bytes": 6569,
+      "sha256": "8d5c2da1af16bf65d88a658c9101d8830b988d162c78060b2d4ccba29b2c0fbd"
+    },
+    {
+      "path": "public/core/rules.js",
+      "bytes": 5953,
+      "sha256": "4e5275161143bdd4c12139a3bad28609b6bd43dd17d629d87dd9d68e2f388496"
+    },
+    {
+      "path": "public/game.css",
+      "bytes": 19511,
+      "sha256": "41568af5f48d8713b039b707db119af10547878fc2d6f4191fafc91470e06384"
+    },
+    {
+      "path": "public/game.js",
+      "bytes": 37642,
+      "sha256": "781115ded5e558c7ef94032131789bd5c1ea17ea41ce0feb30a60bb3d3bac7cf"
+    },
+    {
+      "path": "public/icon.svg",
+      "bytes": 213,
+      "sha256": "4408ea28c62926bb1977dfa549941d64824e2935b753169bd77898fc8675cf95"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 15354,
+      "sha256": "634c080bd347019fcd62618a305324d2761cd738f6b7e679a97d5ffad4b0acd5"
+    },
+    {
+      "path": "scripts/export.js",
+      "bytes": 2554,
+      "sha256": "26171b9a3e8e7cdeff4a18563f38873edc325e5a0fd254fdf14ab87e5ba49a73"
+    },
+    {
+      "path": "scripts/fingerprint.js",
+      "bytes": 1808,
+      "sha256": "eb1574dd05659ea495b050163b2a3697799010f370cfc77b232a478a265adfce"
+    },
+    {
+      "path": "scripts/generate-contract-example.js",
+      "bytes": 3389,
+      "sha256": "c8755c9a5f99444050c8532a91f80b075450172c1b9b1aa9a9f88256f98b3ecf"
+    },
+    {
+      "path": "scripts/maintenance.js",
+      "bytes": 2282,
+      "sha256": "e0000d6dd5fd24141167e9d34e04a39b43a1c379c055b3a037d2d7feb61e9bb1"
+    },
+    {
+      "path": "scripts/register-discord.js",
+      "bytes": 1656,
+      "sha256": "850afadc63617de73a4d7e6697384281c223ef852efb66b706aac12e4ad3c6e5"
+    },
+    {
+      "path": "scripts/secrets.js",
+      "bytes": 169,
+      "sha256": "ddbcaaaa766ea437acc7ca1ffb6e22925993e3527f39b86f04fe3e66f9f5e462"
+    },
+    {
+      "path": "scripts/to_parquet.py",
+      "bytes": 1246,
+      "sha256": "c581e87164bf8bfcc5ade7d1900554f460f65ffaf74dae07c6bf59efd236e8ec"
+    },
+    {
+      "path": "scripts/verify.js",
+      "bytes": 802,
+      "sha256": "e7a21c968319f7d5c89bd618d0aeeae3bc0c530da8dee040cac7dcf136aac425"
+    },
+    {
+      "path": "server/app.js",
+      "bytes": 16491,
+      "sha256": "a45d302a1ae289acc3bd24e80fab77546c993bc2c65d3903ff1d57f62bbf5c8f"
+    },
+    {
+      "path": "server/auth.js",
+      "bytes": 9937,
+      "sha256": "ce12ff1173cb8c081dcf00fe558de8c4143303defdf65a7b8f450ca092294312"
+    },
+    {
+      "path": "server/db.js",
+      "bytes": 3121,
+      "sha256": "89036a79bf43e1063964e0ef86ede349d5a5dab475cfc873cdea15236382a7b7"
+    },
+    {
+      "path": "server/jev.js",
+      "bytes": 9729,
+      "sha256": "a24c2522e0a5d3c673f6211056640e7341a2250856d39d0668dede8fa9b7da1a"
+    },
+    {
+      "path": "server/local.js",
+      "bytes": 3984,
+      "sha256": "97f49a068f9db4fc5c271f8a84a52d5fbd145c751ab3ad497358d7820de02f2d"
+    },
+    {
+      "path": "server/matches.js",
+      "bytes": 15921,
+      "sha256": "b3acdbd40b96f2a5d8592a3c5e2998ece6541fcfec4b870beb4a5079fb5894b1"
+    },
+    {
+      "path": "server/sqlite.js",
+      "bytes": 1503,
+      "sha256": "9d8aad055d8292c12160447a6c237c85b3d7f00da6b23306ccef8a5d0bc2b499"
+    },
+    {
+      "path": "server/worker.js",
+      "bytes": 431,
+      "sha256": "69890be1657f92eb792dc631e569d4c797ffb33664dd7615385274822bc0e11b"
+    },
+    {
+      "path": "tests/analytics.test.js",
+      "bytes": 2483,
+      "sha256": "544563a529eedd817de0241999ff93dcf6c5bb28452c442838d9ca86885463a1"
+    },
+    {
+      "path": "tests/api.test.js",
+      "bytes": 5176,
+      "sha256": "ad30bfbeb871a0c43ed241f2b1d2cb35bfb13a90049f3190fec2db37861a14a7"
+    },
+    {
+      "path": "tests/browser_bridge.py",
+      "bytes": 7070,
+      "sha256": "15a19ab8fecd000739773875797af36524ad2bf24cafdadc43463f1ae57a25bb"
+    },
+    {
+      "path": "tests/browser_smoke.py",
+      "bytes": 1950,
+      "sha256": "49dfa7ea5e9e779c75cb0833bcc9d9691eb0e36519679c39f4c8b813505ff809"
+    },
+    {
+      "path": "tests/http-fixture.js",
+      "bytes": 1218,
+      "sha256": "0226059dbb12b714e2508a4b46987f3ec5bca9cb2acf58fb8038f5542953f7c1"
+    },
+    {
+      "path": "tests/jev.test.js",
+      "bytes": 2836,
+      "sha256": "add7d0c77006d964d5bc3b53b59ac3c62cd9c73bd4b5461b5ed4567bfaeb891e"
+    },
+    {
+      "path": "tests/provider-fixture.js",
+      "bytes": 407,
+      "sha256": "0632b749cf1e25a6e028ee109fb05ad42f4ec0cda85147a6d5aa965d37d3a0bc"
+    },
+    {
+      "path": "tests/rules.test.js",
+      "bytes": 4999,
+      "sha256": "035c261d284aa5fa5968cc69330b9e6d973018ff3e29307803e2ab964cd22784"
+    },
+    {
+      "path": "tests/security.test.js",
+      "bytes": 10208,
+      "sha256": "e56e20033b6650d41d9eab7bd2d8e4abb765d1babe56d25c4644be251e23933c"
+    },
+    {
+      "path": "wrangler.jsonc",
+      "bytes": 527,
+      "sha256": "bcae90aa44d1333a5c41d3e74a00af607b57f771e97f6fa8b63fafe0b9ba43ac"
+    }
+  ]
+}

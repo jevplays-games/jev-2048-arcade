@@ -1,0 +1,26 @@
+{
+  "sourceManifestVerified": true,
+  "sourceSHA256": "6957d5ea277c84b18ae972441b386c2dd6a83ff03b81d34e3941f95f6ec3e2d3",
+  "tests": {
+    "passed": 35,
+    "failed": 0,
+    "exhaustiveDirectionalLineCases": 5184
+  },
+  "scriptedBaselineRuns": 9,
+  "scriptedRunsCompletedAndVerified": 9,
+  "liveProviderCalls": 0,
+  "mockProviderExample": "explicitly synthetic; four rounds",
+  "browserHarness": "DOM injection + real API bridge; normal navigation not verified",
+  "cloudDeploymentVerified": false,
+  "liveDiscordVerified": false,
+  "parquetConversionExecuted": false,
+  "excluded": [
+    ".data",
+    ".env",
+    ".dev.vars",
+    "node_modules",
+    "private generated keys",
+    "SQLite files",
+    "__pycache__"
+  ]
+}

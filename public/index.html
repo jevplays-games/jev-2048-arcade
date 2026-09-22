@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10121a">
+  <meta name="description" content="Two-board 2048 against JEV with transparent decision evidence, matched spawns, replay, and analytics.">
+  <title>2048 Duel · JEV Arcade</title>
+  <link rel="icon" type="image/svg+xml" href="/icon.svg"><link rel="stylesheet" href="/game.css">
+  <script type="module" src="/game.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#play-region">Skip to game controls</a>
+  <header class="site-header">
+    <a href="/" class="brand" aria-label="JEV Arcade home"><span class="brand-mark" aria-hidden="true">J</span><span>JEV<span class="brand-light"> / ARCADE</span></span></a>
+    <div class="header-right"><span class="header-note">STRUCTURED INTELLIGENCE. REAL PLAY.</span><button id="auth-button" class="button quiet">Sign in with Discord</button></div>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <div><div class="eyebrow">THE TWO-BOARD CHALLENGE <span class="tiny-line"></span> 01</div><h1 id="title">2048 <span>Duel.</span></h1>
+      <p>Your board. JEV’s board. The same chance.</p></div>
+      <div class="match-controls"><label class="select-label">OPPONENT<select id="opponent"><option value="jev">JEV · live model</option><option value="local">Local heuristic · practice</option></select></label>
+      <label class="select-label">DIFFICULTY<select id="difficulty"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option><option value="jev">JEV</option></select></label>
+      <button id="new-game" class="button primary">New duel <span aria-hidden="true">↗</span></button></div>
+    </section>
+    <div class="match-strip"><div class="pills"><span id="eligibility" class="pill">READY TO PLAY</span><span class="pill subdued">MATCHED SPAWNS</span><span id="round-label" class="pill subdued">ROUND 0 / 2,048</span></div>
+      <button id="rules-button" class="text-button">How to play <span aria-hidden="true">?</span></button></div>
+    <section id="play-region" class="arena" aria-label="2048 game" tabindex="0">
+      <article class="board-card human-card"><header class="board-header"><div><div class="eyebrow"><span class="status-dot human-dot"></span> YOU</div><h2>Make your move.</h2></div><div class="score-wrap"><span>SCORE</span><strong id="human-score">0</strong><small id="human-gain">YOUR NEXT MOVE COUNTS</small></div></header>
+        <div id="human-board" class="board" role="grid" aria-label="Your 2048 board"></div>
+        <footer class="board-footer"><span>Best tile <strong id="human-max">—</strong></span><span>Empty <strong id="human-empty">16</strong></span><span id="human-state">Ready</span></footer>
+      </article>
+      <div class="versus" aria-hidden="true">VS</div>
+      <article class="board-card jev-card"><header class="board-header"><div><div class="eyebrow"><span class="status-dot jev-dot"></span><span id="opponent-label">JEV</span></div><h2 id="jev-caption">Structured, not scripted.</h2></div><div class="score-wrap"><span>SCORE</span><strong id="jev-score">0</strong><small id="jev-gain">AWAITING YOUR MOVE</small></div></header>
+        <div id="jev-board" class="board" role="grid" aria-label="Opponent 2048 board"></div>
+        <footer class="board-footer"><span>Best tile <strong id="jev-max">—</strong></span><span>Empty <strong id="jev-empty">16</strong></span><span id="jev-state">Ready</span></footer>
+      </article>
+    </section>
+    <section class="play-footer" aria-label="Game status and controls"><div><p id="game-status" role="status" aria-live="polite">Choose an opponent and start a duel.</p><p class="control-help">Arrow keys / WASD <span>·</span> Swipe your board <span>·</span> No speed bonus</p></div>
+      <div class="direction-pad" aria-label="Direction controls"><button class="direction" data-action="3" aria-label="Move left">←</button><button class="direction" data-action="0" aria-label="Move up">↑</button><button class="direction" data-action="2" aria-label="Move down">↓</button><button class="direction" data-action="1" aria-label="Move right">→</button></div>
+      <div class="recovery"><button id="retry" class="button small" hidden>Retry reserved move</button><button id="fallback" class="button small" hidden>Switch to local practice</button><button id="advance-jev" class="button small" hidden>Continue opponent</button></div>
+    </section>
+    <div id="error-banner" class="error-banner" role="alert" hidden></div>
+    <nav class="panel-tabs" aria-label="Match detail panels"><button data-tab="decision" class="active" aria-current="page">Decision lab</button><button data-tab="analytics">Analytics</button><button data-tab="replay">Replay & audit</button><button data-tab="leaderboard">Leaderboards</button><button data-tab="history">Your matches</button></nav>
+    <section id="decision-panel" class="detail-panel" aria-labelledby="decision-title">
+      <div class="panel-heading"><div><div class="eyebrow">OBSERVE THE DECISION, NOT HIDDEN REASONING</div><h2 id="decision-title">Inside the move.</h2></div><label class="toggle"><input id="evidence-toggle" type="checkbox" checked> Show evidence</label></div>
+      <div id="decision-content"><div class="decision-metrics"><div class="metric"><span>DECISION SOURCE</span><strong id="metric-source">Not started</strong></div><div class="metric"><span>LEGAL CANDIDATES</span><strong id="metric-candidates">—</strong></div><div class="metric"><span>RUBRIC CONFIDENCE</span><strong id="metric-confidence">—</strong></div><div class="metric"><span>SERVER DECISION TIME</span><strong id="metric-latency">—</strong></div></div>
+        <div class="table-scroll"><table><caption class="sr-only">Candidate move evidence. Higher model utility is preferred; confidence is not a win probability.</caption><thead><tr><th>Move</th><th>Merge gain</th><th>Empty cells</th><th>Block risk</th><th>Search value</th><th>Model utility</th><th>Confidence</th></tr></thead><tbody id="candidate-table"><tr><td colspan="7" class="empty-state">Play a move to inspect candidate features and the selected action.</td></tr></tbody></table></div>
+        <details class="raw-evidence"><summary>Raw structured decision evidence</summary><pre id="decision-json">No decisions yet.</pre></details>
+        <p class="panel-footnote">Exact mechanics are computed by the rules engine. JEV evaluates positional rubrics. Confidence describes a rubric distribution—not the chance of winning.</p>
+      </div>
+    </section>
+    <section id="analytics-panel" class="detail-panel" hidden aria-labelledby="analytics-title">
+      <div class="panel-heading"><div><div class="eyebrow">EVERY MOVE LEAVES EVIDENCE</div><h2 id="analytics-title">The match, measured.</h2></div><div class="inline-controls"><button id="refresh-analytics" class="button small">Refresh analytics</button><button id="export-summary" class="button small">Export analytics JSON</button></div></div>
+      <div class="analytics-kpis" id="analytics-kpis"></div>
+      <div class="chart-grid"><article class="chart-card"><h3>Score progression</h3><p>Human <span class="legend-line human-line"></span> &nbsp; Opponent <span class="legend-line jev-line"></span></p><div id="score-chart" class="chart"></div></article>
+      <article class="chart-card"><h3>Room to move</h3><p>Empty cells after each committed round</p><div id="space-chart" class="chart"></div></article>
+      <article class="chart-card"><h3>Decision latency</h3><p>Measured server time, including feature evaluation</p><div id="latency-chart" class="chart"></div></article>
+      <article class="chart-card"><h3>Legal options</h3><p>Available directions after spawning</p><div id="mobility-chart" class="chart"></div></article></div>
+      <div class="panel-heading compact"><h3>Spatial signatures</h3><label class="select-label">HEATMAP<select id="heatmap-type"><option value="mergeDestinations">Merge destinations</option><option value="spawnPositions">Spawn positions</option><option value="occupancyRate">Occupancy rate</option><option value="maxTilePositions">Largest-tile positions</option><option value="meanTileValue">Mean tile value</option></select></label></div>
+      <div class="heatmap-grid"><article><h4>You</h4><div id="human-heatmap" class="heatmap"></div></article><article><h4>Opponent</h4><div id="jev-heatmap" class="heatmap"></div></article><article><h4>Direction frequency</h4><div id="direction-distribution"></div></article><article><h4>Evidence & reliability</h4><dl id="reliability"></dl></article></div>
+      <div class="table-scroll"><table><caption>Board metrics · all committed active-board moves</caption><thead><tr><th>Metric</th><th>You</th><th>Opponent</th></tr></thead><tbody id="comparison-table"></tbody></table></div>
+      <details class="raw-evidence"><summary>Full analytics JSON and metric definitions</summary><p>See docs/ANALYTICS.md for denominators, caveats, schemas, export tables, and retention.</p><pre id="analytics-json"></pre></details>
+      <div class="analytics-bottom"><label class="toggle"><input type="checkbox" id="telemetry-toggle"> Opt in to browser timing analytics</label><p>No text entry, browsing history, fingerprints, or third-party analytics. Gameplay evidence is always recorded for replay.</p></div>
+    </section>
+    <section id="replay-panel" class="detail-panel" hidden aria-labelledby="replay-title">
+      <div class="panel-heading"><div><div class="eyebrow">RECONSTRUCT. INSPECT. VERIFY.</div><h2 id="replay-title">A replay you can audit.</h2></div><button id="verify-audit" class="button small">Verify evidence</button></div>
+      <div class="replay-control"><label for="replay-slider">Inspect round <strong id="replay-round">0</strong></label><input id="replay-slider" type="range" min="0" max="0" value="0"><button id="return-live" class="button small">Return to live board</button></div>
+      <p id="audit-status" class="panel-footnote">The server keeps future spawns secret. Finished matches reveal the committed seed for independent verification.</p>
+      <div class="audit-grid"><div><h3>Provenance</h3><dl id="provenance"></dl></div><div><h3>Portable evidence</h3><p>Replay reconstructs recorded moves. It never calls JEV again.</p><div class="export-buttons"><button data-export="bundle" class="button small">Audit bundle JSON</button><button data-export="jsonl" class="button small">Event journal JSONL</button><button data-export="rounds" class="button small">Moves CSV</button><button data-export="candidates" class="button small">Candidates CSV</button><button data-export="cells" class="button small">Cells CSV</button></div><label class="file-import">Inspect a saved audit bundle<input id="import-bundle" type="file" accept=".json,application/json"></label></div></div>
+      <details class="raw-evidence"><summary>Recent event timeline</summary><div id="event-timeline"></div></details>
+    </section>
+    <section id="leaderboard-panel" class="detail-panel" hidden aria-labelledby="leaderboard-title"><div class="panel-heading"><div><div class="eyebrow">VERIFIED RESULTS ONLY</div><h2 id="leaderboard-title">Make your mark.</h2></div><label class="select-label">PERIOD<select id="leader-period"><option value="all">All time</option><option value="week">This week · UTC</option></select></label></div>
+      <div class="scope-tabs"><button data-scope="channel">Channel</button><button data-scope="server">Server</button><button data-scope="world" class="active">World</button></div><p id="leader-context" class="panel-footnote">Best score per player. Separate rules, difficulty, and opponent versions. Equal scores share a rank.</p>
+      <div class="table-scroll"><table><thead><tr><th>Rank</th><th>Player</th><th>Score</th><th>JEV score</th><th>Best tile</th><th>Result</th></tr></thead><tbody id="leader-table"></tbody></table></div><button id="leader-more" class="button small" hidden>Next page</button></section>
+    <section id="history-panel" class="detail-panel" hidden aria-labelledby="history-title"><div class="panel-heading"><div><div class="eyebrow">YOUR LAST 20 MATCHES</div><h2 id="history-title">Pick up where you left off.</h2></div><button id="history-refresh" class="button small">Refresh</button></div><div id="history-list"></div></section>
+    <footer class="site-footer"><span>JEV ARCADE / 2048 DUEL</span><span id="footer-model">Native HTML · deterministic rules · no tracking SDK</span><button class="text-button" id="privacy-button">Privacy & data</button></footer>
+  </main>
+  <dialog id="rules-dialog"><div class="dialog-header"><h2>Same chance. Separate boards.</h2><button class="dialog-close" aria-label="Close rules">×</button></div><p>Slide tiles with arrow keys, WASD, the direction buttons, or a swipe. Equal tiles merge once per move. A merge adds the new tile’s value to your score.</p><p>You and the opponent start identically. Every successful move advances both active boards once and adds the same tile value using a shared, hidden position priority. Different empty cells can produce different spawn locations.</p><p>The higher final merge score wins. Reaching 2048 does not end the match. A blocked board freezes; the other continues. Each board is capped at 2,048 successful moves. Equal final scores are a draw. There is no undo or speed bonus.</p><p>Live JEV judges structured candidate rubrics; JavaScript handles exact rules and lookahead. Difficulty changes the evidence and search budget—not luck. Its strength has not been established by a live-provider benchmark.</p><p>Ranked play needs Discord and the real JEV service. Use /2048 in an approved Discord channel for channel/server attribution. A local heuristic is always unranked and clearly labeled.</p></dialog>
+  <dialog id="confirm-dialog"><div class="dialog-header"><h2>Start a new duel?</h2></div><p>Your active match will be marked resigned. Its audit evidence remains available, but it cannot submit a high score.</p><div class="inline-controls"><button id="cancel-new" class="button">Keep playing</button><button id="confirm-new" class="button primary">Resign and start</button></div></dialog>
+  <dialog id="privacy-dialog"><div class="dialog-header"><h2>Your data and the evidence.</h2><button class="dialog-close" aria-label="Close privacy">×</button></div><p>Required gameplay records include boards, actions, spawns, candidate features, JEV requests and answers, usage, and event hashes. Secrets and future seeds are never included in active-match exports.</p><p>Discord login stores your user ID, display name, and avatar reference. No email scope is requested. Community context proves a recent launch, not perpetual channel access.</p><p>Optional browser analytics records game input timing, network timing, visibility, and frame gaps. These are labeled untrusted and are never used to score a match. It is off by default and can be turned off in Analytics.</p><p>Exports are private to the match owner. World leaderboards show verified scores and display names, not community identifiers. The host controls retention and deletion; the package includes a maintenance tool. There are no third-party tracking services.</p></dialog>
+</body>
+</html>

@@ -1,0 +1,4 @@
+{"eventSeq":5,"requestHash":"6f96e975e8a29d8242e928f193de9300101bd0db4e33760718255c478cc5f84a","attempt":1,"httpStatus":200,"latencyMs":20.848332,"model":"jev-1.13.0","inputTokens":512,"outputTokens":64}
+{"eventSeq":11,"requestHash":"15c312d3a70592e59430b1cf2d2ff9767b6f5dae3602f2fed79f7dd1970b115c","attempt":1,"httpStatus":200,"latencyMs":0.536681999999999,"model":"jev-1.13.0","inputTokens":512,"outputTokens":64}
+{"eventSeq":17,"requestHash":"b115e3de9d12ae243619101939118d59ed7a06e87472ae437a9cb08e1b19886f","attempt":1,"httpStatus":200,"latencyMs":0.45230799999998794,"model":"jev-1.13.0","inputTokens":512,"outputTokens":64}
+{"eventSeq":23,"requestHash":"7f08af70b0df4c274f71a0e5d7858e3aacaf2fbcdc8d318da6590e72b930a4fe","attempt":1,"httpStatus":200,"latencyMs":0.43618399999999724,"model":"jev-1.13.0","inputTokens":512,"outputTokens":64}

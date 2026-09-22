@@ -1,0 +1,10 @@
+.env
+.dev.vars
+.data/
+node_modules/
+.wrangler/
+playwright-report/
+test-results/
+bench/results/
+exports/
+*.sqlite*

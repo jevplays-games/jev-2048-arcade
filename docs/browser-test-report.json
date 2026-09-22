@@ -1,0 +1,9 @@
+{
+  "harness": "Offline asset injection with real loopback API bridge; no browser network navigation",
+  "errors": [],
+  "verification": "Verified 97 events and 24 rounds. The active seed is hidden; spawn provenance is not yet independently verified. No provider calls were made. This checks evidence consistency, not proof of unaided human play.",
+  "mobileHorizontalOverflow": false,
+  "desktopHorizontalOverflow": false,
+  "playedRounds": 25,
+  "passed": true
+}

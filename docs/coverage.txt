@@ -1,0 +1,261 @@
+
+> jev-2048-arcade@1.0.0 test:coverage
+> node --experimental-test-coverage --test tests/*.test.js
+
+TAP version 13
+# (node:2424) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: partial usage preserves known input without inventing missing output or timed-out usage
+ok 1 - partial usage preserves known input without inventing missing output or timed-out usage
+  ---
+  duration_ms: 2.436215
+  type: 'test'
+  ...
+# Subtest: empty distributions remain unknown, and percentiles use linear interpolation
+ok 2 - empty distributions remain unknown, and percentiles use linear interpolation
+  ---
+  duration_ms: 0.146847
+  type: 'test'
+  ...
+# Subtest: streamed verification matches an array and rejects a truncated trusted snapshot
+ok 3 - streamed verification matches an array and rejects a truncated trusted snapshot
+  ---
+  duration_ms: 92.621824
+  type: 'test'
+  ...
+# (node:2425) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: local end-to-end match, idempotency, immutable log, analytics and tamper detection
+ok 4 - local end-to-end match, idempotency, immutable log, analytics and tamper detection
+  ---
+  duration_ms: 133.113695
+  type: 'test'
+  ...
+# Subtest: CSRF, illegal moves, unknown fields, ranked guest and cross-session access rejected
+ok 5 - CSRF, illegal moves, unknown fields, ranked guest and cross-session access rejected
+  ---
+  duration_ms: 8.378494
+  type: 'test'
+  ...
+# Subtest: native JEV fixture evidence replays without network
+ok 6 - native JEV fixture evidence replays without network
+  ---
+  duration_ms: 67.265455
+  type: 'test'
+  ...
+# Subtest: provider failures keep the action locked until explicit practice downgrade
+ok 7 - provider failures keep the action locked until explicit practice downgrade
+  ---
+  duration_ms: 23.312393
+  type: 'test'
+  ...
+# Subtest: typed JEV request limits knowledge and records native evidence
+ok 8 - typed JEV request limits knowledge and records native evidence
+  ---
+  duration_ms: 36.805715
+  type: 'test'
+  ...
+# Subtest: malformed probability, missing answers and wrong model rejected
+ok 9 - malformed probability, missing answers and wrong model rejected
+  ---
+  duration_ms: 7.303298
+  type: 'test'
+  ...
+# Subtest: no key never silently substitutes
+ok 10 - no key never silently substitutes
+  ---
+  duration_ms: 11.422817
+  type: 'test'
+  ...
+# Subtest: transient failure retries once and records both attempts
+ok 11 - transient failure retries once and records both attempts
+  ---
+  duration_ms: 610.843135
+  type: 'test'
+  ...
+# Subtest: permanent failure stays unavailable and cannot become a legal move
+ok 12 - permanent failure stays unavailable and cannot become a legal move
+  ---
+  duration_ms: 4.020388
+  type: 'test'
+  ...
+# Subtest: merge 2,2,2,2
+ok 13 - merge 2,2,2,2
+  ---
+  duration_ms: 1.850111
+  type: 'test'
+  ...
+# Subtest: merge 2,2,4,0
+ok 14 - merge 2,2,4,0
+  ---
+  duration_ms: 0.194177
+  type: 'test'
+  ...
+# Subtest: merge 4,4,4,0
+ok 15 - merge 4,4,4,0
+  ---
+  duration_ms: 0.101971
+  type: 'test'
+  ...
+# Subtest: merge 2,0,2,2
+ok 16 - merge 2,0,2,2
+  ---
+  duration_ms: 0.085006
+  type: 'test'
+  ...
+# Subtest: merge 2,2,4,4
+ok 17 - merge 2,2,4,4
+  ---
+  duration_ms: 0.080399
+  type: 'test'
+  ...
+# Subtest: merge 0,0,0,0
+ok 18 - merge 0,0,0,0
+  ---
+  duration_ms: 0.072337
+  type: 'test'
+  ...
+# Subtest: exhaust all 1,296 exponent lines in all directions, against an independent queue reference
+ok 19 - exhaust all 1,296 exponent lines in all directions, against an independent queue reference
+  ---
+  duration_ms: 79.247598
+  type: 'test'
+  ...
+# Subtest: blocked and full-but-mergeable states differ
+ok 20 - blocked and full-but-mergeable states differ
+  ---
+  duration_ms: 0.489993
+  type: 'test'
+  ...
+# Subtest: invalid directions and malformed spawns are rejected
+ok 21 - invalid directions and malformed spawns are rejected
+  ---
+  duration_ms: 0.529621
+  type: 'test'
+  ...
+# Subtest: both start identically; caps finish both; invalid direction consumes nothing
+ok 22 - both start identically; caps finish both; invalid direction consumes nothing
+  ---
+  duration_ms: 14.893919
+  type: 'test'
+  ...
+# Subtest: finished human board freezes while JEV continues
+ok 23 - finished human board freezes while JEV continues
+  ---
+  duration_ms: 3.850181
+  type: 'test'
+  ...
+# Subtest: spawn vectors deterministic, uniform support, shared values and valid divergent positions
+ok 24 - spawn vectors deterministic, uniform support, shared values and valid divergent positions
+  ---
+  duration_ms: 107.41851
+  type: 'test'
+  ...
+# Subtest: canonical hashing, encryption and signatures reject tampering
+ok 25 - canonical hashing, encryption and signatures reject tampering
+  ---
+  duration_ms: 5.466878
+  type: 'test'
+  ...
+# Subtest: chance probabilities sum to one and feature/search budgets are bounded
+ok 26 - chance probabilities sum to one and feature/search budgets are bounded
+  ---
+  duration_ms: 39.216423
+  type: 'test'
+  ...
+# (node:2468) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: OAuth state is browser-bound, one-use; session rotates; guest cannot become ranked retroactively
+ok 27 - OAuth state is browser-bound, one-use; session rotates; guest cannot become ranked retroactively
+  ---
+  duration_ms: 49.998454
+  type: 'test'
+  ...
+# Subtest: wrong OAuth state is rejected before contacting Discord
+ok 28 - wrong OAuth state is rejected before contacting Discord
+  ---
+  duration_ms: 4.166429
+  type: 'test'
+  ...
+# Subtest: signed channel launches bind the user and cannot be replayed
+ok 29 - signed channel launches bind the user and cannot be replayed
+  ---
+  duration_ms: 11.568923
+  type: 'test'
+  ...
+# Subtest: Discord Ed25519 signature verifies exact bytes, timestamp, and approved channel
+ok 30 - Discord Ed25519 signature verifies exact bytes, timestamp, and approved channel
+  ---
+  duration_ms: 10.55749
+  type: 'test'
+  ...
+# Subtest: concurrent steps apply once; no lease loser can replace the human action
+ok 31 - concurrent steps apply once; no lease loser can replace the human action
+  ---
+  duration_ms: 38.757255
+  type: 'test'
+  ...
+# Subtest: ranked native fixture completes verification and inserts exactly one result
+ok 32 - ranked native fixture completes verification and inserts exactly one result
+  ---
+  duration_ms: 38.872067
+  type: 'test'
+  ...
+# Subtest: leaderboard best-per-user, competition ties, pagination and community isolation
+ok 33 - leaderboard best-per-user, competition ties, pagination and community isolation
+  ---
+  duration_ms: 10.00794
+  type: 'test'
+  ...
+# Subtest: CSV export neutralizes formula injection in text, not numeric negatives
+ok 34 - CSV export neutralizes formula injection in text, not numeric negatives
+  ---
+  duration_ms: 0.371068
+  type: 'test'
+  ...
+# Subtest: schema write batches roll back atomically when an event guard fails
+ok 35 - schema write batches roll back atomically when an event guard fails
+  ---
+  duration_ms: 3.871924
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 748.442749
+# start of coverage report
+# ---------------------------------------------------------------------------------------------------------------------------
+# file                  | line % | branch % | funcs % | uncovered lines
+# ---------------------------------------------------------------------------------------------------------------------------
+# public                |        |          |         | 
+#  core                 |        |          |         | 
+#   analytics.js        |  97.56 |    89.38 |  100.00 | 162-166
+#   audit.js            |  88.46 |    65.96 |   88.89 | 19-33
+#   crypto.js           | 100.00 |    87.18 |  100.00 | 
+#   evaluate.js         |  94.02 |    90.00 |   95.45 | 111-117
+#   rules.js            |  94.12 |    84.52 |   92.31 | 9-10 115-119
+# server                |        |          |         | 
+#  app.js               |  65.97 |    76.42 |   75.00 | 60-63 73-111 138-140 161 165-169 171-182 184-185 198-199 201 210-221
+#  auth.js              | 100.00 |    71.76 |  100.00 | 
+#  build-info.js        | 100.00 |   100.00 |  100.00 | 
+#  db.js                |  96.23 |    73.68 |   92.31 | 23-24
+#  jev.js               |  98.64 |    85.94 |   95.00 | 57-58
+#  matches.js           |  93.75 |    72.90 |   91.67 | 67-71 108-112 118-120
+#  sqlite.js            | 100.00 |   100.00 |  100.00 | 
+# tests                 |        |          |         | 
+#  analytics.test.js    | 100.00 |   100.00 |  100.00 | 
+#  api.test.js          | 100.00 |   100.00 |  100.00 | 
+#  http-fixture.js      | 100.00 |   100.00 |  100.00 | 
+#  jev.test.js          | 100.00 |   100.00 |  100.00 | 
+#  provider-fixture.js  | 100.00 |   100.00 |  100.00 | 
+#  rules.test.js        | 100.00 |   100.00 |  100.00 | 
+#  security.test.js     | 100.00 |   100.00 |   94.44 | 
+# ---------------------------------------------------------------------------------------------------------------------------
+# all files             |  92.82 |    82.20 |   95.38 | 
+# ---------------------------------------------------------------------------------------------------------------------------
+# end of coverage report

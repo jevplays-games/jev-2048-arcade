@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "matchId": "a193063899de5bed96f0ce6b74ce97e4",
+  "game": "2048",
+  "rulesVersion": "duel-2048-v1",
+  "rngVersion": "paired-spawn-v1",
+  "policyVersion": "2048-factorized-v1",
+  "difficulty": "normal",
+  "profile": {
+    "dimensions": [
+      "merge",
+      "space"
+    ],
+    "weights": [
+      0.6,
+      0.4
+    ],
+    "depth": 1,
+    "nodes": 512
+  },
+  "model": "jev-1.13.0",
+  "moveLimit": 4,
+  "mode": "jev",
+  "ranked": false,
+  "createdAt": "2026-09-22T05:28:07.649Z",
+  "evidenceClass": "mocked-provider-contract-fixture",
+  "build": {
+    "version": "1.0.0",
+    "sourceSHA256": "6957d5ea277c84b18ae972441b386c2dd6a83ff03b81d34e3941f95f6ec3e2d3"
+  },
+  "note": "Every provider response in this example is synthetic. It is not evidence of live JEV quality, latency, confidence, or cost."
+}
