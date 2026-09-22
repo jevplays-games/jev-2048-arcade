@@ -23,7 +23,7 @@ if (!loopback && (!origin.startsWith('https://') || !process.env.APP_SIGNING_KEY
 const DB = createSqlite(resolve(dataDir, 'arcade.sqlite'));
 DB.exec(await readFile(resolve(root, 'migrations/001_initial.sql'), 'utf8'));
 const env = {...secrets, ...process.env, DB, PUBLIC_ORIGIN: origin, DEV_LOCAL: loopback ? 'true' : 'false'};
-const types = {'.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json'};
+const types = {'.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json', '.woff2': 'font/woff2', '.txt': 'text/plain; charset=utf-8'};
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, origin);
