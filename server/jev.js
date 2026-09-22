@@ -58,7 +58,14 @@ export function validateResponse(response, request) {
     }
     const total = keys.reduce((s, k) => s + a.probabilities[k], 0);
     const mean = keys.reduce((s, k) => s + Number(k) * a.probabilities[k], 0);
-    if (Math.abs(total - 1) > .002 || Math.abs(mean - a.score) > .025)
+    // The provider rounds score and every probability to two decimals. Each of the
+    // five probabilities can therefore be off by .005, so the reconstructed sum can
+    // legitimately differ from 1 by up to 5 * .005 = .025, and the reconstructed mean
+    // from the reported score by up to (0+1+2+3+4) * .005 + .005 = .055. Tolerances
+    // below are those rounding bounds, not sampled values: a tighter bound rejects
+    // faithful responses at random and, because one rejection ends the match, made
+    // long games impossible.
+    if (Math.abs(total - 1) > .03 || Math.abs(mean - a.score) > .06)
       throw new JevError('Inconsistent probability distribution.', 'jev_invalid');
   }
   if (response.usage !== undefined && response.usage !== null &&
@@ -133,7 +140,11 @@ export async function chooseJevAction({board, difficulty = 'normal', model = DEF
     } catch (error) {
       await emit('jev_failed', {attempt, requestHash, code: error.code || 'jev_network',
         latencyMs: performance.now() - callStart});
-      if (error instanceof JevError || attempt === 2) throw error instanceof JevError ? error : new JevError('JEV timed out or the network failed.');
+      // A response that fails validation is a bad sample, not a settled verdict: the
+      // provider is nondeterministic, so one retry usually returns a well-formed one.
+      // Everything else keeps the original semantics and is never retried here.
+      const resample = error instanceof JevError && error.code === 'jev_invalid' && attempt === 1;
+      if (!resample && (error instanceof JevError || attempt === 2)) throw error instanceof JevError ? error : new JevError('JEV timed out or the network failed.');
       await new Promise(r => setTimeout(r, 500));
     }
   }
