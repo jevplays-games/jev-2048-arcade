@@ -12,6 +12,7 @@ origin=os.environ.get('TEST_ORIGIN','http://127.0.0.1:8787')
 html=(root/'public/index.html').read_text()
 html=re.sub(r'<link[^>]+>', '',html)
 html=re.sub(r'<script[^>]+></script>', '',html)
+html=html.replace('</head>','<style>'+(root/'public/brand/brand.css').read_text()+'</style></head>')
 html=html.replace('</head>','<style>'+(root/'public/game.css').read_text()+'</style></head>')
 modules={str(p.relative_to(root/'public')):p.read_text() for p in (root/'public').rglob('*.js')}
 results={'harness':'Offline asset injection with real loopback API bridge; no browser network navigation','errors':[]}

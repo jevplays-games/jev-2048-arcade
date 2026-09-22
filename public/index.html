@@ -23,16 +23,18 @@
         <span class="jv-title">2048 Duel</span>
       </a>
       <span class="jv-status"><span class="jv-dot"></span>SCORE <strong id="human-score">0</strong></span>
-      <div class="jv-sheet jv-secondary" id="jv-sheet" role="dialog" aria-modal="true" aria-label="Menu">
-        <span class="jv-sheet-label">Match</span>
-        <button id="rules-button" class="jv-sheet-item" type="button">How to play</button>
-        <button id="auth-button" class="jv-sheet-item" type="button">Sign in with Discord</button>
-      </div>
       <button class="jv-icon-btn jv-menu-btn" id="jv-menu" type="button"
               aria-expanded="false" aria-controls="jv-sheet" aria-label="Menu">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </header>
+    <div class="jv-sheet" id="jv-sheet" role="dialog" aria-modal="true" aria-label="Menu">
+      <div id="jv-controls">
+        <span class="jv-sheet-label">Match</span>
+        <button id="rules-button" class="jv-sheet-item" type="button">How to play</button>
+        <button id="auth-button" class="jv-sheet-item" type="button">Sign in with Discord</button>
+      </div>
+    </div>
     <main class="jv-main" id="main">
     <section class="intro jv-hero" aria-labelledby="title">
       <div><div class="eyebrow">THE TWO-BOARD CHALLENGE <span class="tiny-line"></span> 01</div><h1 id="title">2048 <span>Duel.</span></h1>
