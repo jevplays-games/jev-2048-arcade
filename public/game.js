@@ -501,9 +501,14 @@ async function boot() {
       catch (error) { showError(error); }
       finally { sessionStorage.removeItem('jevLaunch'); }
     } else if (pendingLaunch) status('Sign in with the Discord account that launched this game to claim its channel context.');
+    // Auto-start: the duel is live as soon as the page is. An active match is
+    // resumed first, so a reload rejoins rather than opening a second one and
+    // the server's active-match check still owns duplicate prevention.
+    // startMatch() reads $('opponent'), which is already pinned to 'local' when
+    // the JEV key is absent, so an auto-started game is never labeled jev
+    // unless it really ran against the model; ranked stays gated on me.user.
     if (me.activeMatchId) await loadMatch(me.activeMatchId);
-    else if (!me.capabilities.jev) await startMatch();
-    else { renderMatch(); status('Live JEV is available. Select a difficulty and start your duel.'); }
+    else await startMatch();
   } catch (error) { showError(error); status('The game needs its included server. Start it with npm start, then reload this page.'); }
 }
 boot();
