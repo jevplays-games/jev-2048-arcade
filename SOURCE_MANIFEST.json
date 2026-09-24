@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "ef6cff4eda5405d7556c0647f56c7a16234a63052a88be198ccd47d3d7446104",
+  "sourceSHA256": "41a7541cb89bc958f74d9d6b897d88132e72fb8ecdafe377b10b815046db7c76",
   "files": [
     {
       "path": "bench/run.js",
@@ -30,8 +30,8 @@
     },
     {
       "path": "public/brand/brand.css",
-      "bytes": 16749,
-      "sha256": "5893cbe3da470de337b4c1d50573aa99fb9b4fd084bbbf68870758931508f3cf"
+      "bytes": 17683,
+      "sha256": "47a9a1dd23a93d08d61bc1ff28cc84e64b07c3ddefb0e24506960e51ce6cbf65"
     },
     {
       "path": "public/brand/brand.js",
