@@ -11,8 +11,10 @@ let me = null, match = null, events = [], busy = false, currentTab = 'decision',
   imported = null, lastServerMatchId = null, replayRound = null, eventSync = null, lastSettled = performance.now(),
   telemetryEnabled = store.get('telemetry', 'false') === 'true', telemetryQueue = [], telemetryTimer = null,
   leaderScope = 'world', leaderOffset = 0, nextLeaderOffset = null, autoOpponent = false;
+let bearer = null; // set only inside a Discord Activity, where cookies are not sent
 async function api(path, {method = 'GET', body} = {}) {
   const response = await fetch(path, {method, credentials: 'same-origin', headers: {
+    ...(bearer ? {Authorization: `Bearer ${bearer}`} : {}),
     ...(body === undefined ? {} : {'Content-Type': 'application/json'}),
     ...(me?.csrf ? {'X-CSRF-Token': me.csrf} : {})},
     ...(body === undefined ? {} : {body: JSON.stringify(body)}), signal: AbortSignal.timeout(60000)});
@@ -339,7 +341,7 @@ async function exportData(kind) {
   try {
     if (!imported && ['jsonl','rounds','candidates','cells'].includes(kind)) {
       const url = kind === 'jsonl' ? `/api/matches/${match.id}/bundle?format=jsonl` : `/api/matches/${match.id}/analytics?format=csv&table=${kind}`;
-      const response = await fetch(url, {credentials: 'same-origin'});
+      const response = await fetch(url, {credentials: 'same-origin', headers: bearer ? {Authorization: `Bearer ${bearer}`} : {}});
       if (!response.ok) throw new Error('Export failed. The match must belong to your current session.');
       download(await response.blob(), `${match.id}-${kind}.${kind === 'jsonl' ? 'jsonl' : 'csv'}`); return;
     }
@@ -494,6 +496,10 @@ async function boot() {
     // Launch proof survives the OAuth round trip only in sessionStorage, not a referrer or server URL.
     const launch = new URLSearchParams(location.hash.slice(1)).get('launch');
     if (launch) { sessionStorage.setItem('jevLaunch', launch); history.replaceState(null, '', location.pathname); }
+    if (new URLSearchParams(location.search).has('frame_id')) {
+      try { bearer = (await (await import('/activity.js')).signInWithDiscord(api)).token; }
+      catch (error) { showError(`Could not sign in through Discord. ${error.message}`); }
+    }
     await refreshIdentity();
     const pendingLaunch = sessionStorage.getItem('jevLaunch');
     if (pendingLaunch && me.user) {

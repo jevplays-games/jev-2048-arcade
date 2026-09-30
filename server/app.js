@@ -1,6 +1,7 @@
 import {Store, HttpError} from './db.js';
 import {getSession, requireWrite, discordConfigured, beginOAuth, finishOAuth,
   handleInteraction, consumeContext, sessionContext, sessionCookie} from './auth.js';
+import {activityConfig, createActivitySession} from './activity.js';
 import {createMatch, getMatch, ownedMatch, stepMatch, controlMatch, matchBundle, bundleMetadata, partition} from './matches.js';
 import {analyze, csv} from '../public/core/analytics.js';
 import {verifyBundle} from '../public/core/audit.js';
@@ -115,6 +116,9 @@ async function route(request, env) {
   if (!env.APP_SIGNING_KEY || !env.SEED_ENCRYPTION_KEY) throw new HttpError(503, 'Server secrets are not configured.');
   if (path === '/api/health' && method === 'GET') return json({ok: true, jevConfigured: Boolean(env.TYPESAFE_API_KEY), discordConfigured: discordConfigured(env)});
   if (path === '/api/discord/interactions' && method === 'POST') return handleInteraction(request, store, env);
+  if (path === '/api/activity/config' && method === 'GET') return json(activityConfig(env));
+  if (path === '/api/activity/session' && method === 'POST')
+    return json(await createActivitySession(request, fields(await readBody(request), ['code']), store, env));
   if (path === '/api/auth/discord' && method === 'GET') return beginOAuth(request, store, env);
   if (path === '/api/auth/discord/callback' && method === 'GET') return finishOAuth(request, store, env);
   if (path === '/api/admin/analytics' && method === 'GET') return json(await adminAnalytics(request, url, store, env));

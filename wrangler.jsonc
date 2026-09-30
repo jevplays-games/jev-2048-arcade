@@ -3,7 +3,7 @@
   "main": "server/worker.js",
   "routes": [{ "pattern": "2048.jevplay.games", "custom_domain": true }],
   "compatibility_date": "2026-09-01",
-  "assets": {"directory": "public", "binding": "ASSETS", "run_worker_first": ["/api/*"]},
+  "assets": {"directory": "public", "binding": "ASSETS", "run_worker_first": ["/api/*", "/"]},
   "d1_databases": [{"binding": "DB", "database_name": "jev-2048", "database_id": "5b4fe93d-f89e-4c4a-9e1c-afdea140daf4", "migrations_dir": "migrations"}],
   "vars": {"PUBLIC_ORIGIN": "https://2048.jevplay.games", "JEV_MODEL": "jev-1.13.0", "JEV_REQUESTS_PER_DAY": "10000", "DISCORD_ALLOWED_CHANNELS": ""}
 }
