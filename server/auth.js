@@ -5,13 +5,16 @@ function cookieName(env) { return env.DEV_LOCAL === 'true' ? 'jev_session' : '__
 export function sessionCookie(env, token, maxAge = SESSION_MS / 1000) {
   return `${cookieName(env)}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${env.DEV_LOCAL === 'true' ? '' : '; Secure'}`;
 }
+export const activityOrigin = env => /^\d{5,25}$/.test(env.DISCORD_CLIENT_ID || '') ? `https://${env.DISCORD_CLIENT_ID}.discordsays.com` : null;
+// Inside a Discord Activity the browser will not send our SameSite cookie, so the game holds the session token in memory.
+function bearerToken(request) { const m = /^Bearer ([a-f0-9]{64})$/.exec(request.headers.get('authorization') || ''); return m ? m[1] : null; }
 export async function getSession(request, store, env, create = false) {
   const cookies = Object.fromEntries((request.headers.get('cookie') || '').split(';').filter(x => x.includes('='))
     .map(x => { const at = x.indexOf('='); return [x.slice(0, at).trim(), x.slice(at + 1)]; }));
-  const token = cookies[cookieName(env)];
+  const bearer = bearerToken(request), token = bearer || cookies[cookieName(env)];
   if (token && /^[a-f0-9]{64}$/.test(token)) {
     const s = await store.get('SELECT * FROM sessions WHERE id=? AND expires_at>?', [await sha256(token), Date.now()]);
-    if (s) return {session: s, cookie: null};
+    if (s) return {session: bearer ? {...s, via: 'bearer'} : s, cookie: null};
   }
   if (!create) throw new HttpError(401, 'Session expired. Reload the page.', 'session_required');
   const fresh = randomHex(), id = await sha256(fresh), csrf = randomHex();
@@ -20,7 +23,8 @@ export async function getSession(request, store, env, create = false) {
   return {session: {id, user_id: null, csrf, context_json: null, created_at: now, expires_at: now + SESSION_MS}, cookie: sessionCookie(env, fresh)};
 }
 export function requireWrite(request, session, env) {
-  if (request.headers.get('origin') !== env.PUBLIC_ORIGIN || request.headers.get('x-csrf-token') !== session.csrf)
+  const origin = request.headers.get('origin'), framed = session.via === 'bearer' ? activityOrigin(env) : null;
+  if ((origin !== env.PUBLIC_ORIGIN && !(framed && origin === framed)) || request.headers.get('x-csrf-token') !== session.csrf)
     throw new HttpError(403, 'Origin or CSRF check failed.', 'csrf');
 }
 export function discordConfigured(env) { return Boolean(env.DISCORD_CLIENT_ID && env.DISCORD_CLIENT_SECRET); }
@@ -35,19 +39,15 @@ export async function beginOAuth(request, store, env) {
     redirect_uri: env.PUBLIC_ORIGIN + '/api/auth/discord/callback', scope: 'identify', state}).toString();
   return new Response(null, {status: 302, headers: {Location: url.toString(), ...(cookie ? {'Set-Cookie': cookie} : {})}});
 }
-export async function finishOAuth(request, store, env) {
-  const {session} = await getSession(request, store, env), url = new URL(request.url);
-  const state = url.searchParams.get('state'), code = url.searchParams.get('code');
-  if (!state || !/^[a-f0-9]{64}$/.test(state) || !code || code.length > 2048) throw new HttpError(400, 'Missing OAuth code/state.');
-  const proof = await store.get(`UPDATE proofs SET consumed_at=? WHERE id=? AND kind='oauth' AND session_id=?
-    AND expires_at>? AND consumed_at IS NULL RETURNING id`, [Date.now(), await sha256(state), session.id, Date.now()]);
-  if (!proof) throw new HttpError(403, 'OAuth state is expired, already used, or bound to another browser.', 'oauth_state');
+// Exchanges an authorization code for the verified Discord identity. The OAuth redirect flow passes its
+// redirect_uri; the Embedded App SDK's code is exchanged without one.
+export async function discordIdentity(env, code, redirectUri) {
   const fetcher = env.FETCH || fetch;
+  const form = {client_id: env.DISCORD_CLIENT_ID, client_secret: env.DISCORD_CLIENT_SECRET, grant_type: 'authorization_code', code};
+  if (redirectUri) form.redirect_uri = redirectUri;
   const response = await fetcher('https://discord.com/api/v10/oauth2/token', {method: 'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: new URLSearchParams({client_id: env.DISCORD_CLIENT_ID, client_secret: env.DISCORD_CLIENT_SECRET,
-      grant_type: 'authorization_code', code, redirect_uri: env.PUBLIC_ORIGIN + '/api/auth/discord/callback'}),
-    signal: AbortSignal.timeout(10000)});
+    body: new URLSearchParams(form), signal: AbortSignal.timeout(10000)});
   if (!response.ok) throw new HttpError(502, 'Discord authorization failed. Start login again.');
   const tokens = await response.json();
   if (typeof tokens.access_token !== 'string') throw new HttpError(502, 'Discord returned no access token.');
@@ -56,12 +56,25 @@ export async function finishOAuth(request, store, env) {
   if (!identityResponse.ok) throw new HttpError(502, 'Discord identity could not be verified.');
   const user = await identityResponse.json();
   if (!/^\d{5,24}$/.test(user.id)) throw new HttpError(502, 'Invalid Discord identity.');
-  const name = String(user.global_name || user.username || 'Player').slice(0, 100), now = Date.now();
+  return {user, accessToken: tokens.access_token};
+}
+export function upsertDiscordUser(user, now) {
+  const name = String(user.global_name || user.username || 'Player').slice(0, 100);
+  return [`INSERT INTO users(id,display_name,avatar,created_at,last_seen_at) VALUES(?,?,?,?,?) ON CONFLICT(id)
+      DO UPDATE SET display_name=excluded.display_name,avatar=excluded.avatar,last_seen_at=excluded.last_seen_at`,
+    [user.id, name, typeof user.avatar === 'string' ? user.avatar.slice(0, 128) : null, now, now]];
+}
+export async function finishOAuth(request, store, env) {
+  const {session} = await getSession(request, store, env), url = new URL(request.url);
+  const state = url.searchParams.get('state'), code = url.searchParams.get('code');
+  if (!state || !/^[a-f0-9]{64}$/.test(state) || !code || code.length > 2048) throw new HttpError(400, 'Missing OAuth code/state.');
+  const proof = await store.get(`UPDATE proofs SET consumed_at=? WHERE id=? AND kind='oauth' AND session_id=?
+    AND expires_at>? AND consumed_at IS NULL RETURNING id`, [Date.now(), await sha256(state), session.id, Date.now()]);
+  if (!proof) throw new HttpError(403, 'OAuth state is expired, already used, or bound to another browser.', 'oauth_state');
+  const {user} = await discordIdentity(env, code, env.PUBLIC_ORIGIN + '/api/auth/discord/callback'), now = Date.now();
   const fresh = randomHex(), id = await sha256(fresh), csrf = randomHex();
   await store.batch([
-    [`INSERT INTO users(id,display_name,avatar,created_at,last_seen_at) VALUES(?,?,?,?,?) ON CONFLICT(id)
-      DO UPDATE SET display_name=excluded.display_name,avatar=excluded.avatar,last_seen_at=excluded.last_seen_at`,
-    [user.id, name, typeof user.avatar === 'string' ? user.avatar.slice(0, 128) : null, now, now]],
+    upsertDiscordUser(user, now),
     ['INSERT INTO sessions(id,user_id,csrf,created_at,expires_at) VALUES(?,?,?,?,?)', [id, user.id, csrf, now, now + SESSION_MS]],
     // Preserve ownership of guest practice without upgrading its eligibility.
     ['UPDATE matches SET session_id=? WHERE session_id=? AND user_id IS NULL', [id, session.id]],

@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {dirname, resolve, extname, sep} from 'node:path';
 import {createSqlite} from './sqlite.js';
 import {handleApi, HEADERS} from './app.js';
+import {documentHeaders} from './activity.js';
 import {randomHex} from '../public/core/crypto.js';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dataDir = resolve(process.env.DATA_DIR || resolve(root, '.data'));
@@ -47,7 +48,7 @@ const server = http.createServer(async (req, res) => {
     const decoded = decodeURIComponent(url.pathname), relative = decoded === '/' ? 'index.html' : decoded.slice(1);
     const publicRoot = resolve(root, 'public'), path = resolve(publicRoot, relative);
     if (!path.startsWith(publicRoot + sep) || !(await stat(path)).isFile()) { res.writeHead(404); res.end('Not found'); return; }
-    res.writeHead(200, {...HEADERS, 'Content-Type': types[extname(path)] || 'application/octet-stream'});
+    res.writeHead(200, {...documentHeaders(url, HEADERS), 'Content-Type': types[extname(path)] || 'application/octet-stream'});
     res.end(req.method === 'HEAD' ? undefined : await readFile(path));
   } catch { if (!res.headersSent) res.writeHead(500); res.end('Request failed'); }
 });

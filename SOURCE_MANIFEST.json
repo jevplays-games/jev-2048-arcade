@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "41a7541cb89bc958f74d9d6b897d88132e72fb8ecdafe377b10b815046db7c76",
+  "sourceSHA256": "616d9357ebcb118921ca9259bacd0770c5d591065aed3d05d1baad1648e0ae41",
   "files": [
     {
       "path": "bench/run.js",
@@ -27,6 +27,11 @@
       "path": "public/_headers",
       "bytes": 375,
       "sha256": "b89688e95e2404ba5ec91161df8b5582dc592da56d90b9cab0340bc2f607d0a4"
+    },
+    {
+      "path": "public/activity.js",
+      "bytes": 797,
+      "sha256": "ab3881137a7f51cd8d98e57aaabd1f70dfbe129117147bdee7c950f5f19217fc"
     },
     {
       "path": "public/brand/brand.css",
@@ -90,13 +95,18 @@
     },
     {
       "path": "public/game.js",
-      "bytes": 37971,
-      "sha256": "c292a51f34a3a2b2f5728bfa139b7a7897b653e8ddf8bef1bc104c3f657326af"
+      "bytes": 38428,
+      "sha256": "e1a63508eaa7f8aed88ce89a245d404e72946a57d0705938436f912c2d533cf2"
     },
     {
       "path": "public/index.html",
       "bytes": 16510,
       "sha256": "0ed36a9ff3a395b3a27abafb93f430f2bf22f17e120ae78b177cdce2508f1051"
+    },
+    {
+      "path": "public/vendor/discord-embedded-app-sdk.js",
+      "bytes": 158033,
+      "sha256": "c58611dd66e1294569561759aef0771cced023280e53be81cd00a9a5f641f0a3"
     },
     {
       "path": "scripts/export.js",
@@ -139,14 +149,19 @@
       "sha256": "e7a21c968319f7d5c89bd618d0aeeae3bc0c530da8dee040cac7dcf136aac425"
     },
     {
+      "path": "server/activity.js",
+      "bytes": 2845,
+      "sha256": "d28bde2a6acb8ded55d8af2d83c628df773cde745c7b2915b2b829e622f40fe3"
+    },
+    {
       "path": "server/app.js",
-      "bytes": 16491,
-      "sha256": "a45d302a1ae289acc3bd24e80fab77546c993bc2c65d3903ff1d57f62bbf5c8f"
+      "bytes": 16824,
+      "sha256": "8583a8492384bf6953377631b5be6738f94a83fb5bc4a32a67df061af5eb75e4"
     },
     {
       "path": "server/auth.js",
-      "bytes": 9937,
-      "sha256": "ce12ff1173cb8c081dcf00fe558de8c4143303defdf65a7b8f450ca092294312"
+      "bytes": 11029,
+      "sha256": "42c0b946aaf2d70f65ca9f2040e234ce08c3a5bf676cc44fc6a736c3c207aeb0"
     },
     {
       "path": "server/db.js",
@@ -160,8 +175,8 @@
     },
     {
       "path": "server/local.js",
-      "bytes": 4045,
-      "sha256": "174e345a2e22049cfaf0aeb9047eae3775bfd07e55e82c920a19e3182e4c05d8"
+      "bytes": 4114,
+      "sha256": "bdc96fb0770a374222d66639c9659359fcb7da5db3626b794e0f23fd1e0c18fc"
     },
     {
       "path": "server/matches.js",
@@ -175,8 +190,13 @@
     },
     {
       "path": "server/worker.js",
-      "bytes": 431,
-      "sha256": "69890be1657f92eb792dc631e569d4c797ffb33664dd7615385274822bc0e11b"
+      "bytes": 521,
+      "sha256": "2748a8aa16f60d3f0e47ff8ce574da5df7552cfd1d5fad1363cb65f0dc998730"
+    },
+    {
+      "path": "tests/activity.test.js",
+      "bytes": 7308,
+      "sha256": "717df65d8c566f29e7269fd0201bb6fce3939aec9ca317004afd8d242635e1b6"
     },
     {
       "path": "tests/analytics.test.js",
@@ -225,8 +245,8 @@
     },
     {
       "path": "wrangler.jsonc",
-      "bytes": 527,
-      "sha256": "bcae90aa44d1333a5c41d3e74a00af607b57f771e97f6fa8b63fafe0b9ba43ac"
+      "bytes": 575,
+      "sha256": "add6b16bc09a5ec97b40a0123b3a34b3ddf0ad355f2cc33d5794371819acb64b"
     }
   ]
 }
