@@ -98,3 +98,12 @@ npm run maintenance -- --db .data/arcade.sqlite --guest-days 30 --apply
 The first command is dry run; the second removes expired proof/session data and old inactive/expired guest histories. It does not delete verified registered-user histories by age. Explicit account erasure requires `--delete-user ID --confirm ID --apply`. The tool operates on local SQLite files, not directly on D1. Use an appropriately reviewed remote retention process for D1 rather than pretending the local command manages it.
 
 Release changes should regenerate `npm run fingerprint`, preserve old replay versions, and archive the matching source identity. Secrets and mutable database files are never source-fingerprinted or included in the ZIP.
+
+## GoDaddy Node hosting
+
+The same `server/local.js` entry runs as a plain Node.js app (`npm run build` is a no-op, `npm start` loads `.env` via `--env-file-if-exists=.env`). Zip layout: repository root files (`package.json`, `server/`, `public/`, `migrations/`, `.env`) at the zip root.
+
+- The platform injects `PORT`; set `HOST=0.0.0.0` (the shim defaults to loopback otherwise). Set `PUBLIC_ORIGIN=https://2048.jevplay.games`; a non-loopback origin turns `DEV_LOCAL` off, so ranked play, Discord interactions and Discord sign-in behave as on the Worker, and startup fails unless `APP_SIGNING_KEY` and `SEED_ENCRYPTION_KEY` (64 hex characters, `npm run secrets`) are configured.
+- Other keys: `TYPESAFE_API_KEY`, `JEV_MODEL`, `JEV_TIMEOUT_MS`, `JEV_REQUESTS_PER_DAY`, `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_PUBLIC_KEY`, `DISCORD_ALLOWED_CHANNELS` (empty rejects all interactions), optional `ADMIN_API_KEY`. Real process env vars override `.env`.
+- Set `TRUST_PROXY=1` behind the platform's single reverse proxy so per-client quotas use the last `X-Forwarded-For` entry; otherwise all clients share the proxy address. CSRF/origin checks are unchanged and compare against `PUBLIC_ORIGIN`.
+- SQLite lives in `DATA_DIR` (default `.data/arcade.sqlite`, outside `public/`, never served). Storage is ephemeral: matches and analytics are lost on redeploy. There are no scheduled jobs; run `npm run maintenance` manually if needed.

@@ -35,9 +35,11 @@ const server = http.createServer(async (req, res) => {
       for (const [k, v] of Object.entries(req.headers)) if (v !== undefined) headers.set(k, Array.isArray(v) ? v.join(',') : v);
       // Do not trust client-provided forwarding headers for local quota attribution.
       headers.delete('CF-Connecting-IP');
+      // Behind one trusted reverse proxy (TRUST_PROXY=1), attribute quota to the proxy-appended client address.
+      const forwarded = process.env.TRUST_PROXY === '1' ? String(req.headers['x-forwarded-for'] || '').split(',').pop().trim() : '';
       const request = new Request(url, {method: req.method, headers,
         ...(['GET', 'HEAD'].includes(req.method) ? {} : {body: Buffer.concat(chunks)})});
-      const response = await handleApi(request, {...env, LOCAL_CLIENT_IP: req.socket.remoteAddress || 'local'});
+      const response = await handleApi(request, {...env, LOCAL_CLIENT_IP: forwarded || req.socket.remoteAddress || 'local'});
       res.writeHead(response.status, Object.fromEntries(response.headers.entries()));
       if (response.body) for await (const chunk of response.body) {
         if (!res.write(Buffer.from(chunk))) await new Promise(r => res.once('drain', r));
