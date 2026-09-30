@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "616d9357ebcb118921ca9259bacd0770c5d591065aed3d05d1baad1648e0ae41",
+  "sourceSHA256": "7449e43a64418a9ea34f032a2904fbeba64032c5b73bb7f50c5557584084dbb3",
   "files": [
     {
       "path": "bench/run.js",
@@ -20,8 +20,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 788,
-      "sha256": "7d9f7d69c416ce670530b9dd027745b017012c9125a230966915dfd13b703ca8"
+      "bytes": 832,
+      "sha256": "46ddb0b2d16db232a91ee7d0d1a589f2b3f033853552ad8016e855bdf71e42c7"
     },
     {
       "path": "public/_headers",
@@ -175,8 +175,8 @@
     },
     {
       "path": "server/local.js",
-      "bytes": 4114,
-      "sha256": "bdc96fb0770a374222d66639c9659359fcb7da5db3626b794e0f23fd1e0c18fc"
+      "bytes": 4373,
+      "sha256": "1cf097f447e71c2dc6adc7b9d8d3c9ee6dcfcf5da00e909f9542d6424c2177e6"
     },
     {
       "path": "server/matches.js",
