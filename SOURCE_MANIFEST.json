@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "7449e43a64418a9ea34f032a2904fbeba64032c5b73bb7f50c5557584084dbb3",
+  "sourceSHA256": "349dc5268684add86639fefc3fb4179e14f36ac8c54407c478e8dff0dfd12802",
   "files": [
     {
       "path": "bench/run.js",
@@ -75,18 +75,18 @@
     },
     {
       "path": "public/core/crypto.js",
-      "bytes": 4128,
-      "sha256": "aa17b58c3550179967cced56ed73a3aa8816c5c029ff9a50a61d5ac6140fb7de"
+      "bytes": 4343,
+      "sha256": "48a4fe61dddb551ea4187b7e34f9d3b0b6a3c7ce4580762b6f126f2373e631a9"
     },
     {
       "path": "public/core/evaluate.js",
-      "bytes": 6569,
-      "sha256": "8d5c2da1af16bf65d88a658c9101d8830b988d162c78060b2d4ccba29b2c0fbd"
+      "bytes": 11514,
+      "sha256": "ee05c4e76270df874d39e3a9d1db9825ed473dd12f198d8239e822b35a8bff71"
     },
     {
       "path": "public/core/rules.js",
-      "bytes": 5953,
-      "sha256": "4e5275161143bdd4c12139a3bad28609b6bd43dd17d629d87dd9d68e2f388496"
+      "bytes": 10191,
+      "sha256": "e9d60ab8dcf62af2ec18da9047286262b4b4ba372a13bd2fdda0ad1c853bf491"
     },
     {
       "path": "public/game.css",
@@ -227,6 +227,11 @@
       "path": "tests/jev.test.js",
       "bytes": 2836,
       "sha256": "add7d0c77006d964d5bc3b53b59ac3c62cd9c73bd4b5461b5ed4567bfaeb891e"
+    },
+    {
+      "path": "tests/perf-equivalence.test.js",
+      "bytes": 6076,
+      "sha256": "86f417dfc4697cb9b0afe43b27606ce42c102fbfb3e314f0f961de9aa16941be"
     },
     {
       "path": "tests/provider-fixture.js",

@@ -59,7 +59,7 @@ export function spawnRisk(cells) {
   return {immediateBlockProbability, expectedLegalMoves, expectedEmptyCount};
 }
 /** Deterministic bounded expectimax. Exhausted branches retain all chance mass via frontier evaluation. */
-export function lookahead(afterstate, depth, budget) {
+export function lookaheadReference(afterstate, depth, budget) {
   const stats = {nodes: 0, frontierEvaluations: 0, maxDepthReached: 0, truncated: false};
   function decision(cells, remaining, traversed) {
     stats.maxDepthReached = Math.max(stats.maxDepthReached, traversed);
@@ -86,7 +86,114 @@ export function lookahead(afterstate, depth, budget) {
   const value = depth ? chance(afterstate, depth, 0) : heuristic(afterstate);
   return {value, requestedDepth: depth, nodeBudget: budget, ...stats};
 }
-export function generateCandidates(board, difficulty = 'normal') {
+/* Fast bounded expectimax: same traversal order, node accounting and floating-point operation order as
+   lookaheadReference, but in place on typed arrays with no per-node allocation. */
+const LINE = new Int8Array(64); // [action * 16 + line * 4 + i] -> cell index, as lineIndices()
+for (let a = 0; a < 4; a++) for (let l = 0; l < 4; l++) for (let i = 0; i < 4; i++)
+  LINE[a * 16 + l * 4 + i] = a === 0 ? i * 4 + l : a === 1 ? l * 4 + 3 - i : a === 2 ? (3 - i) * 4 + l : l * 4 + i;
+const POW2 = Float64Array.from({length: 32}, (_, i) => 2 ** i);
+let movedScore = 0;
+/** Writes the move of src into dst; returns whether it changed the board and leaves the score in movedScore. */
+function moveInto(src, dst, action) {
+  dst.fill(0);
+  let score = 0, changed = false;
+  for (let line = 0; line < 4; line++) {
+    const base = action * 16 + line * 4;
+    let pend = 0, t = 0;
+    for (let i = 0; i < 4; i++) {
+      const v = src[LINE[base + i]];
+      if (!v) continue;
+      if (pend === 0) { pend = v; continue; }
+      if (pend === v) {
+        if (v >= 30) throw new Error('Tile exponent overflow.');
+        const out = v + 1; score += POW2[out]; dst[LINE[base + t++]] = out; pend = 0;
+      } else { dst[LINE[base + t++]] = pend; pend = v; }
+    }
+    if (pend) dst[LINE[base + t++]] = pend;
+  }
+  for (let i = 0; i < 16; i++) if (dst[i] !== src[i]) { changed = true; break; }
+  movedScore = score;
+  return changed;
+}
+function anyMove(c) {
+  let empty = 0;
+  for (let i = 0; i < 16; i++) if (!c[i]) empty++;
+  if (empty) return empty < 16;
+  for (let i = 0; i < 16; i++) {
+    if (i % 4 < 3 && c[i] === c[i + 1]) return true;
+    if (i < 12 && c[i] === c[i + 4]) return true;
+  }
+  return false;
+}
+function heuristicFast(c) {
+  if (!anyMove(c)) return -10;
+  let empty = 0, maxExp = 0, rough = 0;
+  for (let i = 0; i < 16; i++) {
+    const v = c[i];
+    if (!v) { empty++; continue; }
+    if (v > maxExp) maxExp = v;
+    if (i % 4 < 3) { const w = c[i + 1]; if (w) rough += v > w ? v - w : w - v; }
+    if (i < 12) { const w = c[i + 4]; if (w) rough += v > w ? v - w : w - v; }
+  }
+  let pen = 0;
+  for (let k = 0; k < 4; k++) {
+    let inc = 0, dec = 0, d;
+    d = c[k * 4 + 1] - c[k * 4]; if (d > 0) inc += d; else dec -= d;
+    d = c[k * 4 + 2] - c[k * 4 + 1]; if (d > 0) inc += d; else dec -= d;
+    d = c[k * 4 + 3] - c[k * 4 + 2]; if (d > 0) inc += d; else dec -= d;
+    pen += inc < dec ? inc : dec;
+    inc = 0; dec = 0;
+    d = c[4 + k] - c[k]; if (d > 0) inc += d; else dec -= d;
+    d = c[8 + k] - c[4 + k]; if (d > 0) inc += d; else dec -= d;
+    d = c[12 + k] - c[8 + k]; if (d > 0) inc += d; else dec -= d;
+    pen += inc < dec ? inc : dec;
+  }
+  const scale = 24 * Math.max(1, maxExp), corner = maxExp > 0 && (c[0] === maxExp || c[3] === maxExp || c[12] === maxExp || c[15] === maxExp);
+  return 4 * empty / 16 + (1 - pen / scale) + Number(corner) - rough / scale;
+}
+const levelBuffers = [];
+const levelBuf = depth => levelBuffers[depth] ??= {moved: new Uint8Array(16), cells: new Uint8Array(16)};
+export function lookahead(afterstate, depth, budget) {
+  const stats = {nodes: 0, frontierEvaluations: 0, maxDepthReached: 0, truncated: false};
+  function decision(c, remaining, traversed) {
+    if (traversed > stats.maxDepthReached) stats.maxDepthReached = traversed;
+    if (stats.nodes >= budget) {
+      if (remaining > 0) stats.truncated = true;
+      stats.frontierEvaluations++; return heuristicFast(c);
+    }
+    stats.nodes++;
+    if (remaining === 0) { stats.frontierEvaluations++; return heuristicFast(c); }
+    const buf = levelBuf(traversed);
+    let best = -Infinity, any = false;
+    for (let action = 0; action < 4; action++) {
+      if (!moveInto(c, buf.moved, action)) continue;
+      any = true;
+      const reward = Math.log2(1 + movedScore) / 32;
+      best = Math.max(best, reward + chance(buf.moved, buf.cells, remaining - 1, traversed + 1));
+    }
+    return any ? best : -10;
+  }
+  function chance(moved, work, remaining, traversed) {
+    let n = 0;
+    for (let i = 0; i < 16; i++) if (!moved[i]) n++;
+    if (!n) { work.set(moved); return 0 + decision(work, remaining, traversed); }
+    work.set(moved);
+    let value = 0;
+    for (let i = 0; i < 16; i++) {
+      if (moved[i]) continue;
+      work[i] = 1; value = value + (.9 / n) * decision(work, remaining, traversed);
+      work[i] = 2; value = value + (.1 / n) * decision(work, remaining, traversed);
+      work[i] = 0;
+    }
+    return value;
+  }
+  const start = Uint8Array.from(afterstate);
+  const value = depth ? chance(start, new Uint8Array(16), depth, 0) : heuristicFast(start);
+  return {value, requestedDepth: depth, nodeBudget: budget, ...stats};
+}
+export function generateCandidates(board, difficulty = 'normal') { return generateCandidatesWith(board, difficulty, lookahead); }
+export function generateCandidatesReference(board, difficulty = 'normal') { return generateCandidatesWith(board, difficulty, lookaheadReference); }
+function generateCandidatesWith(board, difficulty, lookahead) {
   const profile = PROFILES[difficulty]; if (!profile) throw new Error('Unknown difficulty.');
   const legal = getLegalActions(board);
   return legal.map(action => {

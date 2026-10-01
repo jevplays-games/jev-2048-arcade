@@ -16,7 +16,7 @@ export function lineIndices(action, line) {
   return Array.from({length: 4}, (_, i) => action === 0 ? i * 4 + line :
     action === 1 ? line * 4 + 3 - i : action === 2 ? (3 - i) * 4 + line : line * 4 + i);
 }
-export function simulateMove(board, action) {
+export function simulateMoveReference(board, action) {
   const original = Array.isArray(board) ? board : board.cells;
   validateCells(original);
   if (!ACTIONS.includes(action)) throw new Error('Invalid action.');
@@ -44,8 +44,74 @@ export function simulateMove(board, action) {
   }
   return {changed: cells.some((v, i) => v !== original[i]), cells, scoreDelta, merges, movements};
 }
+export function getLegalActionsReference(board) {
+  return ACTIONS.filter(action => simulateMoveReference(board, action).changed);
+}
+/* Optimized implementations; the *Reference functions above are the specification and are compared against these in tests. */
+const LINE_TABLE = Array.from({length: 4}, (_, a) => Array.from({length: 4}, (_, l) => Int8Array.from(lineIndices(a, l))));
+function checkedCells(board) {
+  const original = Array.isArray(board) ? board : board.cells;
+  validateCells(original);
+  return original;
+}
+export function simulateMove(board, action) {
+  const original = checkedCells(board);
+  if (!ACTIONS.includes(action)) throw new Error('Invalid action.');
+  const cells = Array(16).fill(0), merges = [], movements = [], lines = LINE_TABLE[action];
+  let scoreDelta = 0, changed = false;
+  for (let line = 0; line < 4; line++) {
+    const indices = lines[line];
+    let target = 0, pendCell = -1, pendExp = 0;
+    for (let i = 0; i < 4; i++) {
+      const cell = indices[i], exponent = original[cell];
+      if (!exponent) continue;
+      if (pendExp === 0) { pendCell = cell; pendExp = exponent; continue; }
+      const to = indices[target++];
+      if (pendExp === exponent) {
+        if (pendExp >= 30) throw new Error('Tile exponent overflow.');
+        const merged = pendExp + 1, value = 2 ** merged;
+        cells[to] = merged; scoreDelta += value;
+        merges.push({from: [pendCell, cell], to, exponent: merged, value});
+        movements.push({from: pendCell, to}, {from: cell, to});
+        pendExp = 0;
+      } else {
+        cells[to] = pendExp; movements.push({from: pendCell, to});
+        pendCell = cell; pendExp = exponent;
+      }
+    }
+    if (pendExp !== 0) { const to = indices[target++]; cells[to] = pendExp; movements.push({from: pendCell, to}); }
+  }
+  for (let i = 0; i < 16; i++) if (cells[i] !== original[i]) { changed = true; break; }
+  return {changed, cells, scoreDelta, merges, movements};
+}
+/** Whether a move changes the board; same validation and overflow errors as simulateMove, without building the result. */
+function moveChanges(original, action) {
+  const lines = LINE_TABLE[action];
+  let changed = false;
+  for (let line = 0; line < 4; line++) {
+    const indices = lines[line];
+    let target = 0, pendExp = 0, pendCell = -1;
+    for (let i = 0; i < 4; i++) {
+      const cell = indices[i], exponent = original[cell];
+      if (!exponent) continue;
+      if (pendExp === 0) { pendCell = cell; pendExp = exponent; continue; }
+      const to = indices[target++];
+      if (pendExp === exponent) {
+        if (pendExp >= 30) throw new Error('Tile exponent overflow.');
+        changed = true; pendExp = 0;
+      } else {
+        if (to !== pendCell) changed = true;
+        pendCell = cell; pendExp = exponent;
+      }
+    }
+    if (pendExp !== 0 && indices[target] !== pendCell) changed = true;
+  }
+  return changed;
+}
 export function getLegalActions(board) {
-  return ACTIONS.filter(action => simulateMove(board, action).changed);
+  const original = checkedCells(board), legal = [];
+  for (let action = 0; action < 4; action++) if (moveChanges(original, action)) legal.push(action);
+  return legal;
 }
 export function applySpawn(board, event) {
   const original = Array.isArray(board) ? board : board.cells;
@@ -101,14 +167,47 @@ export function advanceRound(state, {humanAction, jevAction, spawnEvent}) {
   }
   return {state: next, details};
 }
-export function canonical(value) {
+export function canonicalReference(value) {
   if (value === null || typeof value !== 'object') {
     if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('Nonfinite canonical value.');
     if (value === undefined) throw new Error('Undefined canonical value.');
     return JSON.stringify(value);
   }
-  if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
-  return '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k])).join(',') + '}';
+  if (Array.isArray(value)) return '[' + value.map(canonicalReference).join(',') + ']';
+  return '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonicalReference(value[k])).join(',') + '}';
+}
+const keyJson = new Map();
+export function canonical(value) {
+  if (value === null || typeof value !== 'object') {
+    if (typeof value === 'number') {
+      if (!Number.isFinite(value)) throw new Error('Nonfinite canonical value.');
+      return String(value); // identical to JSON.stringify for every finite number, including -0
+    }
+    if (value === undefined) throw new Error('Undefined canonical value.');
+    return JSON.stringify(value);
+  }
+  if (Array.isArray(value)) {
+    let out = '[';
+    for (let i = 0; i < value.length; i++) {
+      const item = value[i];
+      if (i) out += ',';
+      if (item !== undefined || i in value) { const piece = canonical(item); if (piece !== undefined) out += piece; } // holes and function values join as empty, like map/join
+    }
+    return out + ']';
+  }
+  const keys = Object.keys(value).sort();
+  let out = '{';
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    let encoded = keyJson.get(key);
+    if (encoded === undefined) {
+      encoded = JSON.stringify(key);
+      if (keyJson.size >= 2048) keyJson.clear();
+      keyJson.set(key, encoded);
+    }
+    out += (i ? ',' : '') + encoded + ':' + canonical(value[key]);
+  }
+  return out + '}';
 }
 export function serializeState(state) { return canonical(state); }
 export function deserializeState(json) {
