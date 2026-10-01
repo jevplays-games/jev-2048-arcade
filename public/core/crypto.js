@@ -1,7 +1,13 @@
 import {canonical, applySpawn, spawnFor} from './rules.js';
 export const RNG_VERSION = 'paired-spawn-v1';
 const encoder = new TextEncoder();
-export const hex = bytes => Array.from(bytes, x => x.toString(16).padStart(2, '0')).join('');
+const HEX = Array.from({length: 256}, (_, i) => i.toString(16).padStart(2, '0'));
+export const hexReference = bytes => Array.from(bytes, x => x.toString(16).padStart(2, '0')).join('');
+export function hex(bytes) {
+  let out = '';
+  for (let i = 0; i < bytes.length; i++) out += HEX[bytes[i]];
+  return out;
+}
 export function unhex(s) {
   if (typeof s !== 'string' || !/^(?:[a-f0-9]{2})+$/i.test(s)) throw new Error('Invalid hex.');
   return Uint8Array.from(s.match(/../g), x => parseInt(x, 16));
