@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/banner.jpg" alt="Pixel-art robot Jev sliding glowing colored tiles on a four-by-four neon board in a purple arcade" width="100%"></p>
+
 # JEV Arcade — 2048 Duel
 
 A runnable, single-page 2048 duel with **separate human and opponent boards**, matched hidden randomness, a real TypeSafe/JEV HTTP adapter, Discord identity/context integration, authoritative scores, and detailed auditable analytics.
