@@ -100,6 +100,10 @@ function renderMatch(details = null) {
     else if (state.human.status !== 'playing') status('Your board is finished. The opponent can continue; final score decides the match.');
     else status(local ? 'Local heuristic practice. Play your board to advance both boards.' : 'Your move. JEV evaluates its own board after your direction is locked.');
   }
+  if (state && !busy && replayRound === null) {
+    const done = match.status === 'complete' && !imported;
+    $('game-status').className = done ? `jv-plaque is-${state.winner === 'draw' ? 'draw' : state.winner === 'human' ? 'win' : 'loss'}` : '';
+  }
   const manifest = match?.manifest;
   $('footer-model').textContent = manifest ? `${manifest.model || 'LOCAL HEURISTIC'} · ${manifest.policyVersion} · ${manifest.rulesVersion}` : 'Native HTML · deterministic rules · no tracking SDK';
   if (match) {

@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="JEV Arcade"><rect width="64" height="64" rx="15" fill="#0e1017"/><rect width="64" height="64" rx="15" fill="none" stroke="#a99bff" stroke-width="1.5" opacity=".35"/><path d="M34 14v20.5c0 5.2-4.2 9.5-9.5 9.5S15 39.7 15 34.5" fill="none" stroke="#eef0f7" stroke-width="6" stroke-linecap="round"/><rect x="34" y="34" width="9" height="9" rx="2.5" fill="#a99bff"/><rect x="45" y="34" width="9" height="9" rx="2.5" fill="#a99bff" opacity=".55"/><rect x="34" y="45" width="9" height="9" rx="2.5" fill="#a99bff" opacity=".55"/><rect x="45" y="45" width="9" height="9" rx="2.5" fill="#a99bff"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+  <defs>
+    <radialGradient id="ground" cx="0.28" cy="0.2" r="1"><stop offset="0" stop-color="#6b5410"/><stop offset="0.45" stop-color="#2e2408"/><stop offset="1" stop-color="#0c0d17"/></radialGradient>
+    <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="26" y1="22" x2="54" y2="50"><stop offset="0" stop-color="#fff0a8"/><stop offset="0.5" stop-color="#edc22e"/><stop offset="1" stop-color="#c0961a"/></linearGradient>
+    <linearGradient id="b" gradientUnits="userSpaceOnUse" x1="6" y1="10" x2="30" y2="34"><stop offset="0" stop-color="#ffc1ae"/><stop offset="0.5" stop-color="#f67c5f"/><stop offset="1" stop-color="#d9482a"/></linearGradient>
+    <linearGradient id="c" gradientUnits="userSpaceOnUse" x1="6" y1="34" x2="30" y2="58"><stop offset="0" stop-color="#ffd9c2"/><stop offset="0.5" stop-color="#f59563"/><stop offset="1" stop-color="#d4602f"/></linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#ground)"/>
+  <g transform="rotate(-8 32 32)">
+    <rect x="8.2" y="10" width="24" height="24" rx="4.8" fill="#8c2a12"/><rect x="7" y="8" width="24" height="24" rx="4.8" fill="url(#b)"/><rect x="9.9" y="9.7" width="12.0" height="1.7" rx="1" fill="#fff" fill-opacity="0.7"/>
+    <rect x="8.2" y="36" width="22" height="22" rx="4.4" fill="#8e3a14"/><rect x="7" y="34" width="22" height="22" rx="4.4" fill="url(#c)"/><rect x="9.6" y="35.5" width="11.0" height="1.5" rx="1" fill="#fff" fill-opacity="0.7"/>
+    <rect x="25.2" y="20" width="64" height="64" rx="6.4" fill="#7a5a08"/><rect x="24" y="18" width="32" height="32" rx="6.4" fill="url(#a)"/><rect x="27.8" y="20.2" width="16.0" height="2.2" rx="1" fill="#fff" fill-opacity="0.7"/>
+  </g>
+</svg>
