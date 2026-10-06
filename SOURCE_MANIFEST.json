@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "349dc5268684add86639fefc3fb4179e14f36ac8c54407c478e8dff0dfd12802",
+  "sourceSHA256": "e7ac347eee59e2e913ba89a6885d0d60f4b80375ea310bc7e1c25eac0fa81969",
   "files": [
     {
       "path": "bench/run.js",
@@ -34,9 +34,24 @@
       "sha256": "ab3881137a7f51cd8d98e57aaabd1f70dfbe129117147bdee7c950f5f19217fc"
     },
     {
+      "path": "public/art/tile.svg",
+      "bytes": 1291,
+      "sha256": "af54732b14ee3731555974c11e0d3bfb7374dc87bae2f1a160963564ee7e9da7"
+    },
+    {
+      "path": "public/art/well.svg",
+      "bytes": 499,
+      "sha256": "bc5242d3d3af689fdb9af1f060b96a427114eaa6ef2f29f0eaeeb75298e4e7ce"
+    },
+    {
+      "path": "public/brand/apple-touch-icon.png",
+      "bytes": 19167,
+      "sha256": "bf3a4db42615438f8d3158ec2219244353844c938e76b37d058dba96489b7599"
+    },
+    {
       "path": "public/brand/brand.css",
-      "bytes": 17683,
-      "sha256": "47a9a1dd23a93d08d61bc1ff28cc84e64b07c3ddefb0e24506960e51ce6cbf65"
+      "bytes": 25412,
+      "sha256": "9138ab8bc31bcd47ec1cbf003925a993b1bb63e2cd0c2f6d15ab77b12db2b404"
     },
     {
       "path": "public/brand/brand.js",
@@ -44,9 +59,14 @@
       "sha256": "661ed9c0cc676363d01fb330533cc09f1dfb5aa388eff1bf59c8a61836bcba66"
     },
     {
+      "path": "public/brand/favicon-32.png",
+      "bytes": 1945,
+      "sha256": "e5d0208e9d5f390b2abbd18d0a3561375255cb1156bd4bae43fb9cc932a7d035"
+    },
+    {
       "path": "public/brand/icon.svg",
-      "bytes": 699,
-      "sha256": "363f2d0a67aff236bf31adace1ee28f31997e2047d30d5dd20fa4058e8892600"
+      "bytes": 1794,
+      "sha256": "55981b08db420b5b47b1b0c5ddedb25593c5847cda6272411f27a78c228c6433"
     },
     {
       "path": "public/brand/inter-var.woff2",
@@ -55,13 +75,33 @@
     },
     {
       "path": "public/brand/mark.svg",
-      "bytes": 314,
-      "sha256": "36302e2d29ca7b644799190de1af44727eb416d91e30648e10ff71f8571ddeb3"
+      "bytes": 1794,
+      "sha256": "7873242b6e491bfc548fcd05d5f153f6d439ca3aa9c916efbe715586750e7cb4"
     },
     {
       "path": "public/brand/OFL.txt",
       "bytes": 4380,
       "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
+    },
+    {
+      "path": "public/brand/og.png",
+      "bytes": 172794,
+      "sha256": "b0ac24a4c75742eb2ef47e45449026ac652785ba16dbac94d0286013ed3f6f5a"
+    },
+    {
+      "path": "public/brand/result-draw.svg",
+      "bytes": 1004,
+      "sha256": "c7c4069551fe2be380118c5379dd8f6ee0f80bc969d09c3b07c2e526a6609fe2"
+    },
+    {
+      "path": "public/brand/result-loss.svg",
+      "bytes": 1048,
+      "sha256": "7759d7a48baf9a7a1502320036df8d98e8be435dd37d4aa3fcd509ae6a25eedc"
+    },
+    {
+      "path": "public/brand/result-win.svg",
+      "bytes": 1203,
+      "sha256": "80a744fdca06775cfca12fd8e00044471f9e2dbf3d1245b992b0463d4c51208a"
     },
     {
       "path": "public/core/analytics.js",
@@ -90,18 +130,18 @@
     },
     {
       "path": "public/game.css",
-      "bytes": 16210,
-      "sha256": "c9cde09b59b22e06b90e46d8882702687bfe93c162336dd4ef0c2d32c8144de0"
+      "bytes": 19822,
+      "sha256": "4e5eb5e77269fbaeb3bdb9eab406dbcf603dd6955fc2f293c5e312b748c5f0f1"
     },
     {
       "path": "public/game.js",
-      "bytes": 38428,
-      "sha256": "e1a63508eaa7f8aed88ce89a245d404e72946a57d0705938436f912c2d533cf2"
+      "bytes": 38680,
+      "sha256": "ba313befb5307c7bb8197278507c80e1d2d1f736ffded064810c65607f6e68bb"
     },
     {
       "path": "public/index.html",
-      "bytes": 16510,
-      "sha256": "0ed36a9ff3a395b3a27abafb93f430f2bf22f17e120ae78b177cdce2508f1051"
+      "bytes": 17785,
+      "sha256": "f039499557c26bd25f3710fc690914dc4871e50264e3025378f337f0cde52464"
     },
     {
       "path": "public/vendor/discord-embedded-app-sdk.js",
@@ -175,8 +215,8 @@
     },
     {
       "path": "server/local.js",
-      "bytes": 4373,
-      "sha256": "1cf097f447e71c2dc6adc7b9d8d3c9ee6dcfcf5da00e909f9542d6424c2177e6"
+      "bytes": 4394,
+      "sha256": "fa7f9c33c45b6917bcfb7dbc0d69f92eb213a9d41fe807cade47f803b25999b5"
     },
     {
       "path": "server/matches.js",

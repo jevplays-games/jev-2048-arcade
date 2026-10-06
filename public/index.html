@@ -6,8 +6,15 @@
   <meta name="description" content="Two-board 2048 against JEV with transparent decision evidence, matched spawns, replay, and analytics.">
   <title>2048 Duel · JEV Arcade</title>
   <link rel="preload" href="/brand/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <meta property="og:type" content="website"><meta property="og:site_name" content="JevPlay Arcade"><meta property="og:title" content="2048 Duel · JEV Arcade">
+  <meta property="og:description" content="Your board, JEV's board, the same spawns. Inspect structured decisions and measure every move.">
+  <meta property="og:url" content="https://2048.jevplay.games/"><meta property="og:image" content="https://2048.jevplay.games/brand/og.png">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="2048 Duel on JevPlay Arcade: a gold 2048 tile with two smaller tiles sliding in behind it.">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://2048.jevplay.games/brand/og.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
   <link rel="icon" type="image/svg+xml" href="/brand/icon.svg">
-  <link rel="apple-touch-icon" href="/brand/icon.svg">
+  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
+  <link rel="preload" href="/art/tile.svg" as="image" type="image/svg+xml"><link rel="preload" href="/art/well.svg" as="image" type="image/svg+xml">
   <link rel="stylesheet" href="/brand/brand.css"><link rel="stylesheet" href="/game.css">
   <script type="module" src="/brand/brand.js"></script>
   <script type="module" src="/game.js"></script>
@@ -17,7 +24,7 @@
   <div class="jv-app">
     <header class="jv-header">
       <a class="jv-brand" href="/" aria-label="JEV Arcade home">
-        <img class="jv-mark" src="/brand/mark.svg" alt="" width="28" height="28">
+        <img class="jv-mark" src="/brand/mark.svg" alt="" width="32" height="32">
         <span class="jv-wordmark">JEV ARCADE</span>
         <span class="jv-sep" aria-hidden="true"></span>
         <span class="jv-title">2048 Duel</span>
@@ -37,32 +44,32 @@
     </div>
     <main class="jv-main" id="main">
     <section class="intro jv-hero" aria-labelledby="title">
-      <div><div class="eyebrow">THE TWO-BOARD CHALLENGE <span class="tiny-line"></span> 01</div><h1 id="title">2048 <span>Duel.</span></h1>
+      <div class="jv-pip-hide"><div class="eyebrow">THE TWO-BOARD CHALLENGE <span class="tiny-line"></span> 01</div><h1 id="title">2048 <span>Duel.</span></h1>
       <p>Your board. JEV’s board. The same chance.</p>
       <p class="hero-tagline">STRUCTURED INTELLIGENCE. REAL PLAY.</p></div>
-      <div class="match-controls"><label class="select-label">OPPONENT<select id="opponent"><option value="jev">JEV · live model</option><option value="local">Local heuristic · practice</option></select></label>
-      <label class="select-label">DIFFICULTY<select id="difficulty"><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option><option value="jev" selected>JEV</option></select></label>
+      <div class="match-controls"><label class="select-label jv-pip-hide">OPPONENT<select id="opponent"><option value="jev">JEV · live model</option><option value="local">Local heuristic · practice</option></select></label>
+      <label class="select-label jv-pip-hide">DIFFICULTY<select id="difficulty"><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option><option value="jev" selected>JEV</option></select></label>
       <button id="new-game" class="button primary">New duel <span aria-hidden="true">↗</span></button></div>
     </section>
-    <div class="match-strip"><div class="pills"><span id="eligibility" class="pill">READY TO PLAY</span><span class="pill subdued">MATCHED SPAWNS</span><span id="round-label" class="pill subdued">ROUND 0 / 2,048</span></div></div>
+    <div class="match-strip jv-pip-hide"><div class="pills"><span id="eligibility" class="pill">READY TO PLAY</span><span class="pill subdued">MATCHED SPAWNS</span><span id="round-label" class="pill subdued">ROUND 0 / 2,048</span></div></div>
     <section id="play-region" class="arena jv-first" aria-label="2048 game" tabindex="0">
-      <article class="jv-panel is-tight board-card is-human"><header class="board-header"><div><div class="eyebrow"><span class="status-dot human-dot"></span> YOU</div><h2>Make your move.</h2></div><div class="score-wrap"><span>SCORE</span><small id="human-gain">YOUR NEXT MOVE COUNTS</small></div></header>
-        <div id="human-board" class="jv-fit board" role="grid" aria-label="Your 2048 board"></div>
-        <footer class="board-footer"><span>Best tile <strong id="human-max">—</strong></span><span>Empty <strong id="human-empty">16</strong></span><span id="human-state">Ready</span></footer>
+      <article class="jv-panel is-tight board-card is-human"><header class="board-header jv-pip-hide"><div><div class="eyebrow"><span class="status-dot human-dot"></span> YOU</div><h2>Make your move.</h2></div><div class="score-wrap"><span>SCORE</span><small id="human-gain">YOUR NEXT MOVE COUNTS</small></div></header>
+        <div id="human-board" class="jv-fit jv-tray board" role="grid" aria-label="Your 2048 board"></div>
+        <footer class="board-footer jv-pip-hide"><span>Best tile <strong id="human-max">—</strong></span><span>Empty <strong id="human-empty">16</strong></span><span id="human-state">Ready</span></footer>
       </article>
       <div class="versus" aria-hidden="true">VS</div>
-      <article class="jv-panel is-tight board-card is-jev"><header class="board-header"><div><div class="eyebrow"><span class="status-dot jev-dot"></span><span id="opponent-label">JEV</span></div><h2 id="jev-caption">Structured, not scripted.</h2></div><div class="score-wrap"><span>SCORE</span><strong id="jev-score">0</strong><small id="jev-gain">AWAITING YOUR MOVE</small></div></header>
-        <div id="jev-board" class="jv-fit board" role="grid" aria-label="Opponent 2048 board"></div>
-        <footer class="board-footer"><span>Best tile <strong id="jev-max">—</strong></span><span>Empty <strong id="jev-empty">16</strong></span><span id="jev-state">Ready</span></footer>
+      <article class="jv-panel is-tight board-card is-jev jv-pip-hide"><header class="board-header"><div><div class="eyebrow"><span class="status-dot jev-dot"></span><span id="opponent-label">JEV</span></div><h2 id="jev-caption">Structured, not scripted.</h2></div><div class="score-wrap"><span>SCORE</span><strong id="jev-score">0</strong><small id="jev-gain">AWAITING YOUR MOVE</small></div></header>
+        <div id="jev-board" class="jv-fit jv-tray board" role="grid" aria-label="Opponent 2048 board"></div>
+        <footer class="board-footer jv-pip-hide"><span>Best tile <strong id="jev-max">—</strong></span><span>Empty <strong id="jev-empty">16</strong></span><span id="jev-state">Ready</span></footer>
       </article>
     </section>
-    <section class="play-footer" aria-label="Game status and controls"><div><p id="game-status" role="status" aria-live="polite">Choose an opponent and start a duel.</p><p class="control-help">Arrow keys / WASD <span>·</span> Swipe your board <span>·</span> No speed bonus</p></div>
-      <div class="direction-pad" aria-label="Direction controls"><button class="direction" data-action="3" aria-label="Move left">←</button><button class="direction" data-action="0" aria-label="Move up">↑</button><button class="direction" data-action="2" aria-label="Move down">↓</button><button class="direction" data-action="1" aria-label="Move right">→</button></div>
+    <section class="play-footer" aria-label="Game status and controls"><div><p id="game-status" role="status" aria-live="polite">Choose an opponent and start a duel.</p><p class="control-help jv-pip-hide">Arrow keys / WASD <span>·</span> Swipe your board <span>·</span> No speed bonus</p></div>
+      <div class="direction-pad jv-pip-hide" aria-label="Direction controls"><button class="direction" data-action="3" aria-label="Move left">←</button><button class="direction" data-action="0" aria-label="Move up">↑</button><button class="direction" data-action="2" aria-label="Move down">↓</button><button class="direction" data-action="1" aria-label="Move right">→</button></div>
       <div class="recovery"><button id="retry" class="button small" hidden>Retry reserved move</button><button id="fallback" class="button small" hidden>Switch to local practice</button><button id="advance-jev" class="button small" hidden>Continue opponent</button></div>
     </section>
     <div id="error-banner" class="error-banner" role="alert" hidden></div>
-    <nav class="panel-tabs" aria-label="Match detail panels"><button data-tab="decision" class="active" aria-current="page">Decision lab</button><button data-tab="analytics">Analytics</button><button data-tab="replay">Replay & audit</button><button data-tab="leaderboard">Leaderboards</button><button data-tab="history">Your matches</button></nav>
-    <section id="decision-panel" class="detail-panel" aria-labelledby="decision-title">
+    <nav class="panel-tabs jv-pip-hide" aria-label="Match detail panels"><button data-tab="decision" class="active" aria-current="page">Decision lab</button><button data-tab="analytics">Analytics</button><button data-tab="replay">Replay & audit</button><button data-tab="leaderboard">Leaderboards</button><button data-tab="history">Your matches</button></nav>
+    <section id="decision-panel" class="detail-panel jv-pip-hide" aria-labelledby="decision-title">
       <div class="panel-heading"><div><div class="eyebrow">OBSERVE THE DECISION, NOT HIDDEN REASONING</div><h2 id="decision-title">Inside the move.</h2></div><label class="toggle"><input id="evidence-toggle" type="checkbox" checked> Show evidence</label></div>
       <div id="decision-content"><div class="decision-metrics"><div class="metric"><span>DECISION SOURCE</span><strong id="metric-source">Not started</strong></div><div class="metric"><span>LEGAL CANDIDATES</span><strong id="metric-candidates">—</strong></div><div class="metric"><span>RUBRIC CONFIDENCE</span><strong id="metric-confidence">—</strong></div><div class="metric"><span>SERVER DECISION TIME</span><strong id="metric-latency">—</strong></div></div>
         <div class="table-scroll"><table><caption class="sr-only">Candidate move evidence. Higher model utility is preferred; confidence is not a win probability.</caption><thead><tr><th>Move</th><th>Merge gain</th><th>Empty cells</th><th>Block risk</th><th>Search value</th><th>Model utility</th><th>Confidence</th></tr></thead><tbody id="candidate-table"><tr><td colspan="7" class="empty-state">Play a move to inspect candidate features and the selected action.</td></tr></tbody></table></div>
@@ -70,7 +77,7 @@
         <p class="panel-footnote">Exact mechanics are computed by the rules engine. JEV evaluates positional rubrics. Confidence describes a rubric distribution—not the chance of winning.</p>
       </div>
     </section>
-    <section id="analytics-panel" class="detail-panel" hidden aria-labelledby="analytics-title">
+    <section id="analytics-panel" class="detail-panel jv-pip-hide" hidden aria-labelledby="analytics-title">
       <div class="panel-heading"><div><div class="eyebrow">EVERY MOVE LEAVES EVIDENCE</div><h2 id="analytics-title">The match, measured.</h2></div><div class="inline-controls"><button id="refresh-analytics" class="button small">Refresh analytics</button><button id="export-summary" class="button small">Export analytics JSON</button></div></div>
       <div class="analytics-kpis" id="analytics-kpis"></div>
       <div class="chart-grid"><article class="jv-panel is-tight chart-card"><h3>Score progression</h3><p>Human <span class="legend-line human-line"></span> &nbsp; Opponent <span class="legend-line jev-line"></span></p><div id="score-chart" class="chart"></div></article>
@@ -83,18 +90,18 @@
       <details class="raw-evidence"><summary>Full analytics JSON and metric definitions</summary><p>See docs/ANALYTICS.md for denominators, caveats, schemas, export tables, and retention.</p><pre id="analytics-json"></pre></details>
       <div class="analytics-bottom"><label class="toggle"><input type="checkbox" id="telemetry-toggle"> Opt in to browser timing analytics</label><p>No text entry, browsing history, fingerprints, or third-party analytics. Gameplay evidence is always recorded for replay.</p></div>
     </section>
-    <section id="replay-panel" class="detail-panel" hidden aria-labelledby="replay-title">
+    <section id="replay-panel" class="detail-panel jv-pip-hide" hidden aria-labelledby="replay-title">
       <div class="panel-heading"><div><div class="eyebrow">RECONSTRUCT. INSPECT. VERIFY.</div><h2 id="replay-title">A replay you can audit.</h2></div><button id="verify-audit" class="button small">Verify evidence</button></div>
       <div class="replay-control"><label for="replay-slider">Inspect round <strong id="replay-round">0</strong></label><input id="replay-slider" type="range" min="0" max="0" value="0"><button id="return-live" class="button small">Return to live board</button></div>
       <p id="audit-status" class="panel-footnote">The server keeps future spawns secret. Finished matches reveal the committed seed for independent verification.</p>
       <div class="audit-grid"><div><h3>Provenance</h3><dl id="provenance"></dl></div><div><h3>Portable evidence</h3><p>Replay reconstructs recorded moves. It never calls JEV again.</p><div class="export-buttons"><button data-export="bundle" class="button small">Audit bundle JSON</button><button data-export="jsonl" class="button small">Event journal JSONL</button><button data-export="rounds" class="button small">Moves CSV</button><button data-export="candidates" class="button small">Candidates CSV</button><button data-export="cells" class="button small">Cells CSV</button></div><label class="file-import">Inspect a saved audit bundle<input id="import-bundle" type="file" accept=".json,application/json"></label></div></div>
       <details class="raw-evidence"><summary>Recent event timeline</summary><div id="event-timeline"></div></details>
     </section>
-    <section id="leaderboard-panel" class="detail-panel" hidden aria-labelledby="leaderboard-title"><div class="panel-heading"><div><div class="eyebrow">VERIFIED RESULTS ONLY</div><h2 id="leaderboard-title">Make your mark.</h2></div><label class="select-label">PERIOD<select id="leader-period"><option value="all">All time</option><option value="week">This week · UTC</option></select></label></div>
+    <section id="leaderboard-panel" class="detail-panel jv-pip-hide" hidden aria-labelledby="leaderboard-title"><div class="panel-heading"><div><div class="eyebrow">VERIFIED RESULTS ONLY</div><h2 id="leaderboard-title">Make your mark.</h2></div><label class="select-label">PERIOD<select id="leader-period"><option value="all">All time</option><option value="week">This week · UTC</option></select></label></div>
       <div class="scope-tabs"><button data-scope="channel">Channel</button><button data-scope="server">Server</button><button data-scope="world" class="active">World</button></div><p id="leader-context" class="panel-footnote">Best score per player. Separate rules, difficulty, and opponent versions. Equal scores share a rank.</p>
       <div class="table-scroll"><table><thead><tr><th>Rank</th><th>Player</th><th>Score</th><th>JEV score</th><th>Best tile</th><th>Result</th></tr></thead><tbody id="leader-table"></tbody></table></div><button id="leader-more" class="button small" hidden>Next page</button></section>
-    <section id="history-panel" class="detail-panel" hidden aria-labelledby="history-title"><div class="panel-heading"><div><div class="eyebrow">YOUR LAST 20 MATCHES</div><h2 id="history-title">Pick up where you left off.</h2></div><button id="history-refresh" class="button small">Refresh</button></div><div id="history-list"></div></section>
-    <footer class="site-footer"><span>JEV ARCADE / 2048 DUEL</span><span id="footer-model">Native HTML · deterministic rules · no tracking SDK</span><button class="jv-link-btn" id="privacy-button">Privacy & data</button></footer>
+    <section id="history-panel" class="detail-panel jv-pip-hide" hidden aria-labelledby="history-title"><div class="panel-heading"><div><div class="eyebrow">YOUR LAST 20 MATCHES</div><h2 id="history-title">Pick up where you left off.</h2></div><button id="history-refresh" class="button small">Refresh</button></div><div id="history-list"></div></section>
+    <footer class="site-footer jv-pip-hide"><span>JEV ARCADE / 2048 DUEL</span><span id="footer-model">Native HTML · deterministic rules · no tracking SDK</span><button class="jv-link-btn" id="privacy-button">Privacy & data</button></footer>
     </main>
     <div class="jv-scrim" id="jv-scrim"></div>
   </div>
