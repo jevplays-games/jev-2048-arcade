@@ -2,7 +2,10 @@
    sequential ramp (#FBE3EA -> #F386A1 -> #B0287A -> #1E1E1E). Players are told apart by the shared
    --human (blue) and --jev (amber) strips, never by tile colour. */
 :root{--tile-1:#FBE3EA;--tile-2:#F9CCD8;--tile-3:#F7B4C6;--tile-4:#F59DB3;--tile-5:#F386A1;--tile-6:#DD6794;
-  --tile-7:#C64787;--tile-8:#B0287A;--tile-9:#7F255B;--tile-10:#4F213D;--tile-11:#1E1E1E}
+  --tile-7:#C64787;--tile-8:#B0287A;--tile-9:#7F255B;--tile-10:#4F213D;--tile-11:#1E1E1E;
+  /* Chart series on the grey panel. Brand amber (--jev) is 1.6:1 on grey, so the Jev line is a darker amber (4.4:1 on grey)
+     and dashed, a non-colour cue; the human line is brand blue (3.6:1), solid. */
+  --jev-series:#8A5A0E}
 
 button,select,input{font:inherit}button,select{cursor:pointer}button,a,input,select,summary{touch-action:manipulation}button:disabled{opacity:.4;cursor:not-allowed}a{color:inherit;text-decoration:none}button{color:var(--text);border:0}h4{font-weight:550;margin-bottom:var(--s3)}p{color:var(--muted)}[hidden]{display:none!important}
 .jv-title{font-weight:700}.jv-status strong{color:var(--accent)}.jv-sheet-item{font-weight:600}
@@ -103,10 +106,10 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:var(--fs-xs)/1.65 var(--mon
 .chart svg{width:100%;height:11.5rem;overflow:visible}
 .chart text{fill:var(--subtle);font:10px var(--mono)}
 .chart .grid-line{stroke:var(--line);stroke-width:.6}
-.chart .human-line{stroke:var(--human)}.chart .jev-line{stroke:var(--jev)}
+.chart .human-line{stroke:var(--human)}.chart .jev-line{stroke:var(--jev-series);stroke-dasharray:6 4}
 .chart polyline{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .legend-line{display:inline-block;width:15px;height:2px;vertical-align:middle}
-.legend-line.human-line{background:var(--human)}.legend-line.jev-line{background:var(--jev)}
+.legend-line.human-line{background:var(--human)}.legend-line.jev-line{background:none;height:0;border-top:2px dashed var(--jev-series)}
 .heatmap-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-bottom:var(--s5)}
 .heatmap-grid article:last-child{grid-column:1/-1}
 .heatmap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;max-width:16rem}

@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "c59019ccff04394d356c7b04aae7400362122460e82647bffecd791cb25aa189",
+  "sourceSHA256": "29992e38276ed18048de9438253577c454bb9c59727ef942f25eea2768a2b34f",
   "files": [
     {
       "path": "bench/run.js",
@@ -140,8 +140,8 @@
     },
     {
       "path": "public/game.css",
-      "bytes": 19760,
-      "sha256": "0e4325505d0b8509bdb1f47d0e7900d00d52f14021145a0b8b574e12db0f1c3b"
+      "bytes": 20063,
+      "sha256": "ff0aefc0bd44cd2b18add4e6a7ff85c527aadaa4f2dc286b278b24484d66efd0"
     },
     {
       "path": "public/game.js",
@@ -171,7 +171,7 @@
     {
       "path": "scripts/generate-contract-example.js",
       "bytes": 3389,
-      "sha256": "85905eecb69922dd12bfae8cadecf96a3f91a2054921c62623faa193e8b4b3c0"
+      "sha256": "d924b4d403a178671c968bf4e6d6886fbceefd95e2e7764ce5c02496c93246b4"
     },
     {
       "path": "scripts/maintenance.js",
@@ -210,8 +210,8 @@
     },
     {
       "path": "server/auth.js",
-      "bytes": 12061,
-      "sha256": "0afce7f8723bf7d7582ef53dd6757583ec51e38dfdbc6eb486232cd4191274ed"
+      "bytes": 12660,
+      "sha256": "c6423da3a6814878c226a9600d1e94bba7c6e95212b7b710422122f40b1e287b"
     },
     {
       "path": "server/db.js",
@@ -290,8 +290,8 @@
     },
     {
       "path": "tests/rename.test.js",
-      "bytes": 7360,
-      "sha256": "e147bc652b0f423ec2a795b3677ba59c0deac643c5c43f5a1f72ca75c31da31f"
+      "bytes": 8263,
+      "sha256": "b944252ad4a6cfcf7419f05b2d03bfc65201f1aef941490edb1c5bef5e794595"
     },
     {
       "path": "tests/rules.test.js",

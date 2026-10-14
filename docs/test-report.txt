@@ -2,64 +2,347 @@
 > jev-slide-score@1.0.0 test
 > node --test tests/*.test.js
 
-✔ activity config exposes only the public client id and needs Discord configured (33.943416ms)
-✔ an SDK code becomes a bearer session: exchanged without a redirect uri, token is not stored in clear (2.928416ms)
-✔ the bearer session works for reads and for mutations from the activity origin (3.161ms)
-✔ the activity origin is accepted only together with a bearer session (3.250125ms)
-✔ session creation rejects foreign origins, missing codes, unknown fields and Discord failures (4.278917ms)
-✔ only a page loaded with frame_id may be framed, and only by Discord (1.142166ms)
-✔ the Worker applies the framing headers to the document only when frame_id is present (0.320041ms)
-✔ partial usage preserves known input without inventing missing output or timed-out usage (1.175542ms)
-✔ empty distributions remain unknown, and percentiles use linear interpolation (0.07725ms)
-✔ streamed verification matches an array and rejects a truncated trusted snapshot (51.278167ms)
-✔ local end-to-end match, idempotency, immutable log, analytics and tamper detection (63.046542ms)
-✔ CSRF, illegal moves, unknown fields, ranked guest and cross-session access rejected (4.86825ms)
-✔ native Jev fixture evidence replays without network (20.332583ms)
-✔ provider failures keep the action locked until explicit practice downgrade (5.838167ms)
-✔ typed Jev request limits knowledge and records native evidence (32.378542ms)
-✔ malformed probability, missing answers and wrong model rejected (0.432167ms)
-✔ no key never silently substitutes (1.199958ms)
-✔ transient failure retries once and records both attempts (604.492625ms)
-✔ permanent failure stays unavailable and cannot become a legal move (0.849333ms)
-✔ simulateMove and getLegalActions match the reference, including errors (127.715458ms)
-✔ canonical matches the reference serializer (12.987375ms)
-✔ lookahead matches the reference value and every statistic (446.137667ms)
-✔ generateCandidates matches the reference at every difficulty (874.642084ms)
-✔ hex matches the reference encoder (0.944958ms)
-✔ the Worker serves the new and the legacy hostname, and nothing else (33.556ms)
-✔ a write must come from the host it is sent to, on either hostname (9.295917ms)
-✔ Discord OAuth stays on the host the player started on (5.781583ms)
-✔ launch proofs with the original jev-2048 audience and the new jev-slide-score audience both verify (5.694375ms)
-✔ the /2048 command keeps working and /slide-score is accepted; launch links use the new host (3.735875ms)
-✔ an audit bundle exported before the rename still passes scripts/verify.js (88.10175ms)
-✔ merge 2,2,2,2 (1.354042ms)
-✔ merge 2,2,4,0 (0.073917ms)
-✔ merge 4,4,4,0 (0.046959ms)
-✔ merge 2,0,2,2 (0.039333ms)
-✔ merge 2,2,4,4 (0.05075ms)
-✔ merge 0,0,0,0 (0.037666ms)
-✔ exhaust all 1,296 exponent lines in all directions, against an independent queue reference (12.198458ms)
-✔ blocked and full-but-mergeable states differ (0.383667ms)
-✔ invalid directions and malformed spawns are rejected (0.796583ms)
-✔ both start identically; caps finish both; invalid direction consumes nothing (10.788958ms)
-✔ finished human board freezes while Jev continues (1.983625ms)
-✔ spawn vectors deterministic, uniform support, shared values and valid divergent positions (50.758458ms)
-✔ canonical hashing, encryption and signatures reject tampering (1.591084ms)
-✔ chance probabilities sum to one and feature/search budgets are bounded (1.158625ms)
-✔ OAuth state is browser-bound, one-use; session rotates; guest cannot become ranked retroactively (37.660292ms)
-✔ wrong OAuth state is rejected before contacting Discord (1.677375ms)
-✔ signed channel launches bind the user and cannot be replayed (6.202041ms)
-✔ Discord Ed25519 signature verifies exact bytes, timestamp, and approved channel (5.18025ms)
-✔ concurrent steps apply once; no lease loser can replace the human action (8.549125ms)
-✔ ranked native fixture completes verification and inserts exactly one result (9.500542ms)
-✔ leaderboard best-per-user, competition ties, pagination and community isolation (5.951625ms)
-✔ CSV export neutralizes formula injection in text, not numeric negatives (0.200166ms)
-✔ schema write batches roll back atomically when an event guard fails (1.927375ms)
-ℹ tests 53
-ℹ suites 0
-ℹ pass 53
-ℹ fail 0
-ℹ cancelled 0
-ℹ skipped 0
-ℹ todo 0
-ℹ duration_ms 1543.046
+TAP version 13
+# (node:30109) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: activity config exposes only the public client id and needs Discord configured
+ok 1 - activity config exposes only the public client id and needs Discord configured
+  ---
+  duration_ms: 16.798625
+  type: 'test'
+  ...
+# Subtest: an SDK code becomes a bearer session: exchanged without a redirect uri, token is not stored in clear
+ok 2 - an SDK code becomes a bearer session: exchanged without a redirect uri, token is not stored in clear
+  ---
+  duration_ms: 2.564166
+  type: 'test'
+  ...
+# Subtest: the bearer session works for reads and for mutations from the activity origin
+ok 3 - the bearer session works for reads and for mutations from the activity origin
+  ---
+  duration_ms: 3.782666
+  type: 'test'
+  ...
+# Subtest: the activity origin is accepted only together with a bearer session
+ok 4 - the activity origin is accepted only together with a bearer session
+  ---
+  duration_ms: 2.784667
+  type: 'test'
+  ...
+# Subtest: session creation rejects foreign origins, missing codes, unknown fields and Discord failures
+ok 5 - session creation rejects foreign origins, missing codes, unknown fields and Discord failures
+  ---
+  duration_ms: 2.821875
+  type: 'test'
+  ...
+# Subtest: only a page loaded with frame_id may be framed, and only by Discord
+ok 6 - only a page loaded with frame_id may be framed, and only by Discord
+  ---
+  duration_ms: 1.086916
+  type: 'test'
+  ...
+# Subtest: the Worker applies the framing headers to the document only when frame_id is present
+ok 7 - the Worker applies the framing headers to the document only when frame_id is present
+  ---
+  duration_ms: 0.359541
+  type: 'test'
+  ...
+# (node:30110) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: partial usage preserves known input without inventing missing output or timed-out usage
+ok 8 - partial usage preserves known input without inventing missing output or timed-out usage
+  ---
+  duration_ms: 1.236375
+  type: 'test'
+  ...
+# Subtest: empty distributions remain unknown, and percentiles use linear interpolation
+ok 9 - empty distributions remain unknown, and percentiles use linear interpolation
+  ---
+  duration_ms: 0.092666
+  type: 'test'
+  ...
+# Subtest: streamed verification matches an array and rejects a truncated trusted snapshot
+ok 10 - streamed verification matches an array and rejects a truncated trusted snapshot
+  ---
+  duration_ms: 30.302958
+  type: 'test'
+  ...
+# (node:30111) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: local end-to-end match, idempotency, immutable log, analytics and tamper detection
+ok 11 - local end-to-end match, idempotency, immutable log, analytics and tamper detection
+  ---
+  duration_ms: 42.402292
+  type: 'test'
+  ...
+# Subtest: CSRF, illegal moves, unknown fields, ranked guest and cross-session access rejected
+ok 12 - CSRF, illegal moves, unknown fields, ranked guest and cross-session access rejected
+  ---
+  duration_ms: 4.959875
+  type: 'test'
+  ...
+# Subtest: native Jev fixture evidence replays without network
+ok 13 - native Jev fixture evidence replays without network
+  ---
+  duration_ms: 16.875791
+  type: 'test'
+  ...
+# Subtest: provider failures keep the action locked until explicit practice downgrade
+ok 14 - provider failures keep the action locked until explicit practice downgrade
+  ---
+  duration_ms: 5.065042
+  type: 'test'
+  ...
+# Subtest: typed Jev request limits knowledge and records native evidence
+ok 15 - typed Jev request limits knowledge and records native evidence
+  ---
+  duration_ms: 14.816542
+  type: 'test'
+  ...
+# Subtest: malformed probability, missing answers and wrong model rejected
+ok 16 - malformed probability, missing answers and wrong model rejected
+  ---
+  duration_ms: 0.624458
+  type: 'test'
+  ...
+# Subtest: no key never silently substitutes
+ok 17 - no key never silently substitutes
+  ---
+  duration_ms: 1.429584
+  type: 'test'
+  ...
+# Subtest: transient failure retries once and records both attempts
+ok 18 - transient failure retries once and records both attempts
+  ---
+  duration_ms: 603.515125
+  type: 'test'
+  ...
+# Subtest: permanent failure stays unavailable and cannot become a legal move
+ok 19 - permanent failure stays unavailable and cannot become a legal move
+  ---
+  duration_ms: 1.068625
+  type: 'test'
+  ...
+# Subtest: simulateMove and getLegalActions match the reference, including errors
+ok 20 - simulateMove and getLegalActions match the reference, including errors
+  ---
+  duration_ms: 125.65225
+  type: 'test'
+  ...
+# Subtest: canonical matches the reference serializer
+ok 21 - canonical matches the reference serializer
+  ---
+  duration_ms: 13.098875
+  type: 'test'
+  ...
+# Subtest: lookahead matches the reference value and every statistic
+ok 22 - lookahead matches the reference value and every statistic
+  ---
+  duration_ms: 476.947708
+  type: 'test'
+  ...
+# Subtest: generateCandidates matches the reference at every difficulty
+ok 23 - generateCandidates matches the reference at every difficulty
+  ---
+  duration_ms: 916.1135
+  type: 'test'
+  ...
+# Subtest: hex matches the reference encoder
+ok 24 - hex matches the reference encoder
+  ---
+  duration_ms: 1.156792
+  type: 'test'
+  ...
+# (node:30114) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the Worker serves the new and the legacy hostname, and nothing else
+ok 25 - the Worker serves the new and the legacy hostname, and nothing else
+  ---
+  duration_ms: 14.210875
+  type: 'test'
+  ...
+# Subtest: legacy origins are normalised; entries without a scheme or that are not http(s) URLs are skipped
+ok 26 - legacy origins are normalised; entries without a scheme or that are not http(s) URLs are skipped
+  ---
+  duration_ms: 1.706584
+  type: 'test'
+  ...
+# Subtest: a write must come from the host it is sent to, on either hostname
+ok 27 - a write must come from the host it is sent to, on either hostname
+  ---
+  duration_ms: 9.526125
+  type: 'test'
+  ...
+# Subtest: Discord OAuth stays on the host the player started on
+ok 28 - Discord OAuth stays on the host the player started on
+  ---
+  duration_ms: 4.576083
+  type: 'test'
+  ...
+# Subtest: launch proofs with the original jev-2048 audience and the new jev-slide-score audience both verify
+ok 29 - launch proofs with the original jev-2048 audience and the new jev-slide-score audience both verify
+  ---
+  duration_ms: 4.3805
+  type: 'test'
+  ...
+# Subtest: the /2048 command keeps working and /slide-score is accepted; launch links use the new host
+ok 30 - the /2048 command keeps working and /slide-score is accepted; launch links use the new host
+  ---
+  duration_ms: 3.070333
+  type: 'test'
+  ...
+# Subtest: an audit bundle exported before the rename still passes scripts/verify.js
+ok 31 - an audit bundle exported before the rename still passes scripts/verify.js
+  ---
+  duration_ms: 52.605708
+  type: 'test'
+  ...
+# Subtest: merge 2,2,2,2
+ok 32 - merge 2,2,2,2
+  ---
+  duration_ms: 0.872625
+  type: 'test'
+  ...
+# Subtest: merge 2,2,4,0
+ok 33 - merge 2,2,4,0
+  ---
+  duration_ms: 0.146125
+  type: 'test'
+  ...
+# Subtest: merge 4,4,4,0
+ok 34 - merge 4,4,4,0
+  ---
+  duration_ms: 0.046041
+  type: 'test'
+  ...
+# Subtest: merge 2,0,2,2
+ok 35 - merge 2,0,2,2
+  ---
+  duration_ms: 0.037916
+  type: 'test'
+  ...
+# Subtest: merge 2,2,4,4
+ok 36 - merge 2,2,4,4
+  ---
+  duration_ms: 0.0995
+  type: 'test'
+  ...
+# Subtest: merge 0,0,0,0
+ok 37 - merge 0,0,0,0
+  ---
+  duration_ms: 0.038917
+  type: 'test'
+  ...
+# Subtest: exhaust all 1,296 exponent lines in all directions, against an independent queue reference
+ok 38 - exhaust all 1,296 exponent lines in all directions, against an independent queue reference
+  ---
+  duration_ms: 9.99175
+  type: 'test'
+  ...
+# Subtest: blocked and full-but-mergeable states differ
+ok 39 - blocked and full-but-mergeable states differ
+  ---
+  duration_ms: 0.185667
+  type: 'test'
+  ...
+# Subtest: invalid directions and malformed spawns are rejected
+ok 40 - invalid directions and malformed spawns are rejected
+  ---
+  duration_ms: 0.354
+  type: 'test'
+  ...
+# Subtest: both start identically; caps finish both; invalid direction consumes nothing
+ok 41 - both start identically; caps finish both; invalid direction consumes nothing
+  ---
+  duration_ms: 5.345458
+  type: 'test'
+  ...
+# Subtest: finished human board freezes while Jev continues
+ok 42 - finished human board freezes while Jev continues
+  ---
+  duration_ms: 1.056166
+  type: 'test'
+  ...
+# Subtest: spawn vectors deterministic, uniform support, shared values and valid divergent positions
+ok 43 - spawn vectors deterministic, uniform support, shared values and valid divergent positions
+  ---
+  duration_ms: 32.609
+  type: 'test'
+  ...
+# Subtest: canonical hashing, encryption and signatures reject tampering
+ok 44 - canonical hashing, encryption and signatures reject tampering
+  ---
+  duration_ms: 1.278208
+  type: 'test'
+  ...
+# Subtest: chance probabilities sum to one and feature/search budgets are bounded
+ok 45 - chance probabilities sum to one and feature/search budgets are bounded
+  ---
+  duration_ms: 1.481292
+  type: 'test'
+  ...
+# (node:30116) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: OAuth state is browser-bound, one-use; session rotates; guest cannot become ranked retroactively
+ok 46 - OAuth state is browser-bound, one-use; session rotates; guest cannot become ranked retroactively
+  ---
+  duration_ms: 20.42025
+  type: 'test'
+  ...
+# Subtest: wrong OAuth state is rejected before contacting Discord
+ok 47 - wrong OAuth state is rejected before contacting Discord
+  ---
+  duration_ms: 1.839333
+  type: 'test'
+  ...
+# Subtest: signed channel launches bind the user and cannot be replayed
+ok 48 - signed channel launches bind the user and cannot be replayed
+  ---
+  duration_ms: 4.147666
+  type: 'test'
+  ...
+# Subtest: Discord Ed25519 signature verifies exact bytes, timestamp, and approved channel
+ok 49 - Discord Ed25519 signature verifies exact bytes, timestamp, and approved channel
+  ---
+  duration_ms: 4.518667
+  type: 'test'
+  ...
+# Subtest: concurrent steps apply once; no lease loser can replace the human action
+ok 50 - concurrent steps apply once; no lease loser can replace the human action
+  ---
+  duration_ms: 7.815625
+  type: 'test'
+  ...
+# Subtest: ranked native fixture completes verification and inserts exactly one result
+ok 51 - ranked native fixture completes verification and inserts exactly one result
+  ---
+  duration_ms: 8.400792
+  type: 'test'
+  ...
+# Subtest: leaderboard best-per-user, competition ties, pagination and community isolation
+ok 52 - leaderboard best-per-user, competition ties, pagination and community isolation
+  ---
+  duration_ms: 4.281792
+  type: 'test'
+  ...
+# Subtest: CSV export neutralizes formula injection in text, not numeric negatives
+ok 53 - CSV export neutralizes formula injection in text, not numeric negatives
+  ---
+  duration_ms: 0.163667
+  type: 'test'
+  ...
+# Subtest: schema write batches roll back atomically when an event guard fails
+ok 54 - schema write batches roll back atomically when an event guard fails
+  ---
+  duration_ms: 2.381666
+  type: 'test'
+  ...
+1..54
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1573.605083

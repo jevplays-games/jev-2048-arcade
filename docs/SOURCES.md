@@ -2,7 +2,7 @@
 
 ## User-provided requirements
 
-The supplied “JEV Single-Page Game — Architecture & Implementation Planning Prompt” requested vanilla browser code, a minimal trusted backend, explicit legal candidates, structured JEV decisions, Discord identity plus verified channel/server context, verified leaderboards, replay, observability and benchmarking. The follow-up requested separate 2048 boards and exhaustive analytics. The conversation's 2048 architecture established synchronized active boards, matched randomness, a 2,048-move competitive cap and a score-based duel.
+The supplied “JEV Single-Page Game — Architecture & Implementation Planning Prompt” requested vanilla browser code, a minimal trusted backend, explicit legal candidates, structured Jev decisions, Discord identity plus verified channel/server context, verified leaderboards, replay, observability and benchmarking. The follow-up requested separate 2048 boards and exhaustive analytics. The conversation's 2048 architecture established synchronized active boards, matched randomness, a 2,048-move competitive cap and a score-based duel.
 
 This package implements those concepts rather than copying an existing game's source. The observability expansion includes detailed event/metric dictionaries, evidence exports, normalized tables, offline checking and seed-paired experiments. “Exhaustive” is bounded to the implemented game/decision pipeline; unsupported infrastructure, biological or billing measurements are explicitly not invented.
 

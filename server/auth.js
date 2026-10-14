@@ -7,8 +7,16 @@ export function sessionCookie(env, token, maxAge = SESSION_MS / 1000) {
 }
 // Every origin this Worker answers on: PUBLIC_ORIGIN (canonical) plus LEGACY_PUBLIC_ORIGINS, a comma-separated list
 // of old hostnames that stay served until the cutover (slide-score.jevplay.games was 2048.jevplay.games).
+// Legacy entries are normalised to a bare origin (scheme required, trailing slash or path dropped); an entry that is not
+// an http(s) URL is skipped and logged, so a typo fails closed (421) instead of serving an unexpected host.
 export function appOrigins(env) {
-  return [env.PUBLIC_ORIGIN, ...(env.LEGACY_PUBLIC_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean)].filter(Boolean);
+  const legacy = [];
+  for (const entry of (env.LEGACY_PUBLIC_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean)) {
+    let origin = null;
+    try { const url = new URL(entry); if (url.protocol === 'https:' || url.protocol === 'http:') origin = url.origin; } catch { /* invalid */ }
+    if (origin) legacy.push(origin); else console.warn(`Ignoring invalid LEGACY_PUBLIC_ORIGINS entry: ${JSON.stringify(entry)}`);
+  }
+  return [...new Set([env.PUBLIC_ORIGIN, ...legacy].filter(Boolean))];
 }
 // The origin the request was sent to. Session cookies are host-only, so OAuth and redirects stay on that host.
 export const requestOrigin = request => new URL(request.url).origin;

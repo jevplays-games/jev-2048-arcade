@@ -37,6 +37,17 @@ test('the Worker serves the new and the legacy hostname, and nothing else',async
     assert.equal((await browser(f,'https://slide-score.jevplay.games.evil.example')('/api/health')).status,421);
   } finally {f.DB.close();}
 });
+test('legacy origins are normalised; entries without a scheme or that are not http(s) URLs are skipped',async()=>{
+  const warn=console.warn,warned=[];console.warn=m=>warned.push(m);
+  try {
+    assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:' https://2048.jevplay.games/ , https://2048.jevplay.games/some/path?x=1,,'}),[NEW,OLD]);
+    assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'2048.jevplay.games,not a url,javascript:alert(1),http://[::1'}),[NEW]);
+    assert.equal(warned.length,4);assert.match(warned[0],/2048\.jevplay\.games/);
+    const f=await fixture({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'https://2048.jevplay.games/'});
+    try {assert.equal((await browser(f,OLD)('/api/health')).status,200);assert.equal((await browser(f,'https://evil.example')('/api/health')).status,421);}
+    finally {f.DB.close();}
+  } finally {console.warn=warn;}
+});
 test('a write must come from the host it is sent to, on either hostname',async()=>{
   const f=await fixture(hosts);
   try {
