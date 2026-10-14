@@ -12,7 +12,7 @@ Build environment: Node.js 22.16.0; native SQLite; Python 3 with Playwright; loc
 | RNG and cryptography | Deterministic spawn vectors, equal initialization, probability mass, commitment, encryption and signed-token round trips |
 | Backend | Actual in-memory SQLite transactions and API handler, ownership, CSRF, bad fields/actions, idempotency, concurrent reservations, pause/downgrade, replay verification |
 | Discord contract/security | Mocked OAuth identity exchange plus actual generated Ed25519 signature verification; wrong body/timestamp/user/state and token reuse rejected |
-| JEV contract | Mocked typed answers, malformed responses, missing fields, pinned model, transient/permanent failure, no silent substitute, recorded evidence replay |
+| Jev contract | Mocked typed answers, malformed responses, missing fields, pinned model, transient/permanent failure, no silent substitute, recorded evidence replay |
 | Analytics | Known versus missing token usage, null empty distributions, normalized row counts, move/spawn counts, streaming versus array verifier agreement |
 | Leaderboard | Verified mocked-provider result publication, unique result, best-per-user query, ties, paging and context isolation |
 | Benchmark smoke | Nine completed scripted baseline runs, three seeds, 64 moves per active board; all replays verified; zero live provider requests |
@@ -46,9 +46,9 @@ python tests/browser_smoke.py
 
 ## Not executed or certified
 
-No live TypeSafe/JEV request, no real Discord consent/account/guild installation, no live Cloudflare/D1 deployment, no container build, no cross-browser matrix, no independent accessibility audit, no production-scale load test, and no independently audited security certification.
+No live TypeSafe/Jev request, no real Discord consent/account/guild installation, no live Cloudflare/D1 deployment, no container build, no cross-browser matrix, no independent accessibility audit, no production-scale load test, and no independently audited security certification.
 
-The API fixture test named “native JEV fixture evidence” exercises the application's native JEV **adapter path using a mocked provider**, not genuine external inference. Synthetic confidence/usage/latency is never presented as model performance. Provider and cloud integration claims are limited to implemented code and documented-contract/mocked testing.
+The API fixture test named “native Jev fixture evidence” exercises the application's native Jev **adapter path using a mocked provider**, not genuine external inference. Synthetic confidence/usage/latency is never presented as model performance. Provider and cloud integration claims are limited to implemented code and documented-contract/mocked testing.
 
 ## Integrity of artifacts
 

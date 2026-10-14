@@ -59,7 +59,7 @@ export async function verifyBundle(bundle, {requireComplete = false, expectedHea
     if (e.type === 'practice_enabled') practice = true;
     if (['round_reserved', 'round_resumed'].includes(e.type)) reserved = e.data;
     if (e.type === 'jev_requested') {
-      if (await sha256(e.data.request) !== e.data.requestHash) throw new Error('JEV request hash mismatch.');
+      if (await sha256(e.data.request) !== e.data.requestHash) throw new Error('Jev request hash mismatch.');
       requests.set(e.data.requestHash, e.data.request);
     }
     if (e.type === 'jev_response' && e.data.httpStatus === 200 && e.data.response) {

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Paired-seed benchmark. JEV calls require an explicit --live flag. Journals are fsynced. */
+/** Paired-seed benchmark. Jev calls require an explicit --live flag. Journals are fsynced. */
 import {mkdir, writeFile, open} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {RULES_VERSION, createDuel, advanceRound, canonical} from '../public/core/rules.js';
@@ -96,6 +96,6 @@ const report={experiment,summaries,rows,caveats:[
   'These are descriptive intervals, not a confirmatory statistical test.',
   'Move-cap results are censored marathon performance. Compare only identical rule caps.',
   'Failed runs remain in the report and are excluded from completed-score aggregates.',
-  'No JEV performance claim is supported by scripted-baseline runs.']};
+  'No Jev performance claim is supported by scripted-baseline runs.']};
 await writeFile(resolve(output,'report.json'),JSON.stringify(report,null,2));await writeFile(resolve(output,'runs.csv'),csv(rows));
 console.log(`Report written: ${output}`);

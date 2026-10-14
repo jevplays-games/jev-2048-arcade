@@ -42,7 +42,7 @@ test('CSRF, illegal moves, unknown fields, ranked guest and cross-session access
     assert.equal(res.status,404);assert.ok(session.csrf);
   }finally{f.DB.close();}
 });
-test('native JEV fixture evidence replays without network',async()=>{
+test('native Jev fixture evidence replays without network',async()=>{
   let calls=0;
   const f=await fixture({TYPESAFE_API_KEY:'fixture',FETCH:async(_url,options)=>{calls++;return Response.json(fakeResponse(JSON.parse(options.body)));}});
   try{

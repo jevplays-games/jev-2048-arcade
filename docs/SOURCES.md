@@ -22,11 +22,12 @@ Consulted for the implementation contract on 2026-09-22. Recheck these when depl
 - D1 database/batch interface: https://developers.cloudflare.com/d1/worker-api/d1-database/
 - Workers Web Crypto: https://developers.cloudflare.com/workers/runtime-apis/web-crypto/
 - Node SQLite: https://nodejs.org/api/sqlite.html
+- Slide Score is a two-board duel built on the rules of 2048 by Gabriele Cirulli.
 - Original 2048 game manager, referenced for conventional gameplay semantics: https://github.com/gabrielecirulli/2048/blob/master/js/game_manager.js
 
 ## Implementation decisions, not external facts
 
-The competitive move cap, paired priority-permutation spawn coupling, profile weights, risk penalty, lookahead ceilings, lease/session/context lifetimes, quotas and local fallback ordering are explicit application choices. They are not claims about conventional multiplayer 2048, an optimal JEV strategy or provider recommendations.
+The competitive move cap, paired priority-permutation spawn coupling, profile weights, risk penalty, lookahead ceilings, lease/session/context lifetimes, quotas and local fallback ordering are explicit application choices. They are not claims about conventional multiplayer 2048, an optimal Jev strategy or provider recommendations.
 
 The delivered application uses a native Node/SQLite entry point in addition to the proposed Worker/D1 adapter, allowing immediate execution without cloud setup. Search budgets count admitted states including leaves; root moves receive equal budget shares. This is more precisely bounded than an internal-node-only counter but does not guarantee identical work across every subtree.
 

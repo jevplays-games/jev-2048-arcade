@@ -6,7 +6,7 @@ import {makeBoard,getLegalActions} from '../public/core/rules.js';
 import {fakeResponse} from './provider-fixture.js';
 
 const board=makeBoard([1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]);
-test('typed JEV request limits knowledge and records native evidence',async()=>{
+test('typed Jev request limits knowledge and records native evidence',async()=>{
   const events=[];
   const out=await chooseJevAction({board,difficulty:'easy',apiKey:'test-not-a-real-key',
     fetcher:async(url,options)=>{

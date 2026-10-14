@@ -1,9 +1,12 @@
 {
-  "name": "jev-2048-arcade",
+  "name": "jev-slide-score",
   "main": "server/worker.js",
-  "routes": [{ "pattern": "2048.jevplay.games", "custom_domain": true }],
+  // slide-score.jevplay.games is canonical. 2048.jevplay.games stays served by this Worker (LEGACY_PUBLIC_ORIGINS)
+  // until the orchestrator moves it to a 301 redirect at cutover.
+  "routes": [{ "pattern": "slide-score.jevplay.games", "custom_domain": true }, { "pattern": "2048.jevplay.games", "custom_domain": true }],
   "compatibility_date": "2026-09-01",
   "assets": {"directory": "public", "binding": "ASSETS", "run_worker_first": ["/api/*", "/"]},
+  // The D1 database keeps its original name (owner decision 2026-10-14): D1 databases cannot be renamed.
   "d1_databases": [{"binding": "DB", "database_name": "jev-2048", "database_id": "5b4fe93d-f89e-4c4a-9e1c-afdea140daf4", "migrations_dir": "migrations"}],
-  "vars": {"PUBLIC_ORIGIN": "https://2048.jevplay.games", "JEV_MODEL": "jev-1.13.0", "JEV_REQUESTS_PER_DAY": "10000", "DISCORD_ALLOWED_CHANNELS": ""}
+  "vars": {"PUBLIC_ORIGIN": "https://slide-score.jevplay.games", "LEGACY_PUBLIC_ORIGINS": "https://2048.jevplay.games", "JEV_MODEL": "jev-1.13.0", "JEV_REQUESTS_PER_DAY": "10000", "DISCORD_ALLOWED_CHANNELS": ""}
 }

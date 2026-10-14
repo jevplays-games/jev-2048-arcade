@@ -26,7 +26,7 @@ flowchart TB
     Verify --> DB
   end
   UI <-->|HTTPS actions and snapshots| API
-  Controller <-->|Typed questions and answers| JEV[TypeSafe JEV]
+  Controller <-->|Typed questions and answers| Jev[TypeSafe Jev]
   API <-->|OAuth and signed interactions| Discord[Discord]
 ```
 
@@ -44,7 +44,7 @@ The commitment binds the complete manifest and a random 256-bit seed. AES-GCM pr
 
 ```mermaid
 flowchart TD
-  A[JEV own pre-round board] --> L[Generate every legal direction]
+  A[Jev own pre-round board] --> L[Generate every legal direction]
   L --> C{Count}
   C -->|0| F[Finished]
   C -->|1| Forced[Forced action; no provider call]
@@ -57,7 +57,7 @@ flowchart TD
   Forced --> Commit
 ```
 
-Profile dimensions and weights: Easy merge=1; Normal merge=.6/space=.4; Hard and JEV merge=.5/space=.3/anchor=.2. Normalize model scores by 4, sum weighted scores, then subtract twice the exact immediate spawn-block probability. Stable tie order is UP, RIGHT, DOWN, LEFT.
+Profile dimensions and weights: Easy merge=1; Normal merge=.6/space=.4; Hard and Jev merge=.5/space=.3/anchor=.2. Normalize model scores by 4, sum weighted scores, then subtract twice the exact immediate spawn-block probability. Stable tie order is UP, RIGHT, DOWN, LEFT.
 
 Depth budgets are 0/1/2/3 additional decisions; aggregate admitted-state budgets are 0/512/4096/16384, equally floor-divided among legal root moves. Every enumerated chance outcome retains its probability mass, even at a frontier. The baseline heuristic is `4*emptyFraction + monotonicity + cornerFlag - roughness`, with -10 for a blocked board and a logarithmic merge reward in lookahead. Bounded subtree traversal may truncate unevenly within a root; every root still has the same assigned ceiling. These initial settings are experimental, not demonstrated optimal difficulty ordering.
 
@@ -109,7 +109,7 @@ flowchart LR
   L --> H[Verified Channel context]
 ```
 
-Replay does not rerun JEV. It validates recorded response linkage, scores/probabilities, utility and selected action against the pinned policy, while the rules independently verify all movement, merges, spawns and scores. It does not cryptographically prove that a provider really emitted a response or certify external-solver-free human play.
+Replay does not rerun Jev. It validates recorded response linkage, scores/probabilities, utility and selected action against the pinned policy, while the rules independently verify all movement, merges, spawns and scores. It does not cryptographically prove that a provider really emitted a response or certify external-solver-free human play.
 
 Current profile validation must remain available to replay old bundles. If changing rules, RNG, model semantics or policy configuration, introduce a new version and keep the old verifier or archive its source build. Never reinterpret existing matches using silently changed parameters.
 

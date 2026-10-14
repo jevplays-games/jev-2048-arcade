@@ -9,7 +9,7 @@ try {
   const token = (await auth.json()).access_token;
   const guild = process.env.DISCORD_TEST_GUILD_ID;
   const endpoint = `https://discord.com/api/v10/applications/${id}${guild ? `/guilds/${guild}` : ''}/commands`;
-  const command = {name: '2048', type: 1, description: 'Play 2048 on your own board against JEV',
+  const command = {name: '2048', type: 1, description: 'Play Slide Score (2048 rules) on your own board against Jev',
     ...(guild ? {} : {integration_types: [0], contexts: [0]})};
   const response = await fetch(endpoint, {method: 'POST', headers: {Authorization: 'Bearer ' + token, 'Content-Type': 'application/json'},
     body: JSON.stringify(command), signal: AbortSignal.timeout(10000)});

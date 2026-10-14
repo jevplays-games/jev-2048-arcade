@@ -8,7 +8,7 @@ Server-owned board state, legal actions, merge arithmetic, score verification an
 
 Production cookies are HTTP-only, SameSite=Lax, Secure, `__Host-` prefixed, and origin-bound. OAuth uses one-use expiring state bound to the initiating browser; successful login rotates the session. Browser mutations require the expected Origin and CSRF token. Local loopback development deliberately permits an HTTP cookie without Secure.
 
-API request bodies and external response sizes are bounded; supported request fields, action IDs, telemetry types and quotas are validated. Names are rendered with `textContent`; SQL uses parameters. CSP restricts scripts and styles to the application origin, disallows framing and plugins, and avoids third-party assets. Quotas prevent a public arbitrary-purpose JEV proxy.
+API request bodies and external response sizes are bounded; supported request fields, action IDs, telemetry types and quotas are validated. Names are rendered with `textContent`; SQL uses parameters. CSP restricts scripts and styles to the application origin, disallows framing and plugins, and avoids third-party assets. Quotas prevent a public arbitrary-purpose Jev proxy.
 
 Discord interaction verification covers the timestamp plus the exact body bytes with Ed25519. Timestamp freshness, interaction deduplication, configured approved text channels, signed five-minute launch tokens, same-user binding and one-use nonce consumption are enforced. A fifteen-minute context grant is a recent launch-time proof, not live permission synchronization.
 
@@ -23,7 +23,7 @@ API/provider/Discord credentials are kept server-side. Stored active seeds are e
 - Private threads, DMs and continuously refreshed Discord access controls are not implemented. Restrict the command to approved ordinary guild text channels.
 - Anonymous rate limits are not a comprehensive anti-Sybil or DDoS defense. Add host-level protections for internet exposure.
 - Expiry and some API/security rejection events are operational state/log information, not canonical match events.
-- The deployment adapter, native browser CSP/cookie behavior, live Discord and live JEV have not been certified in this environment. Review staging behavior, permissions and provider contract before production.
+- The deployment adapter, native browser CSP/cookie behavior, live Discord and live Jev have not been certified in this environment. Review staging behavior, permissions and provider contract before production.
 
 ## Data minimization and retention
 

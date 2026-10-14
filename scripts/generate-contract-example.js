@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Explicitly synthetic provider-contract example, NOT a JEV benchmark. */
+/** Explicitly synthetic provider-contract example, NOT a Jev benchmark. */
 import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {RULES_VERSION,createDuel,advanceRound} from '../public/core/rules.js';
@@ -15,7 +15,7 @@ const manifest={schemaVersion:1,matchId,game:'2048',rulesVersion:RULES_VERSION,r
   policyVersion:POLICY_VERSION,difficulty:'normal',profile:PROFILES.normal,model:DEFAULT_MODEL,
   moveLimit:4,mode:'jev',ranked:false,createdAt:new Date().toISOString(),
   evidenceClass:'mocked-provider-contract-fixture',build:BUILD_INFO,
-  note:'Every provider response in this example is synthetic. It is not evidence of live JEV quality, latency, confidence, or cost.'};
+  note:'Every provider response in this example is synthetic. It is not evidence of live Jev quality, latency, confidence, or cost.'};
 const initial=await initialCells(seed),commitment=await seedCommitment(manifest,seed);
 let state=createDuel(initial,{matchId,moveLimit:4}),parentSeq=null;
 async function emit(type,data){const added=await createEvents(events.at(-1),[{type,data,parentSeq}],{matchId,clockId:'synthetic-example'});events.push(...added);}
