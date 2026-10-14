@@ -37,23 +37,34 @@ test('the Worker serves the new and the legacy hostname, and nothing else',async
     assert.equal((await browser(f,'https://slide-score.jevplay.games.evil.example')('/api/health')).status,421);
   } finally {f.DB.close();}
 });
-test('legacy origins must be bare http(s) origins; credentials, paths, queries, fragments and non-URLs are skipped',async()=>{
+test('legacy origins: only bare origins are admitted (D9); hostile entries are skipped with a structured warning',async()=>{
   const warn=console.warn,warned=[];console.warn=m=>warned.push(m);
   try {
+    // Real legacy host, with and without one trailing slash.
     assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:' https://2048.jevplay.games/ , https://2048.jevplay.games,,'}),[NEW,OLD]);
-    assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'2048.jevplay.games,not a url,javascript:alert(1),http://[::1'}),[NEW]);
-    assert.equal(warned.length,4);assert.match(warned[0],/2048\.jevplay\.games/);
-    // Each of these parses to a URL whose origin is not the host the operator meant; all must be skipped.
-    const hostile=['https://user:pw@evil.example','https://evil.example#@2048.jevplay.games','https://2048.jevplay.games/some/path',
-      'https://2048.jevplay.games/?x=1','https://2048.jevplay.games/#x','https://user@2048.jevplay.games'];
-    for(const entry of hostile)assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:entry}),[NEW],entry);
-    assert.equal(warned.length,4+hostile.length);
-    const evil=await fixture({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'https://user:pw@evil.example,https://evil.example#@2048.jevplay.games'});
-    try {assert.equal((await browser(evil,'https://evil.example')('/api/health')).status,421);assert.equal((await browser(evil,NEW)('/api/health')).status,200);}
-    finally {evil.DB.close();}
-    const f=await fixture({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'https://2048.jevplay.games/'});
-    try {assert.equal((await browser(f,OLD)('/api/health')).status,200);assert.equal((await browser(f,'https://evil.example')('/api/health')).status,421);}
-    finally {f.DB.close();}
+    assert.equal(warned.length,0);
+    // The five D9 strings, plus non-bare, non-URL and non-https forms. None is admitted, none throws.
+    const required=['https://user:pw@evil.example','https://evil.example#@2048.jevplay.games','https://evil.example/path',
+      'https://evil.example?q=1','https://*.jevplay.games'];
+    const others=['https://2048.jevplay.games//','https://2048.JEVPLAY.games','https://2048.jevplay.games:443','2048.jevplay.games',
+      'not a url','javascript:alert(1)','http://[::1','http://2048.jevplay.games','ftp://2048.jevplay.games'];
+    for(const entry of [...required,...others]){
+      const before=warned.length;
+      assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:entry}),[NEW],entry);
+      assert.equal(warned.length,before+1,'one warning for '+entry);
+      const log=JSON.parse(warned.at(-1));assert.equal(log.event,'legacy_origin_rejected');assert.equal(log.entry,entry);assert.ok(log.reason);
+    }
+    // Loopback http stays allowed for local dev, as server/local.js allows it.
+    assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'http://127.0.0.1:8787'}),[NEW,'http://127.0.0.1:8787']);
+    // End to end: with every required string configured next to the real legacy host, evil.example is refused
+    // with 421 while the canonical and legacy hosts are served.
+    const f=await fixture({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:[...required,OLD+'/'].join(',')});
+    try {
+      assert.equal((await browser(f,'https://evil.example')('/api/health')).status,421);
+      assert.equal((await browser(f,'https://wild.jevplay.games')('/api/health')).status,421);
+      assert.equal((await browser(f,NEW)('/api/health')).status,200);
+      assert.equal((await browser(f,OLD)('/api/health')).status,200);
+    } finally {f.DB.close();}
   } finally {console.warn=warn;}
 });
 test('a write must come from the host it is sent to, on either hostname',async()=>{

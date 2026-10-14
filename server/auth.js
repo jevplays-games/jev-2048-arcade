@@ -7,19 +7,27 @@ export function sessionCookie(env, token, maxAge = SESSION_MS / 1000) {
 }
 // Every origin this Worker answers on: PUBLIC_ORIGIN (canonical) plus LEGACY_PUBLIC_ORIGINS, a comma-separated list
 // of old hostnames that stay served until the cutover (slide-score.jevplay.games was 2048.jevplay.games).
-// Legacy entries must be a bare http(s) origin, optionally with a trailing slash. An entry with credentials, a path, a query
-// or a fragment is skipped and logged, as is anything that does not parse: 'https://user:pw@evil.example' or
-// 'https://evil.example#@2048.jevplay.games' must never admit evil.example. A typo fails closed (421).
+// Legacy-origin allowlist (orchestrator decision D9). An entry is admitted ONLY if it is a bare origin: it parses, its
+// protocol is https: (http: only for loopback hosts, as server/local.js allows for local dev), the entry minus one
+// trailing "/" equals url.origin exactly (so no userinfo, path, query or fragment), and it contains no "@", "?", "#" or "*".
+// Anything else is skipped with one structured warning and never throws: 'https://user:pw@evil.example' or
+// 'https://evil.example#@2048.jevplay.games' must never admit evil.example. A bad entry fails closed (421).
+const LOOPBACK_HOSTS = ['127.0.0.1', 'localhost', '[::1]'];
+function legacyOrigin(entry) {
+  if (/[@?#*]/.test(entry)) return {reason: 'forbidden_character'};
+  let url;
+  try { url = new URL(entry); } catch { return {reason: 'unparseable'}; }
+  if (!(url.protocol === 'https:' || (url.protocol === 'http:' && LOOPBACK_HOSTS.includes(url.hostname))))
+    return {reason: 'protocol_not_allowed'};
+  if (entry.replace(/\/$/, '') !== url.origin) return {reason: 'not_bare_origin'};
+  return {origin: url.origin};
+}
 export function appOrigins(env) {
   const legacy = [];
   for (const entry of (env.LEGACY_PUBLIC_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean)) {
-    let origin = null;
-    try {
-      const url = new URL(entry);
-      if ((url.protocol === 'https:' || url.protocol === 'http:') && !url.username && !url.password && url.pathname === '/' &&
-          !url.search && !url.hash && !/[?#@]/.test(entry)) origin = url.origin;
-    } catch { /* invalid */ }
-    if (origin) legacy.push(origin); else console.warn(`Ignoring invalid LEGACY_PUBLIC_ORIGINS entry: ${JSON.stringify(entry)}`);
+    const {origin, reason} = legacyOrigin(entry);
+    if (origin) legacy.push(origin);
+    else console.warn(JSON.stringify({event: 'legacy_origin_rejected', variable: 'LEGACY_PUBLIC_ORIGINS', entry, reason}));
   }
   return [...new Set([env.PUBLIC_ORIGIN, ...legacy].filter(Boolean))];
 }
