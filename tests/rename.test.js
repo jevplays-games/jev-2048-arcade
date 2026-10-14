@@ -37,12 +37,20 @@ test('the Worker serves the new and the legacy hostname, and nothing else',async
     assert.equal((await browser(f,'https://slide-score.jevplay.games.evil.example')('/api/health')).status,421);
   } finally {f.DB.close();}
 });
-test('legacy origins are normalised; entries without a scheme or that are not http(s) URLs are skipped',async()=>{
+test('legacy origins must be bare http(s) origins; credentials, paths, queries, fragments and non-URLs are skipped',async()=>{
   const warn=console.warn,warned=[];console.warn=m=>warned.push(m);
   try {
-    assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:' https://2048.jevplay.games/ , https://2048.jevplay.games/some/path?x=1,,'}),[NEW,OLD]);
+    assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:' https://2048.jevplay.games/ , https://2048.jevplay.games,,'}),[NEW,OLD]);
     assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'2048.jevplay.games,not a url,javascript:alert(1),http://[::1'}),[NEW]);
     assert.equal(warned.length,4);assert.match(warned[0],/2048\.jevplay\.games/);
+    // Each of these parses to a URL whose origin is not the host the operator meant; all must be skipped.
+    const hostile=['https://user:pw@evil.example','https://evil.example#@2048.jevplay.games','https://2048.jevplay.games/some/path',
+      'https://2048.jevplay.games/?x=1','https://2048.jevplay.games/#x','https://user@2048.jevplay.games'];
+    for(const entry of hostile)assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:entry}),[NEW],entry);
+    assert.equal(warned.length,4+hostile.length);
+    const evil=await fixture({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'https://user:pw@evil.example,https://evil.example#@2048.jevplay.games'});
+    try {assert.equal((await browser(evil,'https://evil.example')('/api/health')).status,421);assert.equal((await browser(evil,NEW)('/api/health')).status,200);}
+    finally {evil.DB.close();}
     const f=await fixture({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'https://2048.jevplay.games/'});
     try {assert.equal((await browser(f,OLD)('/api/health')).status,200);assert.equal((await browser(f,'https://evil.example')('/api/health')).status,421);}
     finally {f.DB.close();}
