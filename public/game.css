@@ -3,9 +3,10 @@
    --human (blue) and --jev (amber) strips, never by tile colour. */
 :root{--tile-1:#FBE3EA;--tile-2:#F9CCD8;--tile-3:#F7B4C6;--tile-4:#F59DB3;--tile-5:#F386A1;--tile-6:#DD6794;
   --tile-7:#C64787;--tile-8:#B0287A;--tile-9:#7F255B;--tile-10:#4F213D;--tile-11:#1E1E1E;
-  /* Chart series on the grey panel. Brand amber (--jev) is 1.6:1 on grey, so the Jev line is a darker amber (4.4:1 on grey)
-     and dashed, a non-colour cue; the human line is brand blue (3.6:1), solid. */
-  --jev-series:#8A5A0E}
+  /* Chart series (orchestrator decision D8, until the hub brand.css carries chart tokens): brand amber and blue fail on
+     the grey panel, so series use dark amber (5.34:1 on #DEDEDE) and dark blue (5.56:1). The Jev series is also dashed so
+     colour is not the only cue; legend text stays ink and only the swatch is coloured. Charts sit on grey panels, never pink. */
+  --chart-jev:#7A4E0B;--chart-human:#155A80}
 
 button,select,input{font:inherit}button,select{cursor:pointer}button,a,input,select,summary{touch-action:manipulation}button:disabled{opacity:.4;cursor:not-allowed}a{color:inherit;text-decoration:none}button{color:var(--text);border:0}h4{font-weight:550;margin-bottom:var(--s3)}p{color:var(--muted)}[hidden]{display:none!important}
 .jv-title{font-weight:700}.jv-status strong{color:var(--accent)}.jv-sheet-item{font-weight:600}
@@ -100,23 +101,23 @@ caption{text-align:left;color:var(--muted);padding:0 0 var(--s2)}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:var(--fs-xs)/1.65 var(--mono);max-height:23rem;overflow:auto;color:var(--muted);margin-bottom:0}
 .inline-controls{display:flex;gap:var(--s2);flex-wrap:wrap}
 .chart-grid{display:grid;grid-template-columns:1fr;gap:var(--s4)}
-.chart-card>p{font-size:var(--fs-xs);color:var(--subtle);margin:var(--s1) 0 var(--s4)}
+.chart-card>p{font-size:var(--fs-xs);color:var(--ink);margin:var(--s1) 0 var(--s4)}
 .chart-card h3{font-size:var(--fs-md)}
 .chart{min-height:11rem}
 .chart svg{width:100%;height:11.5rem;overflow:visible}
 .chart text{fill:var(--subtle);font:10px var(--mono)}
 .chart .grid-line{stroke:var(--line);stroke-width:.6}
-.chart .human-line{stroke:var(--human)}.chart .jev-line{stroke:var(--jev-series);stroke-dasharray:6 4}
-.chart polyline{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chart .human-line{stroke:var(--chart-human)}.chart .jev-line{stroke:var(--chart-jev);stroke-dasharray:6 4}
+.chart polyline{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .legend-line{display:inline-block;width:15px;height:2px;vertical-align:middle}
-.legend-line.human-line{background:var(--human)}.legend-line.jev-line{background:none;height:0;border-top:2px dashed var(--jev-series)}
+.legend-line.human-line{background:var(--chart-human)}.legend-line.jev-line{background:none;height:0;border-top:2px dashed var(--chart-jev)}
 .heatmap-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-bottom:var(--s5)}
 .heatmap-grid article:last-child{grid-column:1/-1}
 .heatmap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;max-width:16rem}
 .heat-cell{aspect-ratio:1;display:grid;place-items:center;border:1px solid var(--ink);border-radius:var(--radius-sm);font:var(--fs-sm) var(--mono);background:var(--paper);font-variant-numeric:tabular-nums}
 .heat-cell[data-intensity="1"]{background:var(--tile-2)}.heat-cell[data-intensity="2"]{background:var(--tile-4)}.heat-cell[data-intensity="3"]{background:var(--tile-6)}.heat-cell[data-intensity="4"]{background:var(--tile-8);color:var(--paper)}.heat-cell[data-intensity="5"]{background:var(--tile-11);color:var(--paper)}
 .direction-stat{display:grid;grid-template-columns:1.25rem 1fr 1fr;align-items:center;gap:var(--s2);border-bottom:1px solid var(--line);padding:var(--s2) 0;font:var(--fs-xs) var(--mono)}
-.direction-stat span:nth-child(2){box-shadow:inset 3px 0 0 var(--human);padding-left:var(--s2)}.direction-stat span:nth-child(3){box-shadow:inset 3px 0 0 var(--jev);padding-left:var(--s2)}
+.direction-stat span:nth-child(2){box-shadow:inset 3px 0 0 var(--chart-human);padding-left:var(--s2)}.direction-stat span:nth-child(3){box-shadow:inset 3px 0 0 var(--chart-jev);padding-left:var(--s2)}
 dl{margin:0}dl>div{display:flex;justify-content:space-between;gap:var(--s3);border-bottom:1px solid var(--line);padding:var(--s2) 0;font-size:var(--fs-xs)}
 dt{color:var(--subtle)}dd{margin:0;text-align:right;word-break:break-word;color:var(--muted);font-family:var(--mono);max-width:65%}
 .analytics-bottom{display:flex;align-items:start;flex-direction:column;gap:var(--s3);margin-top:var(--s5)}

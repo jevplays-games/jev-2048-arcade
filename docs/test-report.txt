@@ -3,338 +3,338 @@
 > node --test tests/*.test.js
 
 TAP version 13
-# (node:30109) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:32087) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: activity config exposes only the public client id and needs Discord configured
 ok 1 - activity config exposes only the public client id and needs Discord configured
   ---
-  duration_ms: 16.798625
+  duration_ms: 15.501292
   type: 'test'
   ...
 # Subtest: an SDK code becomes a bearer session: exchanged without a redirect uri, token is not stored in clear
 ok 2 - an SDK code becomes a bearer session: exchanged without a redirect uri, token is not stored in clear
   ---
-  duration_ms: 2.564166
+  duration_ms: 2.478958
   type: 'test'
   ...
 # Subtest: the bearer session works for reads and for mutations from the activity origin
 ok 3 - the bearer session works for reads and for mutations from the activity origin
   ---
-  duration_ms: 3.782666
+  duration_ms: 4.713375
   type: 'test'
   ...
 # Subtest: the activity origin is accepted only together with a bearer session
 ok 4 - the activity origin is accepted only together with a bearer session
   ---
-  duration_ms: 2.784667
+  duration_ms: 3.091458
   type: 'test'
   ...
 # Subtest: session creation rejects foreign origins, missing codes, unknown fields and Discord failures
 ok 5 - session creation rejects foreign origins, missing codes, unknown fields and Discord failures
   ---
-  duration_ms: 2.821875
+  duration_ms: 3.331
   type: 'test'
   ...
 # Subtest: only a page loaded with frame_id may be framed, and only by Discord
 ok 6 - only a page loaded with frame_id may be framed, and only by Discord
   ---
-  duration_ms: 1.086916
+  duration_ms: 1.605375
   type: 'test'
   ...
 # Subtest: the Worker applies the framing headers to the document only when frame_id is present
 ok 7 - the Worker applies the framing headers to the document only when frame_id is present
   ---
-  duration_ms: 0.359541
+  duration_ms: 0.363875
   type: 'test'
   ...
-# (node:30110) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:32088) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: partial usage preserves known input without inventing missing output or timed-out usage
 ok 8 - partial usage preserves known input without inventing missing output or timed-out usage
   ---
-  duration_ms: 1.236375
+  duration_ms: 0.842334
   type: 'test'
   ...
 # Subtest: empty distributions remain unknown, and percentiles use linear interpolation
 ok 9 - empty distributions remain unknown, and percentiles use linear interpolation
   ---
-  duration_ms: 0.092666
+  duration_ms: 0.069708
   type: 'test'
   ...
 # Subtest: streamed verification matches an array and rejects a truncated trusted snapshot
 ok 10 - streamed verification matches an array and rejects a truncated trusted snapshot
   ---
-  duration_ms: 30.302958
+  duration_ms: 34.988791
   type: 'test'
   ...
-# (node:30111) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:32089) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: local end-to-end match, idempotency, immutable log, analytics and tamper detection
 ok 11 - local end-to-end match, idempotency, immutable log, analytics and tamper detection
   ---
-  duration_ms: 42.402292
+  duration_ms: 45.076959
   type: 'test'
   ...
 # Subtest: CSRF, illegal moves, unknown fields, ranked guest and cross-session access rejected
 ok 12 - CSRF, illegal moves, unknown fields, ranked guest and cross-session access rejected
   ---
-  duration_ms: 4.959875
+  duration_ms: 5.811291
   type: 'test'
   ...
 # Subtest: native Jev fixture evidence replays without network
 ok 13 - native Jev fixture evidence replays without network
   ---
-  duration_ms: 16.875791
+  duration_ms: 17.850541
   type: 'test'
   ...
 # Subtest: provider failures keep the action locked until explicit practice downgrade
 ok 14 - provider failures keep the action locked until explicit practice downgrade
   ---
-  duration_ms: 5.065042
+  duration_ms: 4.910166
   type: 'test'
   ...
 # Subtest: typed Jev request limits knowledge and records native evidence
 ok 15 - typed Jev request limits knowledge and records native evidence
   ---
-  duration_ms: 14.816542
+  duration_ms: 14.167041
   type: 'test'
   ...
 # Subtest: malformed probability, missing answers and wrong model rejected
 ok 16 - malformed probability, missing answers and wrong model rejected
   ---
-  duration_ms: 0.624458
+  duration_ms: 0.576958
   type: 'test'
   ...
 # Subtest: no key never silently substitutes
 ok 17 - no key never silently substitutes
   ---
-  duration_ms: 1.429584
+  duration_ms: 1.880542
   type: 'test'
   ...
 # Subtest: transient failure retries once and records both attempts
 ok 18 - transient failure retries once and records both attempts
   ---
-  duration_ms: 603.515125
+  duration_ms: 602.969542
   type: 'test'
   ...
 # Subtest: permanent failure stays unavailable and cannot become a legal move
 ok 19 - permanent failure stays unavailable and cannot become a legal move
   ---
-  duration_ms: 1.068625
+  duration_ms: 1.154125
   type: 'test'
   ...
 # Subtest: simulateMove and getLegalActions match the reference, including errors
 ok 20 - simulateMove and getLegalActions match the reference, including errors
   ---
-  duration_ms: 125.65225
+  duration_ms: 133.223666
   type: 'test'
   ...
 # Subtest: canonical matches the reference serializer
 ok 21 - canonical matches the reference serializer
   ---
-  duration_ms: 13.098875
+  duration_ms: 14.572209
   type: 'test'
   ...
 # Subtest: lookahead matches the reference value and every statistic
 ok 22 - lookahead matches the reference value and every statistic
   ---
-  duration_ms: 476.947708
+  duration_ms: 497.850167
   type: 'test'
   ...
 # Subtest: generateCandidates matches the reference at every difficulty
 ok 23 - generateCandidates matches the reference at every difficulty
   ---
-  duration_ms: 916.1135
+  duration_ms: 919.427417
   type: 'test'
   ...
 # Subtest: hex matches the reference encoder
 ok 24 - hex matches the reference encoder
   ---
-  duration_ms: 1.156792
+  duration_ms: 1.165416
   type: 'test'
   ...
-# (node:30114) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:32092) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: the Worker serves the new and the legacy hostname, and nothing else
 ok 25 - the Worker serves the new and the legacy hostname, and nothing else
   ---
-  duration_ms: 14.210875
+  duration_ms: 17.276417
   type: 'test'
   ...
 # Subtest: legacy origins are normalised; entries without a scheme or that are not http(s) URLs are skipped
 ok 26 - legacy origins are normalised; entries without a scheme or that are not http(s) URLs are skipped
   ---
-  duration_ms: 1.706584
+  duration_ms: 1.701709
   type: 'test'
   ...
 # Subtest: a write must come from the host it is sent to, on either hostname
 ok 27 - a write must come from the host it is sent to, on either hostname
   ---
-  duration_ms: 9.526125
+  duration_ms: 9.211625
   type: 'test'
   ...
 # Subtest: Discord OAuth stays on the host the player started on
 ok 28 - Discord OAuth stays on the host the player started on
   ---
-  duration_ms: 4.576083
+  duration_ms: 6.266084
   type: 'test'
   ...
 # Subtest: launch proofs with the original jev-2048 audience and the new jev-slide-score audience both verify
 ok 29 - launch proofs with the original jev-2048 audience and the new jev-slide-score audience both verify
   ---
-  duration_ms: 4.3805
+  duration_ms: 3.835458
   type: 'test'
   ...
 # Subtest: the /2048 command keeps working and /slide-score is accepted; launch links use the new host
 ok 30 - the /2048 command keeps working and /slide-score is accepted; launch links use the new host
   ---
-  duration_ms: 3.070333
+  duration_ms: 3.117458
   type: 'test'
   ...
 # Subtest: an audit bundle exported before the rename still passes scripts/verify.js
 ok 31 - an audit bundle exported before the rename still passes scripts/verify.js
   ---
-  duration_ms: 52.605708
+  duration_ms: 55.744791
   type: 'test'
   ...
 # Subtest: merge 2,2,2,2
 ok 32 - merge 2,2,2,2
   ---
-  duration_ms: 0.872625
+  duration_ms: 0.7805
   type: 'test'
   ...
 # Subtest: merge 2,2,4,0
 ok 33 - merge 2,2,4,0
   ---
-  duration_ms: 0.146125
+  duration_ms: 0.140709
   type: 'test'
   ...
 # Subtest: merge 4,4,4,0
 ok 34 - merge 4,4,4,0
   ---
-  duration_ms: 0.046041
+  duration_ms: 0.051125
   type: 'test'
   ...
 # Subtest: merge 2,0,2,2
 ok 35 - merge 2,0,2,2
   ---
-  duration_ms: 0.037916
+  duration_ms: 0.038792
   type: 'test'
   ...
 # Subtest: merge 2,2,4,4
 ok 36 - merge 2,2,4,4
   ---
-  duration_ms: 0.0995
+  duration_ms: 0.093375
   type: 'test'
   ...
 # Subtest: merge 0,0,0,0
 ok 37 - merge 0,0,0,0
   ---
-  duration_ms: 0.038917
+  duration_ms: 0.039125
   type: 'test'
   ...
 # Subtest: exhaust all 1,296 exponent lines in all directions, against an independent queue reference
 ok 38 - exhaust all 1,296 exponent lines in all directions, against an independent queue reference
   ---
-  duration_ms: 9.99175
+  duration_ms: 11.36975
   type: 'test'
   ...
 # Subtest: blocked and full-but-mergeable states differ
 ok 39 - blocked and full-but-mergeable states differ
   ---
-  duration_ms: 0.185667
+  duration_ms: 0.201208
   type: 'test'
   ...
 # Subtest: invalid directions and malformed spawns are rejected
 ok 40 - invalid directions and malformed spawns are rejected
   ---
-  duration_ms: 0.354
+  duration_ms: 0.86975
   type: 'test'
   ...
 # Subtest: both start identically; caps finish both; invalid direction consumes nothing
 ok 41 - both start identically; caps finish both; invalid direction consumes nothing
   ---
-  duration_ms: 5.345458
+  duration_ms: 6.362791
   type: 'test'
   ...
 # Subtest: finished human board freezes while Jev continues
 ok 42 - finished human board freezes while Jev continues
   ---
-  duration_ms: 1.056166
+  duration_ms: 1.124709
   type: 'test'
   ...
 # Subtest: spawn vectors deterministic, uniform support, shared values and valid divergent positions
 ok 43 - spawn vectors deterministic, uniform support, shared values and valid divergent positions
   ---
-  duration_ms: 32.609
+  duration_ms: 37.478459
   type: 'test'
   ...
 # Subtest: canonical hashing, encryption and signatures reject tampering
 ok 44 - canonical hashing, encryption and signatures reject tampering
   ---
-  duration_ms: 1.278208
+  duration_ms: 1.305125
   type: 'test'
   ...
 # Subtest: chance probabilities sum to one and feature/search budgets are bounded
 ok 45 - chance probabilities sum to one and feature/search budgets are bounded
   ---
-  duration_ms: 1.481292
+  duration_ms: 1.403208
   type: 'test'
   ...
-# (node:30116) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (node:32094) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
 # Subtest: OAuth state is browser-bound, one-use; session rotates; guest cannot become ranked retroactively
 ok 46 - OAuth state is browser-bound, one-use; session rotates; guest cannot become ranked retroactively
   ---
-  duration_ms: 20.42025
+  duration_ms: 22.900167
   type: 'test'
   ...
 # Subtest: wrong OAuth state is rejected before contacting Discord
 ok 47 - wrong OAuth state is rejected before contacting Discord
   ---
-  duration_ms: 1.839333
+  duration_ms: 3.102292
   type: 'test'
   ...
 # Subtest: signed channel launches bind the user and cannot be replayed
 ok 48 - signed channel launches bind the user and cannot be replayed
   ---
-  duration_ms: 4.147666
+  duration_ms: 4.336292
   type: 'test'
   ...
 # Subtest: Discord Ed25519 signature verifies exact bytes, timestamp, and approved channel
 ok 49 - Discord Ed25519 signature verifies exact bytes, timestamp, and approved channel
   ---
-  duration_ms: 4.518667
+  duration_ms: 5.559208
   type: 'test'
   ...
 # Subtest: concurrent steps apply once; no lease loser can replace the human action
 ok 50 - concurrent steps apply once; no lease loser can replace the human action
   ---
-  duration_ms: 7.815625
+  duration_ms: 7.7085
   type: 'test'
   ...
 # Subtest: ranked native fixture completes verification and inserts exactly one result
 ok 51 - ranked native fixture completes verification and inserts exactly one result
   ---
-  duration_ms: 8.400792
+  duration_ms: 10.3445
   type: 'test'
   ...
 # Subtest: leaderboard best-per-user, competition ties, pagination and community isolation
 ok 52 - leaderboard best-per-user, competition ties, pagination and community isolation
   ---
-  duration_ms: 4.281792
+  duration_ms: 3.701042
   type: 'test'
   ...
 # Subtest: CSV export neutralizes formula injection in text, not numeric negatives
 ok 53 - CSV export neutralizes formula injection in text, not numeric negatives
   ---
-  duration_ms: 0.163667
+  duration_ms: 0.139625
   type: 'test'
   ...
 # Subtest: schema write batches roll back atomically when an event guard fails
 ok 54 - schema write batches roll back atomically when an event guard fails
   ---
-  duration_ms: 2.381666
+  duration_ms: 2.607958
   type: 'test'
   ...
 1..54
@@ -345,4 +345,4 @@ ok 54 - schema write batches roll back atomically when an event guard fails
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 1573.605083
+# duration_ms 1607.832625
