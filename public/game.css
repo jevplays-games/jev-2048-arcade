@@ -2,17 +2,23 @@
    sequential ramp (#FBE3EA -> #F386A1 -> #B0287A -> #1E1E1E). Players are told apart by the shared
    --human (blue) and --jev (amber) strips, never by tile colour. */
 :root{--tile-1:#FBE3EA;--tile-2:#F9CCD8;--tile-3:#F7B4C6;--tile-4:#F59DB3;--tile-5:#F386A1;--tile-6:#DD6794;
-  --tile-7:#C64787;--tile-8:#B0287A;--tile-9:#7F255B;--tile-10:#4F213D;--tile-11:#1E1E1E;
+  --tile-7:#BF4080;--tile-8:#B0287A;--tile-9:#7F255B;--tile-10:#4F213D;--tile-11:#1E1E1E;
   /* Chart series (orchestrator decision D8, until the hub brand.css carries chart tokens): brand amber and blue fail on
      the grey panel, so series use dark amber (5.34:1 on #DEDEDE) and dark blue (5.56:1). The Jev series is also dashed so
      colour is not the only cue; legend text stays ink and only the swatch is coloured. Charts sit on grey panels, never pink. */
   --chart-jev:#7A4E0B;--chart-human:#155A80}
 
+/* The header is sticky, so anything scrolled into view (keyboard focus, the skip link's target) stops below it instead of
+   underneath it: tabbing backwards used to park focus on controls hidden under the header. */
+html{scroll-padding-top:calc(var(--header-h) + var(--sa-t) + var(--s2))}
 button,select,input{font:inherit}button,select{cursor:pointer}button,a,input,select,summary{touch-action:manipulation}button:disabled{opacity:.4;cursor:not-allowed}a{color:inherit;text-decoration:none}button{color:var(--text);border:0}h4{font-weight:550;margin-bottom:var(--s3)}p{color:var(--muted)}[hidden]{display:none!important}
 .jv-title{font-weight:700}.jv-status strong{color:var(--accent)}.jv-sheet-item{font-weight:600}
 .intro{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s5);padding:var(--s3) 0 var(--s2)}
 .intro>*{min-width:0}
-.eyebrow{font:var(--fs-xs)/1.5 var(--mono);letter-spacing:.12em;color:var(--muted);display:flex;align-items:center;gap:var(--s2)}
+/* Pixel-caps labels (eyebrows, pills, metric labels) are uppercased by CSS, like the brand's wordmark and tags, so the
+   name keeps its owner-approved spelling "Jev" in the markup while reading JEV in an all-caps label (it showed as
+   "Jev PROVIDER REQUESTS" and "Jev · PRACTICE · UNRANKED"). */
+.eyebrow{font:var(--fs-xs)/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:var(--s2)}
 .tiny-line{width:1.5rem;height:1px;background:var(--subtle);display:inline-block}
 .intro p{font-size:var(--fs-sm)}
 .hero-tagline{font-size:var(--fs-xs);letter-spacing:var(--track-caps);color:var(--subtle);margin-top:var(--s2)}
@@ -21,7 +27,7 @@ button,select,input{font:inherit}button,select{cursor:pointer}button,a,input,sel
 .select-label select{font:var(--fs-sm)/1.4 var(--font);letter-spacing:0}
 select{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);color:var(--text);padding:0 var(--s5) 0 var(--s3);min-height:var(--tap);max-width:min(15rem,100%)}
 .button{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);background:var(--raised);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--drop-sm);min-height:var(--tap);padding:0 var(--s4);font-size:var(--fs-sm);font-weight:700;transition:background .15s,transform .15s}
-@media(hover:hover){.button:hover:not(:disabled){background:var(--grey)}.button.primary:hover:not(:disabled){background:var(--accent);outline:1px solid var(--ink);outline-offset:1px}.jv-link-btn:hover{color:var(--text)}.direction:hover{color:var(--accent);border-color:var(--accent)}}
+@media(hover:hover){.button:hover:not(:disabled){background:var(--grey)}.button.primary:hover:not(:disabled){background:var(--accent);outline:1px solid var(--ink);outline-offset:1px}.jv-link-btn:hover{color:var(--text)}.direction:hover:not(:disabled){background:var(--grey)}}
 .button:active:not(:disabled){transform:translate(2px,2px);box-shadow:none;background:var(--grey)}
 .button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--ink);font-weight:700}
 .button.primary span{padding-left:var(--s4);font-size:var(--fs-lg)}
@@ -29,7 +35,7 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:var(
 .button.small{font-size:var(--fs-xs);padding:0 var(--s3);min-height:var(--tap)}.jv-link-btn span{margin-left:var(--s2);display:inline-grid;place-items:center;border:1px solid var(--subtle);border-radius:50%;width:1rem;height:1rem;font:var(--fs-xs) var(--mono)}
 .match-strip{display:flex;justify-content:space-between;gap:var(--s2);align-items:center}
 .pills{display:flex;gap:var(--s2);flex-wrap:wrap}
-.pill{font:var(--fs-sm)/1.3 var(--mono);letter-spacing:.08em;color:var(--ink);padding:var(--s1) var(--s2);border:1px solid var(--ink);border-radius:var(--radius-sm);background:var(--paper)}
+.pill{font:var(--fs-sm)/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);padding:var(--s1) var(--s2);border:1px solid var(--ink);border-radius:var(--radius-sm);background:var(--paper)}
 .pill.subdued{color:var(--ink);border-color:var(--line);background:var(--grey)}
 .pill.verified{color:var(--ink);border-color:var(--ink);background:var(--magenta)}
 .arena{display:grid;grid-template-columns:1fr;gap:var(--s4);position:relative;border-radius:var(--radius-lg)}.board-card{display:flex;flex-direction:column}
@@ -41,8 +47,10 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:var(
 .score-wrap{text-align:right;display:flex;flex-direction:column;line-height:1.2;min-width:0}
 .score-wrap>span{font:var(--fs-xs) var(--mono);letter-spacing:.12em;color:var(--subtle);margin-bottom:var(--s1)}
 .score-wrap strong{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:var(--fs-num-lg);letter-spacing:0;font-weight:400}
-.score-wrap small{font:var(--fs-xs) var(--mono);color:var(--subtle);margin-top:var(--s1);letter-spacing:.02em;min-height:1rem}.board{--fit-max:34rem;--fit-reserve:17rem;display:grid;grid-template-rows:repeat(4,1fr);gap:2.2%;padding:2.6%;aspect-ratio:1;touch-action:none;container-type:inline-size;width:100%;margin-inline:auto}
-.board-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2.9%;min-height:0}
+.score-wrap small{font:var(--fs-xs) var(--mono);color:var(--subtle);margin-top:var(--s1);letter-spacing:.02em;min-height:1rem}.board{--fit-max:34rem;--fit-reserve:17rem;display:grid;grid-template-rows:repeat(4,1fr);gap:2.6%;padding:2.6%;aspect-ratio:1;touch-action:none;container-type:inline-size;width:100%;margin-inline:auto}
+/* Row and column gaps are the same share of the square tray, so the flat tiles are square and evenly spaced (they were
+   2.2% down and 2.9% across: tiles 2% taller than wide, gaps 8px against 12px at 1440). */
+.board-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2.6%;min-height:0}
 /* Flat pixel tiles on a grey tray of paper wells: a fill from the sequential ramp, a 1px ink border and a hard ink drop.
    Light tiles carry ink numerals, dark tiles paper numerals; 2048 and beyond get the one magenta ring. */
 .tile{--t-fill:var(--tile-1);--t-ink:var(--ink);position:relative;display:grid;place-items:center;min-width:0;border-radius:0;font-family:var(--mono);font-size:clamp(17px,4.6vw,40px);font-size:10.5cqw;font-weight:400;letter-spacing:0;line-height:1;font-variant-numeric:tabular-nums;color:var(--t-ink);user-select:none;-webkit-user-select:none;background:var(--sunken);box-shadow:var(--well);overflow:visible}
@@ -56,8 +64,11 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:var(
 .tile[data-e="10"],.tile[data-e="11"],.tile[data-e="12"],.tile[data-e="13"],.tile[data-e="14"]{font-size:clamp(14px,3.6vw,32px);font-size:8.2cqw}
 .tile.large{font-size:clamp(13px,3.1vw,28px);font-size:6.8cqw}
 .tile.spawn{animation:jv-pop .36s var(--ease-pop) both}.tile.merged{animation:tile-merge .32s var(--ease-out) both;z-index:1}
-.board.preview{opacity:.85}
-.board-footer{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text);padding-top:var(--s3);gap:var(--s2)}
+/* A sent move is previewed before the server commits it. The preview drops the tiles' hard shadow (the pressed look of a
+   pixel key) instead of fading the board: at 85% opacity the 64 and 128 numerals fell to 3.9:1. */
+.board.preview .tile[data-e]:not([data-e="0"]){box-shadow:none}
+.board.preview .tile[data-e="11"]:not([data-e="0"]),.board.preview .tile.large:not([data-e="0"]){box-shadow:inset 0 0 0 3px var(--magenta)}
+.board-footer{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text);padding-top:var(--s3);gap:var(--s2)}
 .board-footer strong{font-family:var(--mono);font-size:var(--fs-md);color:var(--text);margin-left:var(--s1)}
 .board-footer>span:last-child{color:var(--subtle)}
 .versus{display:none}
@@ -81,7 +92,7 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:var(
 input[type=checkbox]{accent-color:var(--accent);width:1.1rem;height:1.1rem}
 .decision-metrics,.analytics-kpis{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-bottom:var(--s5)}
 .metric{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:var(--s4);min-width:0}
-.metric>span{display:block;font:var(--fs-xs) var(--mono);letter-spacing:.06em;color:var(--subtle);margin-bottom:var(--s2)}
+.metric>span{display:block;font:var(--fs-xs) var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);margin-bottom:var(--s2)}
 .metric>strong{font-size:var(--fs-xl);font-weight:550;letter-spacing:-.03em}
 .metric>small{display:block;font-size:var(--fs-xs);margin-top:var(--s1);color:var(--muted)}
 #metric-source{font-size:var(--fs-lg)}
@@ -94,9 +105,18 @@ td:first-child{font-weight:550}
 td .selected-tag{margin-left:var(--s2);font:var(--fs-sm) var(--mono);border:1px solid var(--ink);border-radius:var(--radius-sm);color:var(--ink);background:var(--magenta);padding:2px var(--s1)}
 caption{text-align:left;color:var(--muted);padding:0 0 var(--s2)}
 .empty-state{text-align:center!important;color:var(--subtle);padding:var(--s6)!important;font-weight:400!important}
+/* In a scrolling table the empty message is as wide as the visible scroll box and pinned to its left edge, not centred across
+   a table wider than a phone. */
+.table-scroll{container-type:inline-size}
+.table-scroll .empty-state{padding:var(--s6) 0!important}
+.empty-msg{display:block;position:sticky;left:0;max-width:100cqw;padding-inline:var(--s4);text-align:center;white-space:normal}
 .panel-footnote{font-size:var(--fs-xs);margin-top:var(--s4);color:var(--subtle);max-width:60rem}
 .raw-evidence{margin-top:var(--s4);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:var(--s3)}
 .raw-evidence summary{font-size:var(--fs-xs);color:var(--muted);cursor:pointer;min-height:var(--tap);display:flex;align-items:center}
+/* display:flex removes the browser's disclosure triangle, so the box gets its own pixel +/- (decorative; the summary
+   already exposes expanded/collapsed). */
+.raw-evidence summary::before{content:"+";content:"+"/"";flex:none;width:1.25rem;font:var(--fs-lg)/1 var(--mono);color:var(--ink)}
+.raw-evidence[open]>summary::before{content:"-";content:"-"/""}
 .raw-evidence p{font-size:var(--fs-xs);margin-top:var(--s2)}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:var(--fs-xs)/1.65 var(--mono);max-height:23rem;overflow:auto;color:var(--muted);margin-bottom:0}
 .inline-controls{display:flex;gap:var(--s2);flex-wrap:wrap}
@@ -109,6 +129,10 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:var(--fs-xs)/1.65 var(--mon
 .chart .grid-line{stroke:var(--line);stroke-width:.6}
 .chart .human-line{stroke:var(--chart-human)}.chart .jev-line{stroke:var(--chart-jev);stroke-dasharray:6 4}
 .chart polyline{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+/* A single-round chart draws one point per series: human a filled dot, Jev a larger hollow ring around it (shape, not just
+   colour, tells them apart, and neither hides the other at equal values). */
+.chart circle.point.human-line{fill:var(--chart-human);stroke:none}
+.chart circle.point.jev-line{fill:none;stroke:var(--chart-jev);stroke-width:2;stroke-dasharray:none;vector-effect:non-scaling-stroke}
 .legend-line{display:inline-block;width:15px;height:2px;vertical-align:middle}
 .legend-line.human-line{background:var(--chart-human)}.legend-line.jev-line{background:none;height:0;border-top:2px dashed var(--chart-jev)}
 .heatmap-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-bottom:var(--s5)}
@@ -118,6 +142,10 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:var(--fs-xs)/1.65 var(--mon
 .heat-cell[data-intensity="1"]{background:var(--tile-2)}.heat-cell[data-intensity="2"]{background:var(--tile-4)}.heat-cell[data-intensity="3"]{background:var(--tile-6)}.heat-cell[data-intensity="4"]{background:var(--tile-8);color:var(--paper)}.heat-cell[data-intensity="5"]{background:var(--tile-11);color:var(--paper)}
 .direction-stat{display:grid;grid-template-columns:1.25rem 1fr 1fr;align-items:center;gap:var(--s2);border-bottom:1px solid var(--line);padding:var(--s2) 0;font:var(--fs-xs) var(--mono)}
 .direction-stat span:nth-child(2){box-shadow:inset 3px 0 0 var(--chart-human);padding-left:var(--s2)}.direction-stat span:nth-child(3){box-shadow:inset 3px 0 0 var(--chart-jev);padding-left:var(--s2)}
+/* Direction frequency sits in a grey window like the charts (D8: series colours on grey, never on pink, where the Jev
+   strip was 2.99:1), and column heads say which strip is whose, so colour is not the only cue (rows also carry an
+   aria-label). */
+.direction-head{color:var(--ink);letter-spacing:.08em}#direction-distribution .direction-stat:last-child{border-bottom:0}
 dl{margin:0}dl>div{display:flex;justify-content:space-between;gap:var(--s3);border-bottom:1px solid var(--line);padding:var(--s2) 0;font-size:var(--fs-xs)}
 dt{color:var(--subtle)}dd{margin:0;text-align:right;word-break:break-word;color:var(--muted);font-family:var(--mono);max-width:65%}
 .analytics-bottom{display:flex;align-items:start;flex-direction:column;gap:var(--s3);margin-top:var(--s5)}
@@ -131,6 +159,8 @@ input[type=range]{width:100%;min-height:var(--tap);accent-color:var(--accent)}
 .export-buttons{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s4)}
 .file-import{display:block;font-size:var(--fs-xs);color:var(--muted);margin-top:var(--s5)}
 .file-import input{display:block;margin-top:var(--s2);font-size:var(--fs-xs);max-width:100%}
+/* The native file button, drawn as the page's other small pixel keys (and given the 44px target). */
+.file-import input::file-selector-button{min-height:var(--tap);margin-right:var(--s3);padding:0 var(--s3);background:var(--raised);color:var(--ink);border:1px solid var(--ink);border-radius:0;box-shadow:var(--drop-sm);font:700 var(--fs-xs) var(--font);cursor:pointer}
 .scope-tabs{display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s3)}
 .scope-tabs button{min-height:var(--tap);padding:0 var(--s4);border:1px solid var(--line);border-radius:var(--radius-sm);font-size:var(--fs-xs);background:var(--surface);color:var(--muted)}
 .scope-tabs button.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -156,12 +186,16 @@ dialog .inline-controls{margin-top:var(--s5)}
 @media(max-height:560px) and (min-width:600px){.board-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(5.5rem,9rem);grid-template-areas:"b h" "b f";align-content:center;column-gap:var(--s3);padding:var(--s2)}
 .board-card .board{grid-area:b;--fit-reserve:4.75rem}.board-card .board-header{grid-area:h;flex-direction:column;align-self:start;margin:0}.board-card .score-wrap{text-align:left}.board-card .board-footer{grid-area:f;flex-direction:column;align-self:end;padding:0}.score-wrap strong{font-size:var(--fs-xl)}}
 @media(min-width:600px){.board-header{min-height:5rem}}
+/* Side by side, the two cards share three row tracks (caption, board, footer), so both boards and both footers line up
+   however the captions, the opponent's score and the gain lines wrap. Short frames keep their own layouts below. */
+@media(min-width:600px) and (min-height:561px){.arena{grid-template-rows:repeat(3,auto);row-gap:0}.board-card{display:grid;grid-row:span 3;grid-template-rows:subgrid}}
 @media(max-height:560px) and (min-width:600px){.board-header{min-height:0}}
 /* Picture-in-picture: brand.css hides every .jv-pip-hide. What is left is the human board, the status line and the new-duel button. */
 @media(max-height:420px) and (max-width:640px) and (min-aspect-ratio:13/10){
   .jv-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr);grid-template-rows:auto auto;align-content:center;gap:var(--s2) var(--s3);padding-block:var(--s1)}
-  .arena{grid-column:1;grid-row:1/3;gap:0}
-  .board-card{padding:var(--s1);display:block}.board-card .board{--fit-reserve:1.25rem}
+  .arena{grid-column:1;grid-row:1/3;gap:0;grid-template-columns:minmax(0,1fr)}.versus{display:none}
+  /* The board now has the whole column, so its height (not the column) limits it: reserve the card's padding and border too. */
+  .board-card{padding:var(--s1);display:block}.board-card .board{--fit-reserve:3rem}
   .play-footer{grid-column:2;grid-row:1;align-self:end}.intro{grid-column:2;grid-row:2;padding:0;align-self:start}
   .match-controls{display:block}.play-footer{gap:var(--s1)}.play-footer p{font-size:var(--fs-2xs);line-height:1.25}.recovery{gap:var(--s1)}.intro .button{min-height:var(--tap)}
 }

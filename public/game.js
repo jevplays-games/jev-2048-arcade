@@ -63,6 +63,7 @@ function renderBoard(actor, board, details = null, preview = false) {
     tile.setAttribute('aria-label', `Row ${Math.floor(index / 4) + 1}, column ${index % 4 + 1}: ${value || 'empty'}`);
   });
   $(actor + '-score').textContent = fmt(board?.score || 0);
+  if (actor === 'human') $('human-card-score').textContent = fmt(board?.score || 0);
   $(actor + '-max').textContent = fmt(Math.max(...cells.map(tileValue)));
   $(actor + '-empty').textContent = cells.filter(x => !x).length;
   $(actor + '-state').textContent = board ? ({playing: `${board.moves} moves`, blocked: 'No legal moves', move_cap: 'Move limit reached'}[board.status] || board.status) : 'Ready';
@@ -77,6 +78,13 @@ function renderMatch(details = null) {
   const local = match?.mode === 'local' || (!match && $('opponent').value === 'local');
   $('opponent-label').textContent = local ? 'LOCAL HEURISTIC' : 'Jev';
   $('jev-caption').textContent = local ? 'Practice, clearly labeled.' : 'Structured, not scripted.';
+  // Copy names the opponent actually playing: local practice never claims to be Jev.
+  $('hero-line').textContent = local ? 'Your board. The local heuristic’s board. The same chance.' : 'Your board. Jev’s board. The same chance.';
+  $('decision-footnote').textContent = 'Exact mechanics are computed by the rules engine. ' + (local
+    ? 'The local heuristic ranks candidates with deterministic features and search; no model is called, so there is no rubric confidence.'
+    : 'Jev evaluates positional rubrics. Confidence describes a rubric distribution—not the chance of winning.');
+  $('human-caption').textContent = !state || (match.status === 'active' && state.human.status === 'playing') ? 'Make your move.' :
+    match.status === 'active' ? 'Your board is finished.' : 'Match over.';
   $('round-label').textContent = `ROUND ${fmt(state?.round || 0)} / ${fmt(state?.moveLimit || 2048)}`;
   $('eligibility').textContent = imported ? 'IMPORTED EVIDENCE' : match?.verified ? (match.ranked ? 'VERIFIED · RANKED' : 'VERIFIED · UNRANKED') :
     match?.ranked ? 'RANKED · DISCORD' : match ? (local ? 'LOCAL PRACTICE · UNRANKED' : 'Jev · PRACTICE · UNRANKED') : 'READY TO PLAY';
@@ -232,7 +240,11 @@ async function move(action, retry = false) {
   if (autoOpponent && match.status === 'active' && match.state.human.status !== 'playing' && !match.pending)
     setTimeout(() => move(null), 150);
 }
-function emptyRow(columns, text) { const row = document.createElement('tr'), c = cell(text); c.colSpan = columns; c.className = 'empty-state'; row.append(c); return row; }
+// The message sits in a span the width of the scroll box, so on a phone it stays on screen however wide the table is.
+function emptyRow(columns, text) {
+  const row = document.createElement('tr'), c = document.createElement('td'), message = document.createElement('span');
+  message.className = 'empty-msg'; message.textContent = text; c.append(message); c.colSpan = columns; c.className = 'empty-state'; row.append(c); return row;
+}
 function makeMetric(label, value, detail = '') {
   const node = document.createElement('div'); node.className = 'metric';
   for (const [tag, text] of [['span', label], ['strong', value], ['small', detail]]) { const child = document.createElement(tag); child.textContent = text; node.append(child); }
@@ -246,14 +258,17 @@ function svgElement(tag, attrs = {}, text = null) {
 function chart(id, series, lines, label) {
   const container = $(id); container.replaceChildren();
   if (!series.length) { const p = document.createElement('p'); p.className = 'empty-state'; p.textContent = 'Play a few rounds to build this chart.'; container.append(p); return; }
-  const width = 510, height = 190, left = 45, right = 10, top = 8, bottom = 26;
-  const max = Math.max(1, ...lines.flatMap(line => series.map(p => Number.isFinite(p[line.key]) ? p[line.key] : 0)));
+  // The drawing is as wide as its box, in CSS pixels, so the 10px axis text stays 10px on a phone (a fixed 510-unit
+  // drawing scaled it down to 6.7px at 390px) and the plot fills its card at every width.
+  const width = Math.max(280, Math.round(container.clientWidth) || 510), height = 190, left = 45, right = 10, top = 8, bottom = 26;
+  // Round the axis top up to a multiple of 4 so the five whole-number tick labels are distinct (a one-round chart read 1 1 1 0 0).
+  const max = 4 * Math.ceil(Math.max(1, ...lines.flatMap(line => series.map(p => Number.isFinite(p[line.key]) ? p[line.key] : 0))) / 4);
   const svg = svgElement('svg', {viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': label});
   svg.append(svgElement('title', {}, label));
   for (let i = 0; i <= 4; i++) {
     const y = top + (height - top - bottom) * i / 4;
     svg.append(svgElement('line', {x1: left, x2: width - right, y1: y, y2: y, class: 'grid-line'}),
-      svgElement('text', {x: left - 7, y: y + 3, 'text-anchor': 'end'}, fmt(max * (1 - i / 4))));
+      svgElement('text', {x: left - 11, y: y + 3, 'text-anchor': 'end'}, fmt(max * (1 - i / 4))));
   }
   // Bound SVG point count; extrema and all values remain available in the exports.
   const stride = Math.max(1, Math.ceil(series.length / 400));
@@ -265,7 +280,10 @@ function chart(id, series, lines, label) {
     svg.append(svgElement('polyline', {points: points.join(' '), class: line.class}));
     if (series.length === 1) {
       const value = series[0][line.key];
-      if (Number.isFinite(value)) svg.append(svgElement('circle', {cx: left, cy: top + (1 - value / max) * (height - top - bottom), r: 3, fill: 'currentColor'}));
+      // A lone point takes its series colour from CSS (D8 chart tokens), never the ink text colour. Jev's hollow ring is
+      // larger than the human dot, so equal values still show both.
+      if (Number.isFinite(value)) svg.append(svgElement('circle', {cx: left, cy: top + (1 - value / max) * (height - top - bottom),
+        r: line.class === 'jev-line' ? 6 : 3, class: `${line.class} point`}));
     }
   }
   svg.append(svgElement('text', {x: left, y: height - 4}, 'ROUND 1'), svgElement('text', {x: width - right, y: height - 4, 'text-anchor': 'end'}, `ROUND ${series.at(-1).round}`));
@@ -380,7 +398,11 @@ async function loadLeaderboard() {
       const row = document.createElement('tr'); row.append(...[entry.rank, entry.display_name, fmt(entry.human_score), fmt(entry.jev_score), fmt(entry.max_tile), entry.outcome].map(cell)); return row;
     }) : [emptyRow(6, 'No verified scores in this cohort yet. Local practice never appears here.')]));
     $('leader-context').textContent = `${leaderScope.toUpperCase()} · ${$('difficulty').value.toUpperCase()} · ${data.period === 'week' ? 'THIS WEEK (UTC)' : 'ALL TIME'} · Equal scores share a rank. Best verified score per player.`;
-  } catch (error) { $('leader-table').replaceChildren(emptyRow(6, error.message)); $('leader-more').hidden = true; }
+  } catch (error) {
+    // Say which scope failed instead of leaving the previous scope's heading in place.
+    $('leader-table').replaceChildren(emptyRow(6, error.message)); $('leader-more').hidden = true;
+    $('leader-context').textContent = `${leaderScope.toUpperCase()} · UNAVAILABLE · ${error.message}`;
+  }
 }
 async function refreshIdentity() {
   me = await api('/api/me');
@@ -506,9 +528,11 @@ async function boot() {
     }
     await refreshIdentity();
     const pendingLaunch = sessionStorage.getItem('jevLaunch');
+    // loadMatch() clears the banner, so a failed claim is shown again once the match is on screen.
+    let contextError = null;
     if (pendingLaunch && me.user) {
       try { const response = await api('/api/context', {method: 'POST', body: {launchToken: pendingLaunch}}); me.context = response.context; }
-      catch (error) { showError(error); }
+      catch (error) { contextError = `Could not claim this Discord channel launch: ${error.message}`; showError(contextError); }
       finally { sessionStorage.removeItem('jevLaunch'); }
     } else if (pendingLaunch) status('Sign in with the Discord account that launched this game to claim its channel context.');
     // Auto-start: the duel is live as soon as the page is. An active match is
@@ -519,6 +543,7 @@ async function boot() {
     // unless it really ran against the model; ranked stays gated on me.user.
     if (me.activeMatchId) await loadMatch(me.activeMatchId);
     else await startMatch();
+    if (contextError) showError(contextError);
   } catch (error) { showError(error); status('The game needs its included server. Start it with npm start, then reload this page.'); }
 }
 boot();

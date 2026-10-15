@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slide Score — jevplay.games</title>
+<style>
+@font-face{font-family:Inter;src:url('../../public/brand/inter-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:block}
+@font-face{font-family:VT323;src:url('../../public/brand/vt323.woff2') format('woff2');font-weight:400;font-style:normal;font-display:block}
+:root{--pink:#f386a1;--ink:#1e1e1e;--paper:#fefefe;--panel:#dedede;--magenta:#e551ba}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:640px;overflow:hidden;background:var(--pink)}
+body{position:relative;color:var(--ink);font-family:VT323,'JetBrains Mono',monospace}
+.frame{position:absolute;inset:56px;border:1px solid var(--ink);overflow:hidden}
+.texture{position:absolute;inset:0;width:100%;height:100%;fill:var(--ink);opacity:.4}
+.crop{position:absolute;width:10px;height:10px;border:0 solid var(--ink)}
+.tl{left:40px;top:40px;border-left-width:1px;border-top-width:1px}
+.tr{right:40px;top:40px;border-right-width:1px;border-top-width:1px}
+.bl{left:40px;bottom:40px;border-left-width:1px;border-bottom-width:1px}
+.br{right:40px;bottom:40px;border-right-width:1px;border-bottom-width:1px}
+.tag{position:absolute;left:80px;top:80px;padding:4px 9px;background:var(--ink);color:var(--pink);font-size:20px;line-height:22px;letter-spacing:1px}
+h1{position:absolute;left:80px;top:218px;font:700 92px/1.1 Inter,sans-serif;letter-spacing:-4.5px}
+.subtitle{position:absolute;left:84px;top:336px;padding:4px 8px;background:var(--ink);color:var(--paper);font-size:24px;line-height:28px;white-space:nowrap}
+.window{position:absolute;background:var(--panel);border:1px solid var(--ink);box-shadow:inset 0 0 0 2px var(--paper),3px 3px 0 var(--ink)}
+.titlebar{display:flex;justify-content:space-between;background:var(--ink);color:var(--paper);padding:2px 7px;font-size:20px;line-height:21px}
+.jev{right:100px;top:190px;width:330px}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:10px}
+.board span{height:66px;display:grid;place-items:center;background:var(--panel);border:1px solid var(--ink);font-size:32px;line-height:1}
+.board .winner{background:var(--magenta)}
+.robot{position:absolute;right:20px;top:-63px;width:86px;height:66px}
+footer{position:absolute;left:80px;bottom:80px;font-size:28px;line-height:32px}
+</style>
+</head>
+<body>
+<div class="crop tl"></div><div class="crop tr"></div><div class="crop bl"></div><div class="crop br"></div>
+<div class="frame" aria-hidden="true">
+<svg class="texture" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r=".65"/></pattern></defs><rect width="100%" height="100%" fill="url(#dots)"/><g id="blobs"></g></svg>
+</div>
+<div class="tag">JEVPLAY.GAMES/SLIDE-SCORE</div>
+<h1>Slide Score</h1>
+<p class="subtitle">Two-board 2048-rules duel against Jev</p>
+<section class="window jev" aria-label="Jev's tile board">
+<svg class="robot" viewBox="0 0 86 66" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jev, a friendly boxy pixel robot" shape-rendering="crispEdges"><g fill="#1E1E1E"><path d="M40 2h8v6h-3v5h24v6h6v29h-7v12H53v5H33v-5H18V48h-7V19h6v-6h24V8h-1z"/><path d="M3 32h7v18H3zm73 0h7v18h-7z"/></g><path fill="#F386A1" d="M21 17h44v30H21zM24 51h38v7H24z"/><path fill="#DEDEDE" d="M25 22h36v20H25z"/><g fill="#1E1E1E"><path d="M30 25h6v7h-6zm20 0h6v7h-6zM36 35h14v4H36zM28 59h8v7h-8zm23 0h8v7h-8z"/></g></svg>
+<div class="titlebar"><span>JEV</span><span aria-hidden="true">_ x</span></div>
+<div class="board"><span>4</span><span>8</span><span>16</span><span>32</span><span>8</span><span>64</span><span>128</span><span>256</span><span>2</span><span>16</span><span>64</span><span class="winner">2048</span><span></span><span>2</span><span>4</span><span></span></div>
+</section>
+<footer>slide-score.jevplay.games</footer>
+<script>
+// Soft halftone silhouettes made only from ink dots, without gradients or blur.
+const blobs = document.getElementById('blobs');
+for (const [cx, cy, rx, ry] of [[230, 360, 210, 135], [900, 170, 190, 150]]) {
+  for (let y = 3; y < document.querySelector('.frame').clientHeight; y += 6) {
+    for (let x = 3; x < document.querySelector('.frame').clientWidth; x += 6) {
+      const distance = ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2;
+      if (distance >= 1) continue;
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', x);
+      dot.setAttribute('cy', y);
+      dot.setAttribute('r', (1.9 * (1 - distance) ** 1.5).toFixed(3));
+      blobs.appendChild(dot);
+    }
+  }
+}
+</script>
+</body>
+</html>

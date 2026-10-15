@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/banner.jpg" alt="Pixel-art robot Jev sliding numbered tiles on a four-by-four board" width="100%"></p>
+<p align="center"><img src="assets/banner.png" alt="Pink retro-desktop banner: the title Slide Score above two pixel windows labelled You and Jev, each showing a 4x4 tile board, beside a score chart window." width="100%"></p>
 
 <div align="center">
 
@@ -22,7 +22,7 @@ Slide Score is a single-page duel played by the rules of 2048. You and Jev each 
 > [!NOTE]
 > Local heuristic practice works immediately, with no API keys or npm runtime dependencies. Live Jev and Discord require your own server-side credentials. No live Jev call, Discord authorization, or Cloudflare deployment was performed while producing this package. The provider examples are explicitly labeled synthetic; the included measured benchmark uses scripted baselines only.
 
-![Desktop interface in the DOM/API test harness](docs/screenshots/desktop.png)
+![Slide Score in a desktop browser: your board and the local heuristic's board as grey pixel windows on pink, twenty moves into a practice duel.](docs/screenshots/desktop.png)
 
 ## Quick start
 
@@ -55,7 +55,7 @@ Choose **Jev** as the opponent and start a duel. The server calls the documented
 
 Jev receives only its own board, remaining move budget, legal candidate afterstates, exact features, and bounded lookahead summaries. It does not receive your identity, board, pending move, seed, or future spawn. Scores and arithmetic come from code. Jev rates merge structure, space recovery, and anchor stability.
 
-A provider failure pauses the reserved round. Retry preserves the human action. “Continue as local practice” is explicit and permanently removes eligibility; it never silently substitutes a model. Forced moves require no provider request.
+A provider failure pauses the reserved round. Retry preserves the human action. “Switch to local practice” is explicit and permanently removes eligibility; it never silently substitutes a model. Forced moves require no provider request.
 
 ## How it works
 
@@ -103,7 +103,7 @@ Local practice is **not Jev**. Its UI and records say so. Difficulty controls it
 
 ## Analytics and replay
 
-Open **Analytics** for score/space/latency curves, per-player statistics and heatmaps. Open **Decision evidence** for current legal candidates and structured model outputs. **Replay & audit** supports round-by-round inspection, verification, importing a bundle, and exports.
+Open **Analytics** for score/space/latency curves, per-player statistics and heatmaps. Open **Decision lab** for current legal candidates and structured model outputs. **Replay & audit** supports round-by-round inspection, verification, importing a bundle, and exports.
 
 ```sh
 # Check an exported audit without contacting Jev or Discord.
@@ -156,6 +156,7 @@ Audit download and verification use paged event streaming on the server. Full an
 ## Repository layout
 
 ```text
+assets/              README banner and social preview; assets/src holds their HTML sources and render scripts
 public/              Vanilla UI and shared pure rules, RNG, evaluation, audit, analytics
 public/brand/        Shared jevplay.games brand system (pink/ink), Inter and VT323 fonts (SIL OFL 1.1)
 server/              Native Node adapter, Worker adapter, trusted API, Jev, Discord, SQLite

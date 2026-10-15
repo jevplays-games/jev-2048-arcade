@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "eaa023fbac8ad5aee430b26da34b14ae39f19517a316d91a22c8a7556a0b5d9c",
+  "sourceSHA256": "56f7091562f69b8bbed9309657f371a64026d4042ecc00155dfbac89e728f644",
   "files": [
     {
       "path": "bench/run.js",
@@ -35,18 +35,18 @@
     },
     {
       "path": "public/art/tile.svg",
-      "bytes": 1291,
-      "sha256": "af54732b14ee3731555974c11e0d3bfb7374dc87bae2f1a160963564ee7e9da7"
+      "bytes": 291,
+      "sha256": "5ce08ee8db1fa6de5abaee5ae407613d5421dc30eee994c532aefa235838564a"
     },
     {
       "path": "public/art/well.svg",
-      "bytes": 499,
-      "sha256": "bc5242d3d3af689fdb9af1f060b96a427114eaa6ef2f29f0eaeeb75298e4e7ce"
+      "bytes": 389,
+      "sha256": "f597d48ab82f7ee6f7f7d65fb10af90886d6f9a6a358b18edfb219d701ce7bb8"
     },
     {
       "path": "public/brand/apple-touch-icon.png",
-      "bytes": 19167,
-      "sha256": "bf3a4db42615438f8d3158ec2219244353844c938e76b37d058dba96489b7599"
+      "bytes": 677,
+      "sha256": "59828bddf47a60d75cb5baaec4d263b032946d000f45dc6a32792dbef0103c25"
     },
     {
       "path": "public/brand/brand.css",
@@ -60,13 +60,13 @@
     },
     {
       "path": "public/brand/favicon-32.png",
-      "bytes": 1945,
-      "sha256": "e5d0208e9d5f390b2abbd18d0a3561375255cb1156bd4bae43fb9cc932a7d035"
+      "bytes": 260,
+      "sha256": "336255a7c89ac774013c8966a923a82cf025f9539fa986383f8ca17e10259052"
     },
     {
       "path": "public/brand/icon.svg",
-      "bytes": 1794,
-      "sha256": "55981b08db420b5b47b1b0c5ddedb25593c5847cda6272411f27a78c228c6433"
+      "bytes": 763,
+      "sha256": "2b8b923fec90a3490da9c999dffa86f452952b21bb4fcef055db08b821eba031"
     },
     {
       "path": "public/brand/inter-var.woff2",
@@ -75,8 +75,8 @@
     },
     {
       "path": "public/brand/mark.svg",
-      "bytes": 1794,
-      "sha256": "7873242b6e491bfc548fcd05d5f153f6d439ca3aa9c916efbe715586750e7cb4"
+      "bytes": 763,
+      "sha256": "2b8b923fec90a3490da9c999dffa86f452952b21bb4fcef055db08b821eba031"
     },
     {
       "path": "public/brand/OFL-VT323.txt",
@@ -90,23 +90,23 @@
     },
     {
       "path": "public/brand/og.png",
-      "bytes": 172794,
-      "sha256": "b0ac24a4c75742eb2ef47e45449026ac652785ba16dbac94d0286013ed3f6f5a"
+      "bytes": 56007,
+      "sha256": "9a6900f633371b649986d8f579f55621dfd8ccab8cb2d3d02fb329684e7e4c03"
     },
     {
       "path": "public/brand/result-draw.svg",
-      "bytes": 1004,
-      "sha256": "c7c4069551fe2be380118c5379dd8f6ee0f80bc969d09c3b07c2e526a6609fe2"
+      "bytes": 1384,
+      "sha256": "062b1870a9529cda260961a8752c1618b005e0fdb82852d1137a28cba30240b7"
     },
     {
       "path": "public/brand/result-loss.svg",
-      "bytes": 1048,
-      "sha256": "7759d7a48baf9a7a1502320036df8d98e8be435dd37d4aa3fcd509ae6a25eedc"
+      "bytes": 1477,
+      "sha256": "deefc98bac79f7f4c98db5f03d175a474693a7564e63e6ae26f78ce72e856aa3"
     },
     {
       "path": "public/brand/result-win.svg",
-      "bytes": 1203,
-      "sha256": "80a744fdca06775cfca12fd8e00044471f9e2dbf3d1245b992b0463d4c51208a"
+      "bytes": 1350,
+      "sha256": "d53d1ea9fe06022f6d4ac4abc4ef206f304bebf922168bc025695c3e4db6376c"
     },
     {
       "path": "public/brand/vt323.woff2",
@@ -115,8 +115,8 @@
     },
     {
       "path": "public/core/analytics.js",
-      "bytes": 14653,
-      "sha256": "7da9249b50ab37c18a191da4e4515848932875aa911e4616fa2457e5d73909f4"
+      "bytes": 14658,
+      "sha256": "9217a7c9411895f9a8b2da5b957c3dc96374d1c6042011d2bdb52c48afce8069"
     },
     {
       "path": "public/core/audit.js",
@@ -140,18 +140,18 @@
     },
     {
       "path": "public/game.css",
-      "bytes": 20302,
-      "sha256": "4b9533cb69ee59aee98594def3c36be0c2fdfa1a79394368f08b42b28a849607"
+      "bytes": 24073,
+      "sha256": "96da4a95792cdc53d92452f9f21d8afbc7b60f6f424505294da10153b69d1741"
     },
     {
       "path": "public/game.js",
-      "bytes": 38683,
-      "sha256": "220cd355b038b780ee3fbf37ac992b767be168d08fd18dae69832c0fc88062a8"
+      "bytes": 40942,
+      "sha256": "f1be61defc03f545f8222ed53eedf944df2e1ea6e4aac32f0b7611df3e17c1d9"
     },
     {
       "path": "public/index.html",
-      "bytes": 17838,
-      "sha256": "959e30a2f2a8d0e89608b34405c566aea17a3318ccf3356a69291153d0e0bd9c"
+      "bytes": 18191,
+      "sha256": "4165097aa141087158e5cddf9e32c89cad60c99903eaba5db71ea35d7876fd6b"
     },
     {
       "path": "public/vendor/discord-embedded-app-sdk.js",
@@ -210,8 +210,8 @@
     },
     {
       "path": "server/auth.js",
-      "bytes": 13434,
-      "sha256": "a22963345450bfe3d7ee91139f860957e26a9453d57345cc701d2e6aed4e4c6d"
+      "bytes": 14007,
+      "sha256": "399350edaa94f33cab232e8b56eac9eecdd8257ed8bd064c31e066238ca6101b"
     },
     {
       "path": "server/db.js",
@@ -290,8 +290,8 @@
     },
     {
       "path": "tests/rename.test.js",
-      "bytes": 9627,
-      "sha256": "078eac09897cbbcdd6fb285ef3d17d7cdff368b2cb6b6d70514fe07955f2ee2d"
+      "bytes": 11030,
+      "sha256": "59df05bde857bf4f73799bdc14fc1ace0beb98f1090dbafdeb527ab41545ef57"
     },
     {
       "path": "tests/rules.test.js",

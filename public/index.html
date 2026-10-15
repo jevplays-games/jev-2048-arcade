@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#F386A1">
-  <meta name="description" content="Slide Score: two-board 2048 rules against Jev with transparent decision evidence, matched spawns, replay, and analytics.">
+  <meta name="description" content="Slide Score: a two-board duel on 2048 rules against Jev, with transparent decision evidence, matched spawns, replay, and analytics.">
   <title>Slide Score · jevplay.games</title>
   <link rel="preload" href="/brand/inter-var.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/brand/vt323.woff2" as="font" type="font/woff2" crossorigin>
   <meta property="og:type" content="website"><meta property="og:site_name" content="jevplay.games"><meta property="og:title" content="Slide Score · jevplay.games">
   <meta property="og:description" content="Your board, Jev's board, the same spawns. Inspect structured decisions and measure every move.">
   <meta property="og:url" content="https://slide-score.jevplay.games/"><meta property="og:image" content="https://slide-score.jevplay.games/brand/og.png">
-  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Slide Score on jevplay.games: a 2048 tile with two smaller tiles sliding in behind it.">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Slide Score on jevplay.games: a pink pixel window titled Jev holding a 4x4 tile board, with the domain slide-score.jevplay.games.">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://slide-score.jevplay.games/brand/og.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
   <link rel="icon" type="image/svg+xml" href="/brand/icon.svg">
@@ -44,7 +44,7 @@
     <main class="jv-main" id="main">
     <section class="intro jv-hero" aria-labelledby="title">
       <div class="jv-pip-hide"><div class="eyebrow">THE TWO-BOARD CHALLENGE <span class="tiny-line"></span> 01</div><h1 id="title">Slide <span>Score.</span></h1>
-      <p>Your board. Jev’s board. The same chance.</p>
+      <p id="hero-line">Your board. Jev’s board. The same chance.</p>
       <p class="hero-tagline">STRUCTURED INTELLIGENCE. REAL PLAY.</p></div>
       <div class="match-controls"><label class="select-label jv-pip-hide">OPPONENT<select id="opponent"><option value="jev">Jev · live model</option><option value="local">Local heuristic · practice</option></select></label>
       <label class="select-label jv-pip-hide">DIFFICULTY<select id="difficulty"><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option><option value="jev" selected>Jev</option></select></label>
@@ -52,7 +52,7 @@
     </section>
     <div class="match-strip jv-pip-hide"><div class="pills"><span id="eligibility" class="pill">READY TO PLAY</span><span class="pill subdued">MATCHED SPAWNS</span><span id="round-label" class="pill subdued">ROUND 0 / 2,048</span></div></div>
     <section id="play-region" class="arena jv-first" aria-label="Slide Score game" tabindex="0">
-      <article class="jv-panel is-tight board-card is-human"><header class="board-header jv-pip-hide"><div><div class="eyebrow"><span class="status-dot human-dot"></span> YOU</div><h2>Make your move.</h2></div><div class="score-wrap"><span>SCORE</span><small id="human-gain">YOUR NEXT MOVE COUNTS</small></div></header>
+      <article class="jv-panel is-tight board-card is-human"><header class="board-header jv-pip-hide"><div><div class="eyebrow"><span class="status-dot human-dot"></span> YOU</div><h2 id="human-caption">Make your move.</h2></div><div class="score-wrap"><span>SCORE</span><strong id="human-card-score">0</strong><small id="human-gain">YOUR NEXT MOVE COUNTS</small></div></header>
         <div id="human-board" class="jv-fit jv-tray board" role="grid" aria-label="Your board"></div>
         <footer class="board-footer jv-pip-hide"><span>Best tile <strong id="human-max">—</strong></span><span>Empty <strong id="human-empty">16</strong></span><span id="human-state">Ready</span></footer>
       </article>
@@ -71,9 +71,9 @@
     <section id="decision-panel" class="detail-panel jv-pip-hide" aria-labelledby="decision-title">
       <div class="panel-heading"><div><div class="eyebrow">OBSERVE THE DECISION, NOT HIDDEN REASONING</div><h2 id="decision-title">Inside the move.</h2></div><label class="toggle"><input id="evidence-toggle" type="checkbox" checked> Show evidence</label></div>
       <div id="decision-content"><div class="decision-metrics"><div class="metric"><span>DECISION SOURCE</span><strong id="metric-source">Not started</strong></div><div class="metric"><span>LEGAL CANDIDATES</span><strong id="metric-candidates">—</strong></div><div class="metric"><span>RUBRIC CONFIDENCE</span><strong id="metric-confidence">—</strong></div><div class="metric"><span>SERVER DECISION TIME</span><strong id="metric-latency">—</strong></div></div>
-        <div class="table-scroll"><table><caption class="sr-only">Candidate move evidence. Higher model utility is preferred; confidence is not a win probability.</caption><thead><tr><th>Move</th><th>Merge gain</th><th>Empty cells</th><th>Block risk</th><th>Search value</th><th>Model utility</th><th>Confidence</th></tr></thead><tbody id="candidate-table"><tr><td colspan="7" class="empty-state">Play a move to inspect candidate features and the selected action.</td></tr></tbody></table></div>
+        <div class="table-scroll"><table><caption class="sr-only">Candidate move evidence. Higher model utility is preferred; confidence is not a win probability.</caption><thead><tr><th>Move</th><th>Merge gain</th><th>Empty cells</th><th>Block risk</th><th>Search value</th><th>Model utility</th><th>Confidence</th></tr></thead><tbody id="candidate-table"><tr><td colspan="7" class="empty-state"><span class="empty-msg">Play a move to inspect candidate features and the selected action.</span></td></tr></tbody></table></div>
         <details class="raw-evidence"><summary>Raw structured decision evidence</summary><pre id="decision-json">No decisions yet.</pre></details>
-        <p class="panel-footnote">Exact mechanics are computed by the rules engine. Jev evaluates positional rubrics. Confidence describes a rubric distribution—not the chance of winning.</p>
+        <p class="panel-footnote" id="decision-footnote">Exact mechanics are computed by the rules engine. Jev evaluates positional rubrics. Confidence describes a rubric distribution—not the chance of winning.</p>
       </div>
     </section>
     <section id="analytics-panel" class="detail-panel jv-pip-hide" hidden aria-labelledby="analytics-title">
@@ -84,7 +84,7 @@
       <article class="jv-panel is-tight chart-card"><h3>Decision latency</h3><p>Measured server time, including feature evaluation</p><div id="latency-chart" class="chart"></div></article>
       <article class="jv-panel is-tight chart-card"><h3>Legal options</h3><p>Available directions after spawning</p><div id="mobility-chart" class="chart"></div></article></div>
       <div class="panel-heading compact"><h3>Spatial signatures</h3><label class="select-label">HEATMAP<select id="heatmap-type"><option value="mergeDestinations">Merge destinations</option><option value="spawnPositions">Spawn positions</option><option value="occupancyRate">Occupancy rate</option><option value="maxTilePositions">Largest-tile positions</option><option value="meanTileValue">Mean tile value</option></select></label></div>
-      <div class="heatmap-grid"><article><h4>You</h4><div id="human-heatmap" class="heatmap"></div></article><article><h4>Opponent</h4><div id="jev-heatmap" class="heatmap"></div></article><article><h4>Direction frequency</h4><div id="direction-distribution"></div></article><article><h4>Evidence & reliability</h4><dl id="reliability"></dl></article></div>
+      <div class="heatmap-grid"><article><h4>You</h4><div id="human-heatmap" class="heatmap"></div></article><article><h4>Opponent</h4><div id="jev-heatmap" class="heatmap"></div></article><article><h4>Direction frequency</h4><div class="direction-table jv-panel is-tight"><div class="direction-stat direction-head" aria-hidden="true"><span></span><span>YOU</span><span>OPPONENT</span></div><div id="direction-distribution"></div></div></article><article><h4>Evidence & reliability</h4><dl id="reliability"></dl></article></div>
       <div class="table-scroll"><table><caption>Board metrics · all committed active-board moves</caption><thead><tr><th>Metric</th><th>You</th><th>Opponent</th></tr></thead><tbody id="comparison-table"></tbody></table></div>
       <details class="raw-evidence"><summary>Full analytics JSON and metric definitions</summary><p>See docs/ANALYTICS.md for denominators, caveats, schemas, export tables, and retention.</p><pre id="analytics-json"></pre></details>
       <div class="analytics-bottom"><label class="toggle"><input type="checkbox" id="telemetry-toggle"> Opt in to browser timing analytics</label><p>No text entry, browsing history, fingerprints, or third-party analytics. Gameplay evidence is always recorded for replay.</p></div>

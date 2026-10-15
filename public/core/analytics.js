@@ -187,7 +187,7 @@ export function analyze(bundle) {
       roundTripMs: distribution(rtt), frameGapMs: distribution(frameGaps)},
     integrity: {checked: false, note: 'Run verifyBundle to check the chain and replay; a stored hash alone is not verification.'},
     caveats: ['Rubric confidence is not a win probability.', 'Heuristic regret is a proxy, not optimal-play regret.',
-      'Human and Jev baseline comparisons use their recorded, possibly different, search budgets.',
+      'Human and opponent baseline comparisons use their recorded, possibly different, search budgets.',
       'Unknown token usage is not zero. Cost is unset unless an explicit dated tariff is supplied.',
       'Browser timing is opt-in and untrusted. No hidden reasoning is recorded.',
       'Hash chaining is tamper-evident relative to a trusted head; it is not operator-proof.']};
