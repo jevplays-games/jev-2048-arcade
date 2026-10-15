@@ -246,7 +246,9 @@ function svgElement(tag, attrs = {}, text = null) {
 function chart(id, series, lines, label) {
   const container = $(id); container.replaceChildren();
   if (!series.length) { const p = document.createElement('p'); p.className = 'empty-state'; p.textContent = 'Play a few rounds to build this chart.'; container.append(p); return; }
-  const width = 510, height = 190, left = 45, right = 10, top = 8, bottom = 26;
+  // The drawing is as wide as its box, in CSS pixels, so the 10px axis text stays 10px on a phone (a fixed 510-unit
+  // drawing scaled it down to 6.7px at 390px) and the plot fills its card at every width.
+  const width = Math.max(280, Math.round(container.clientWidth) || 510), height = 190, left = 45, right = 10, top = 8, bottom = 26;
   // Round the axis top up to a multiple of 4 so the five whole-number tick labels are distinct (a one-round chart read 1 1 1 0 0).
   const max = 4 * Math.ceil(Math.max(1, ...lines.flatMap(line => series.map(p => Number.isFinite(p[line.key]) ? p[line.key] : 0))) / 4);
   const svg = svgElement('svg', {viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': label});
@@ -254,7 +256,7 @@ function chart(id, series, lines, label) {
   for (let i = 0; i <= 4; i++) {
     const y = top + (height - top - bottom) * i / 4;
     svg.append(svgElement('line', {x1: left, x2: width - right, y1: y, y2: y, class: 'grid-line'}),
-      svgElement('text', {x: left - 7, y: y + 3, 'text-anchor': 'end'}, fmt(max * (1 - i / 4))));
+      svgElement('text', {x: left - 11, y: y + 3, 'text-anchor': 'end'}, fmt(max * (1 - i / 4))));
   }
   // Bound SVG point count; extrema and all values remain available in the exports.
   const stride = Math.max(1, Math.ceil(series.length / 400));
