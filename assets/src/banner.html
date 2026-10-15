@@ -31,7 +31,7 @@ h1{position:absolute;left:60px;top:112px;font:700 92px/1.1 Inter,sans-serif;lett
 .board span{height:37px;display:grid;place-items:center;background:var(--panel);border:1px solid var(--ink);font-size:25px;line-height:1}
 .board span:empty{background:var(--paper)}
 .board .winner{background:var(--magenta)}
-.robot{position:absolute;right:22px;top:-61px;width:80px;height:64px;fill:var(--ink)}
+.robot{position:absolute;right:20px;top:-63px;width:86px;height:66px}
 .score{left:700px;top:286px;width:204px}
 .score-body{padding:8px 10px;display:flex;gap:10px;align-items:end}
 .chart{display:flex;gap:3px;align-items:end;height:51px;width:48px;border-bottom:1px solid var(--ink);flex-shrink:0}
@@ -55,13 +55,7 @@ h1{position:absolute;left:60px;top:112px;font:700 92px/1.1 Inter,sans-serif;lett
 <div class="board"><span>2</span><span>4</span><span>8</span><span>16</span><span>4</span><span>8</span><span>32</span><span>64</span><span>8</span><span>16</span><span>128</span><span>256</span><span>2</span><span></span><span></span><span>4</span></div>
 </section>
 <section class="window jev" aria-label="Jev's tile board">
-<svg class="robot" viewBox="0 0 80 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jev pixel robot peeking over the window" shape-rendering="crispEdges">
-<path d="M36 0h8v8h-2v8h24v6h6v32H8V22h6v-6h24V8h-2zM2 30h6v18H2zm70 0h6v18h-6z"/>
-<path fill="var(--pink)" d="M16 20h48v30H16z"/>
-<path fill="var(--panel)" d="M21 25h38v20H21z"/>
-<path d="M26 29h6v7h-6zm22 0h6v7h-6zM32 39h16v3H32zM12 52h14v12H12zm42 0h14v12H54z"/>
-<path fill="var(--pink)" d="M16 55h6v5h-6zm42 0h6v5h-6z"/>
-</svg>
+<svg class="robot" viewBox="0 0 86 66" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jev, a friendly boxy pixel robot" shape-rendering="crispEdges"><g fill="#1E1E1E"><path d="M40 2h8v6h-3v5h24v6h6v29h-7v12H53v5H33v-5H18V48h-7V19h6v-6h24V8h-1z"/><path d="M3 32h7v18H3zm73 0h7v18h-7z"/></g><path fill="#F386A1" d="M21 17h44v30H21zM24 51h38v7H24z"/><path fill="#DEDEDE" d="M25 22h36v20H25z"/><g fill="#1E1E1E"><path d="M30 25h6v7h-6zm20 0h6v7h-6zM36 35h14v4H36zM28 59h8v7h-8zm23 0h8v7h-8z"/></g></svg>
 <div class="titlebar"><span>JEV</span><span aria-hidden="true">_ x</span></div>
 <div class="board"><span>4</span><span>8</span><span>16</span><span>32</span><span>8</span><span>64</span><span>128</span><span>256</span><span>2</span><span>16</span><span>64</span><span class="winner">2048</span><span></span><span>2</span><span>4</span><span></span></div>
 </section>
