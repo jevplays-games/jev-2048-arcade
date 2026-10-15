@@ -105,6 +105,10 @@ caption{text-align:left;color:var(--muted);padding:0 0 var(--s2)}
 .panel-footnote{font-size:var(--fs-xs);margin-top:var(--s4);color:var(--subtle);max-width:60rem}
 .raw-evidence{margin-top:var(--s4);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:var(--s3)}
 .raw-evidence summary{font-size:var(--fs-xs);color:var(--muted);cursor:pointer;min-height:var(--tap);display:flex;align-items:center}
+/* display:flex removes the browser's disclosure triangle, so the box gets its own pixel +/- (decorative; the summary
+   already exposes expanded/collapsed). */
+.raw-evidence summary::before{content:"+";content:"+"/"";flex:none;width:1.25rem;font:var(--fs-lg)/1 var(--mono);color:var(--ink)}
+.raw-evidence[open]>summary::before{content:"-";content:"-"/""}
 .raw-evidence p{font-size:var(--fs-xs);margin-top:var(--s2)}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:var(--fs-xs)/1.65 var(--mono);max-height:23rem;overflow:auto;color:var(--muted);margin-bottom:0}
 .inline-controls{display:flex;gap:var(--s2);flex-wrap:wrap}
@@ -147,6 +151,8 @@ input[type=range]{width:100%;min-height:var(--tap);accent-color:var(--accent)}
 .export-buttons{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s4)}
 .file-import{display:block;font-size:var(--fs-xs);color:var(--muted);margin-top:var(--s5)}
 .file-import input{display:block;margin-top:var(--s2);font-size:var(--fs-xs);max-width:100%}
+/* The native file button, drawn as the page's other small pixel keys (and given the 44px target). */
+.file-import input::file-selector-button{min-height:var(--tap);margin-right:var(--s3);padding:0 var(--s3);background:var(--raised);color:var(--ink);border:1px solid var(--ink);border-radius:0;box-shadow:var(--drop-sm);font:700 var(--fs-xs) var(--font);cursor:pointer}
 .scope-tabs{display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s3)}
 .scope-tabs button{min-height:var(--tap);padding:0 var(--s4);border:1px solid var(--line);border-radius:var(--radius-sm);font-size:var(--fs-xs);background:var(--surface);color:var(--muted)}
 .scope-tabs button.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
