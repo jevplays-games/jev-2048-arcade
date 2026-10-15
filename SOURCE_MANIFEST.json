@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "b8c55f834267d8447a9c3410344c1a3ccd0032c338657e7807280ef0d54170be",
+  "sourceSHA256": "9c4732aaaf3bdc0acd7bdf47ebb16f258e1d235bda135f1ff11a25f28cdcfe64",
   "files": [
     {
       "path": "bench/run.js",
@@ -95,18 +95,18 @@
     },
     {
       "path": "public/brand/result-draw.svg",
-      "bytes": 480,
-      "sha256": "7410e54f98ec85cdb8b2f990e013e08da8d91d7e7d3aa290d6c723d935bdbf89"
+      "bytes": 1384,
+      "sha256": "062b1870a9529cda260961a8752c1618b005e0fdb82852d1137a28cba30240b7"
     },
     {
       "path": "public/brand/result-loss.svg",
-      "bytes": 576,
-      "sha256": "55fa4c13288547d42993e8d986e9368e3a4014ff21e6116eb9d866004ab054d7"
+      "bytes": 1477,
+      "sha256": "deefc98bac79f7f4c98db5f03d175a474693a7564e63e6ae26f78ce72e856aa3"
     },
     {
       "path": "public/brand/result-win.svg",
-      "bytes": 534,
-      "sha256": "592c71f63c7233e1967da65bdf8cf63671abe3202d2074d84a82adc1aa65e979"
+      "bytes": 1350,
+      "sha256": "d53d1ea9fe06022f6d4ac4abc4ef206f304bebf922168bc025695c3e4db6376c"
     },
     {
       "path": "public/brand/vt323.woff2",
