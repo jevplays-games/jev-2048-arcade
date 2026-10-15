@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "23d043b773a743a774c523413bd3c28ae43e025581f697e41e7979a2a91824f6",
+  "sourceSHA256": "d2fc1abf0300f36685a0e1a762bad20d83fe492d8a009373159be4839695e3dc",
   "files": [
     {
       "path": "bench/run.js",
@@ -90,8 +90,8 @@
     },
     {
       "path": "public/brand/og.png",
-      "bytes": 55852,
-      "sha256": "dfa0a3f621b6ad10c66f65a5e4ef1e2d23d751acce4bc278806a18c9efeb6157"
+      "bytes": 56023,
+      "sha256": "3263b79e40213764da744b0860547ebe67700550bb5ede6dc5fc2b4570d56fe9"
     },
     {
       "path": "public/brand/result-draw.svg",
