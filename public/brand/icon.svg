@@ -7,6 +7,6 @@
   <rect x="8" y="24" width="12" height="12" fill="#DEDEDE"/>
   <rect x="40" y="22" width="16" height="16" fill="#1E1E1E"/>
   <rect x="42" y="24" width="12" height="12" fill="#DEDEDE"/>
-  <path d="M24 28H30V24H32V26H34V28H38V32H34V34H32V36H30V32H24Z" fill="#1E1E1E"/>
+  <path d="M24 28H32V24H34V26H36V28H38V32H36V34H34V36H32V32H24Z" fill="#1E1E1E"/>
   <rect x="42" y="24" width="4" height="4" fill="#E551BA"/>
 </svg>
