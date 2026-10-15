@@ -47,7 +47,8 @@ test('legacy origins: only bare origins are admitted (D9); hostile entries are s
     const required=['https://user:pw@evil.example','https://evil.example#@2048.jevplay.games','https://evil.example/path',
       'https://evil.example?q=1','https://*.jevplay.games'];
     const others=['https://2048.jevplay.games//','https://2048.JEVPLAY.games','https://2048.jevplay.games:443','2048.jevplay.games',
-      'not a url','javascript:alert(1)','http://[::1','http://2048.jevplay.games','ftp://2048.jevplay.games'];
+      'not a url','javascript:alert(1)','http://[::1','http://2048.jevplay.games','ftp://2048.jevplay.games',
+      'https://:pw@evil.example','https://evil.example?','https://evil.example#'];
     for(const entry of [...required,...others]){
       const before=warned.length;
       assert.deepEqual(appOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:entry}),[NEW],entry);
@@ -65,6 +66,21 @@ test('legacy origins: only bare origins are admitted (D9); hostile entries are s
       assert.equal((await browser(f,NEW)('/api/health')).status,200);
       assert.equal((await browser(f,OLD)('/api/health')).status,200);
     } finally {f.DB.close();}
+  } finally {console.warn=warn;}
+});
+test('hostile legacy entries are refused on the request path and each is warned about once, not on every request',async()=>{
+  const warn=console.warn,warned=[];console.warn=m=>warned.push(m);
+  const hostile=['https://:pw@evil.example','https://evil.example?','https://evil.example#'];
+  try {
+    const f=await fixture({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:[...hostile,OLD].join(',')});
+    try {
+      for(let i=0;i<3;i++){
+        assert.equal((await browser(f,'https://evil.example')('/api/health')).status,421);
+        assert.equal((await browser(f,NEW)('/api/health')).status,200);
+        assert.equal((await browser(f,OLD)('/api/health')).status,200);
+      }
+    } finally {f.DB.close();}
+    assert.deepEqual(warned.map(m=>JSON.parse(m).entry),hostile,'one warning per rejected entry, however many requests');
   } finally {console.warn=warn;}
 });
 test('a write must come from the host it is sent to, on either hostname',async()=>{

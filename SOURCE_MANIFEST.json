@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "7d8872275af9c34eb6b474cc73a7352feb665b59b150bd6f56fbcbc937435815",
+  "sourceSHA256": "be3c492c852bebbbd98d5cc201b59f424e5faae41b53fdf7475ffab2ebb35bf6",
   "files": [
     {
       "path": "bench/run.js",
@@ -210,8 +210,8 @@
     },
     {
       "path": "server/auth.js",
-      "bytes": 13434,
-      "sha256": "a22963345450bfe3d7ee91139f860957e26a9453d57345cc701d2e6aed4e4c6d"
+      "bytes": 14007,
+      "sha256": "399350edaa94f33cab232e8b56eac9eecdd8257ed8bd064c31e066238ca6101b"
     },
     {
       "path": "server/db.js",
@@ -290,8 +290,8 @@
     },
     {
       "path": "tests/rename.test.js",
-      "bytes": 9627,
-      "sha256": "078eac09897cbbcdd6fb285ef3d17d7cdff368b2cb6b6d70514fe07955f2ee2d"
+      "bytes": 10571,
+      "sha256": "b79a2624cf2b92dc8388febf992bbbb5132fd3119e1772608bdf122cc5273a98"
     },
     {
       "path": "tests/rules.test.js",

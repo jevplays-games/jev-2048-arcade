@@ -22,14 +22,25 @@ function legacyOrigin(entry) {
   if (entry.replace(/\/$/, '') !== url.origin) return {reason: 'not_bare_origin'};
   return {origin: url.origin};
 }
-export function appOrigins(env) {
-  const legacy = [];
-  for (const entry of (env.LEGACY_PUBLIC_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean)) {
+// appOrigins runs on every API request, so the variable is parsed once per distinct value and the result reused:
+// a rejected entry logs its one warning when the value is first seen, not again on every request. The cache holds
+// configuration values only (never request input) and is bounded anyway.
+const legacyCache = new Map();
+function legacyOrigins(value) {
+  let admitted = legacyCache.get(value);
+  if (admitted) return admitted;
+  admitted = [];
+  for (const entry of value.split(',').map(s => s.trim()).filter(Boolean)) {
     const {origin, reason} = legacyOrigin(entry);
-    if (origin) legacy.push(origin);
+    if (origin) admitted.push(origin);
     else console.warn(JSON.stringify({event: 'legacy_origin_rejected', variable: 'LEGACY_PUBLIC_ORIGINS', entry, reason}));
   }
-  return [...new Set([env.PUBLIC_ORIGIN, ...legacy].filter(Boolean))];
+  if (legacyCache.size >= 16) legacyCache.clear();
+  legacyCache.set(value, Object.freeze(admitted));
+  return admitted;
+}
+export function appOrigins(env) {
+  return [...new Set([env.PUBLIC_ORIGIN, ...legacyOrigins(env.LEGACY_PUBLIC_ORIGINS || '')].filter(Boolean))];
 }
 // The origin the request was sent to. Session cookies are host-only, so OAuth and redirects stay on that host.
 export const requestOrigin = request => new URL(request.url).origin;
