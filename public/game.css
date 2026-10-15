@@ -130,6 +130,10 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:var(--fs-xs)/1.65 var(--mon
 .heat-cell[data-intensity="1"]{background:var(--tile-2)}.heat-cell[data-intensity="2"]{background:var(--tile-4)}.heat-cell[data-intensity="3"]{background:var(--tile-6)}.heat-cell[data-intensity="4"]{background:var(--tile-8);color:var(--paper)}.heat-cell[data-intensity="5"]{background:var(--tile-11);color:var(--paper)}
 .direction-stat{display:grid;grid-template-columns:1.25rem 1fr 1fr;align-items:center;gap:var(--s2);border-bottom:1px solid var(--line);padding:var(--s2) 0;font:var(--fs-xs) var(--mono)}
 .direction-stat span:nth-child(2){box-shadow:inset 3px 0 0 var(--chart-human);padding-left:var(--s2)}.direction-stat span:nth-child(3){box-shadow:inset 3px 0 0 var(--chart-jev);padding-left:var(--s2)}
+/* Direction frequency sits in a grey window like the charts (D8: series colours on grey, never on pink, where the Jev
+   strip was 2.99:1), and column heads say which strip is whose, so colour is not the only cue (rows also carry an
+   aria-label). */
+.direction-head{color:var(--ink);letter-spacing:.08em}#direction-distribution .direction-stat:last-child{border-bottom:0}
 dl{margin:0}dl>div{display:flex;justify-content:space-between;gap:var(--s3);border-bottom:1px solid var(--line);padding:var(--s2) 0;font-size:var(--fs-xs)}
 dt{color:var(--subtle)}dd{margin:0;text-align:right;word-break:break-word;color:var(--muted);font-family:var(--mono);max-width:65%}
 .analytics-bottom{display:flex;align-items:start;flex-direction:column;gap:var(--s3);margin-top:var(--s5)}
