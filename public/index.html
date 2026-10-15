@@ -44,7 +44,7 @@
     <main class="jv-main" id="main">
     <section class="intro jv-hero" aria-labelledby="title">
       <div class="jv-pip-hide"><div class="eyebrow">THE TWO-BOARD CHALLENGE <span class="tiny-line"></span> 01</div><h1 id="title">Slide <span>Score.</span></h1>
-      <p>Your board. Jev’s board. The same chance.</p>
+      <p id="hero-line">Your board. Jev’s board. The same chance.</p>
       <p class="hero-tagline">STRUCTURED INTELLIGENCE. REAL PLAY.</p></div>
       <div class="match-controls"><label class="select-label jv-pip-hide">OPPONENT<select id="opponent"><option value="jev">Jev · live model</option><option value="local">Local heuristic · practice</option></select></label>
       <label class="select-label jv-pip-hide">DIFFICULTY<select id="difficulty"><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option><option value="jev" selected>Jev</option></select></label>
@@ -52,7 +52,7 @@
     </section>
     <div class="match-strip jv-pip-hide"><div class="pills"><span id="eligibility" class="pill">READY TO PLAY</span><span class="pill subdued">MATCHED SPAWNS</span><span id="round-label" class="pill subdued">ROUND 0 / 2,048</span></div></div>
     <section id="play-region" class="arena jv-first" aria-label="Slide Score game" tabindex="0">
-      <article class="jv-panel is-tight board-card is-human"><header class="board-header jv-pip-hide"><div><div class="eyebrow"><span class="status-dot human-dot"></span> YOU</div><h2>Make your move.</h2></div><div class="score-wrap"><span>SCORE</span><small id="human-gain">YOUR NEXT MOVE COUNTS</small></div></header>
+      <article class="jv-panel is-tight board-card is-human"><header class="board-header jv-pip-hide"><div><div class="eyebrow"><span class="status-dot human-dot"></span> YOU</div><h2 id="human-caption">Make your move.</h2></div><div class="score-wrap"><span>SCORE</span><strong id="human-card-score">0</strong><small id="human-gain">YOUR NEXT MOVE COUNTS</small></div></header>
         <div id="human-board" class="jv-fit jv-tray board" role="grid" aria-label="Your board"></div>
         <footer class="board-footer jv-pip-hide"><span>Best tile <strong id="human-max">—</strong></span><span>Empty <strong id="human-empty">16</strong></span><span id="human-state">Ready</span></footer>
       </article>
@@ -71,9 +71,9 @@
     <section id="decision-panel" class="detail-panel jv-pip-hide" aria-labelledby="decision-title">
       <div class="panel-heading"><div><div class="eyebrow">OBSERVE THE DECISION, NOT HIDDEN REASONING</div><h2 id="decision-title">Inside the move.</h2></div><label class="toggle"><input id="evidence-toggle" type="checkbox" checked> Show evidence</label></div>
       <div id="decision-content"><div class="decision-metrics"><div class="metric"><span>DECISION SOURCE</span><strong id="metric-source">Not started</strong></div><div class="metric"><span>LEGAL CANDIDATES</span><strong id="metric-candidates">—</strong></div><div class="metric"><span>RUBRIC CONFIDENCE</span><strong id="metric-confidence">—</strong></div><div class="metric"><span>SERVER DECISION TIME</span><strong id="metric-latency">—</strong></div></div>
-        <div class="table-scroll"><table><caption class="sr-only">Candidate move evidence. Higher model utility is preferred; confidence is not a win probability.</caption><thead><tr><th>Move</th><th>Merge gain</th><th>Empty cells</th><th>Block risk</th><th>Search value</th><th>Model utility</th><th>Confidence</th></tr></thead><tbody id="candidate-table"><tr><td colspan="7" class="empty-state">Play a move to inspect candidate features and the selected action.</td></tr></tbody></table></div>
+        <div class="table-scroll"><table><caption class="sr-only">Candidate move evidence. Higher model utility is preferred; confidence is not a win probability.</caption><thead><tr><th>Move</th><th>Merge gain</th><th>Empty cells</th><th>Block risk</th><th>Search value</th><th>Model utility</th><th>Confidence</th></tr></thead><tbody id="candidate-table"><tr><td colspan="7" class="empty-state"><span class="empty-msg">Play a move to inspect candidate features and the selected action.</span></td></tr></tbody></table></div>
         <details class="raw-evidence"><summary>Raw structured decision evidence</summary><pre id="decision-json">No decisions yet.</pre></details>
-        <p class="panel-footnote">Exact mechanics are computed by the rules engine. Jev evaluates positional rubrics. Confidence describes a rubric distribution—not the chance of winning.</p>
+        <p class="panel-footnote" id="decision-footnote">Exact mechanics are computed by the rules engine. Jev evaluates positional rubrics. Confidence describes a rubric distribution—not the chance of winning.</p>
       </div>
     </section>
     <section id="analytics-panel" class="detail-panel jv-pip-hide" hidden aria-labelledby="analytics-title">

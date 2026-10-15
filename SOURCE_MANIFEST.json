@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "63a93975579cc1328033d408f561b1a981c0fda505c1c8295e71b7e13b180bab",
+  "sourceSHA256": "56f7091562f69b8bbed9309657f371a64026d4042ecc00155dfbac89e728f644",
   "files": [
     {
       "path": "bench/run.js",
@@ -140,18 +140,18 @@
     },
     {
       "path": "public/game.css",
-      "bytes": 23501,
-      "sha256": "edb2f973843e590a5d49f99b52ada3bd9b8d7f437073f3193cd3873e7c1c2925"
+      "bytes": 24073,
+      "sha256": "96da4a95792cdc53d92452f9f21d8afbc7b60f6f424505294da10153b69d1741"
     },
     {
       "path": "public/game.js",
-      "bytes": 39334,
-      "sha256": "79c84b5407facfa553175d066e43dd3a57e9234e73a04c88a7416f7b459d7d73"
+      "bytes": 40942,
+      "sha256": "f1be61defc03f545f8222ed53eedf944df2e1ea6e4aac32f0b7611df3e17c1d9"
     },
     {
       "path": "public/index.html",
-      "bytes": 18063,
-      "sha256": "5069f2e2d5aa91e5629a0105d8aed3de8eef7d8fada08d68335ea3a2abffbea0"
+      "bytes": 18191,
+      "sha256": "4165097aa141087158e5cddf9e32c89cad60c99903eaba5db71ea35d7876fd6b"
     },
     {
       "path": "public/vendor/discord-embedded-app-sdk.js",

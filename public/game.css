@@ -105,6 +105,11 @@ td:first-child{font-weight:550}
 td .selected-tag{margin-left:var(--s2);font:var(--fs-sm) var(--mono);border:1px solid var(--ink);border-radius:var(--radius-sm);color:var(--ink);background:var(--magenta);padding:2px var(--s1)}
 caption{text-align:left;color:var(--muted);padding:0 0 var(--s2)}
 .empty-state{text-align:center!important;color:var(--subtle);padding:var(--s6)!important;font-weight:400!important}
+/* In a scrolling table the empty message is as wide as the visible scroll box and pinned to its left edge, not centred across
+   a table wider than a phone. */
+.table-scroll{container-type:inline-size}
+.table-scroll .empty-state{padding:var(--s6) 0!important}
+.empty-msg{display:block;position:sticky;left:0;max-width:100cqw;padding-inline:var(--s4);text-align:center;white-space:normal}
 .panel-footnote{font-size:var(--fs-xs);margin-top:var(--s4);color:var(--subtle);max-width:60rem}
 .raw-evidence{margin-top:var(--s4);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:var(--s3)}
 .raw-evidence summary{font-size:var(--fs-xs);color:var(--muted);cursor:pointer;min-height:var(--tap);display:flex;align-items:center}
@@ -188,8 +193,9 @@ dialog .inline-controls{margin-top:var(--s5)}
 /* Picture-in-picture: brand.css hides every .jv-pip-hide. What is left is the human board, the status line and the new-duel button. */
 @media(max-height:420px) and (max-width:640px) and (min-aspect-ratio:13/10){
   .jv-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr);grid-template-rows:auto auto;align-content:center;gap:var(--s2) var(--s3);padding-block:var(--s1)}
-  .arena{grid-column:1;grid-row:1/3;gap:0}
-  .board-card{padding:var(--s1);display:block}.board-card .board{--fit-reserve:1.25rem}
+  .arena{grid-column:1;grid-row:1/3;gap:0;grid-template-columns:minmax(0,1fr)}.versus{display:none}
+  /* The board now has the whole column, so its height (not the column) limits it: reserve the card's padding and border too. */
+  .board-card{padding:var(--s1);display:block}.board-card .board{--fit-reserve:3rem}
   .play-footer{grid-column:2;grid-row:1;align-self:end}.intro{grid-column:2;grid-row:2;padding:0;align-self:start}
   .match-controls{display:block}.play-footer{gap:var(--s1)}.play-footer p{font-size:var(--fs-2xs);line-height:1.25}.recovery{gap:var(--s1)}.intro .button{min-height:var(--tap)}
 }
