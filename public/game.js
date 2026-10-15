@@ -247,7 +247,8 @@ function chart(id, series, lines, label) {
   const container = $(id); container.replaceChildren();
   if (!series.length) { const p = document.createElement('p'); p.className = 'empty-state'; p.textContent = 'Play a few rounds to build this chart.'; container.append(p); return; }
   const width = 510, height = 190, left = 45, right = 10, top = 8, bottom = 26;
-  const max = Math.max(1, ...lines.flatMap(line => series.map(p => Number.isFinite(p[line.key]) ? p[line.key] : 0)));
+  // Round the axis top up to a multiple of 4 so the five whole-number tick labels are distinct (a one-round chart read 1 1 1 0 0).
+  const max = 4 * Math.ceil(Math.max(1, ...lines.flatMap(line => series.map(p => Number.isFinite(p[line.key]) ? p[line.key] : 0))) / 4);
   const svg = svgElement('svg', {viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': label});
   svg.append(svgElement('title', {}, label));
   for (let i = 0; i <= 4; i++) {

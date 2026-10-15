@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "9c4732aaaf3bdc0acd7bdf47ebb16f258e1d235bda135f1ff11a25f28cdcfe64",
+  "sourceSHA256": "7d8872275af9c34eb6b474cc73a7352feb665b59b150bd6f56fbcbc937435815",
   "files": [
     {
       "path": "bench/run.js",
@@ -141,12 +141,12 @@
     {
       "path": "public/game.css",
       "bytes": 20706,
-      "sha256": "697b9789dbfd20d66d9b878c7056cbb457ef71efa939786f827b921511c89132"
+      "sha256": "88bb210a61b48602027ad8c300c67555f62eeb99e52ba062cd0b10e136212c24"
     },
     {
       "path": "public/game.js",
-      "bytes": 38922,
-      "sha256": "d4c87a178d25f15a6db8bfddb748ee575e2660f7d6ca0be69fadb8797e8afa9a"
+      "bytes": 39073,
+      "sha256": "e45f224c4878c96e1fe2e5f6a20811342b86bb24fd6f7ebbb7beb1a605cca806"
     },
     {
       "path": "public/index.html",

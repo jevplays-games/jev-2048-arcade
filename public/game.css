@@ -2,7 +2,7 @@
    sequential ramp (#FBE3EA -> #F386A1 -> #B0287A -> #1E1E1E). Players are told apart by the shared
    --human (blue) and --jev (amber) strips, never by tile colour. */
 :root{--tile-1:#FBE3EA;--tile-2:#F9CCD8;--tile-3:#F7B4C6;--tile-4:#F59DB3;--tile-5:#F386A1;--tile-6:#DD6794;
-  --tile-7:#C64787;--tile-8:#B0287A;--tile-9:#7F255B;--tile-10:#4F213D;--tile-11:#1E1E1E;
+  --tile-7:#BF4080;--tile-8:#B0287A;--tile-9:#7F255B;--tile-10:#4F213D;--tile-11:#1E1E1E;
   /* Chart series (orchestrator decision D8, until the hub brand.css carries chart tokens): brand amber and blue fail on
      the grey panel, so series use dark amber (5.34:1 on #DEDEDE) and dark blue (5.56:1). The Jev series is also dashed so
      colour is not the only cue; legend text stays ink and only the swatch is coloured. Charts sit on grey panels, never pink. */
