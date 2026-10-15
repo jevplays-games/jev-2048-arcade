@@ -41,8 +41,10 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:var(
 .score-wrap{text-align:right;display:flex;flex-direction:column;line-height:1.2;min-width:0}
 .score-wrap>span{font:var(--fs-xs) var(--mono);letter-spacing:.12em;color:var(--subtle);margin-bottom:var(--s1)}
 .score-wrap strong{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:var(--fs-num-lg);letter-spacing:0;font-weight:400}
-.score-wrap small{font:var(--fs-xs) var(--mono);color:var(--subtle);margin-top:var(--s1);letter-spacing:.02em;min-height:1rem}.board{--fit-max:34rem;--fit-reserve:17rem;display:grid;grid-template-rows:repeat(4,1fr);gap:2.2%;padding:2.6%;aspect-ratio:1;touch-action:none;container-type:inline-size;width:100%;margin-inline:auto}
-.board-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2.9%;min-height:0}
+.score-wrap small{font:var(--fs-xs) var(--mono);color:var(--subtle);margin-top:var(--s1);letter-spacing:.02em;min-height:1rem}.board{--fit-max:34rem;--fit-reserve:17rem;display:grid;grid-template-rows:repeat(4,1fr);gap:2.6%;padding:2.6%;aspect-ratio:1;touch-action:none;container-type:inline-size;width:100%;margin-inline:auto}
+/* Row and column gaps are the same share of the square tray, so the flat tiles are square and evenly spaced (they were
+   2.2% down and 2.9% across: tiles 2% taller than wide, gaps 8px against 12px at 1440). */
+.board-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2.6%;min-height:0}
 /* Flat pixel tiles on a grey tray of paper wells: a fill from the sequential ramp, a 1px ink border and a hard ink drop.
    Light tiles carry ink numerals, dark tiles paper numerals; 2048 and beyond get the one magenta ring. */
 .tile{--t-fill:var(--tile-1);--t-ink:var(--ink);position:relative;display:grid;place-items:center;min-width:0;border-radius:0;font-family:var(--mono);font-size:clamp(17px,4.6vw,40px);font-size:10.5cqw;font-weight:400;letter-spacing:0;line-height:1;font-variant-numeric:tabular-nums;color:var(--t-ink);user-select:none;-webkit-user-select:none;background:var(--sunken);box-shadow:var(--well);overflow:visible}
@@ -57,7 +59,7 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:var(
 .tile.large{font-size:clamp(13px,3.1vw,28px);font-size:6.8cqw}
 .tile.spawn{animation:jv-pop .36s var(--ease-pop) both}.tile.merged{animation:tile-merge .32s var(--ease-out) both;z-index:1}
 .board.preview{opacity:.85}
-.board-footer{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text);padding-top:var(--s3);gap:var(--s2)}
+.board-footer{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;font-size:var(--fs-xs);color:var(--text);padding-top:var(--s3);gap:var(--s2)}
 .board-footer strong{font-family:var(--mono);font-size:var(--fs-md);color:var(--text);margin-left:var(--s1)}
 .board-footer>span:last-child{color:var(--subtle)}
 .versus{display:none}
@@ -160,6 +162,9 @@ dialog .inline-controls{margin-top:var(--s5)}
 @media(max-height:560px) and (min-width:600px){.board-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(5.5rem,9rem);grid-template-areas:"b h" "b f";align-content:center;column-gap:var(--s3);padding:var(--s2)}
 .board-card .board{grid-area:b;--fit-reserve:4.75rem}.board-card .board-header{grid-area:h;flex-direction:column;align-self:start;margin:0}.board-card .score-wrap{text-align:left}.board-card .board-footer{grid-area:f;flex-direction:column;align-self:end;padding:0}.score-wrap strong{font-size:var(--fs-xl)}}
 @media(min-width:600px){.board-header{min-height:5rem}}
+/* Side by side, the two cards share three row tracks (caption, board, footer), so both boards and both footers line up
+   however the captions, the opponent's score and the gain lines wrap. Short frames keep their own layouts below. */
+@media(min-width:600px) and (min-height:561px){.arena{grid-template-rows:repeat(3,auto);row-gap:0}.board-card{display:grid;grid-row:span 3;grid-template-rows:subgrid}}
 @media(max-height:560px) and (min-width:600px){.board-header{min-height:0}}
 /* Picture-in-picture: brand.css hides every .jv-pip-hide. What is left is the human board, the status line and the new-duel button. */
 @media(max-height:420px) and (max-width:640px) and (min-aspect-ratio:13/10){
