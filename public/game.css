@@ -109,6 +109,10 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:var(--fs-xs)/1.65 var(--mon
 .chart .grid-line{stroke:var(--line);stroke-width:.6}
 .chart .human-line{stroke:var(--chart-human)}.chart .jev-line{stroke:var(--chart-jev);stroke-dasharray:6 4}
 .chart polyline{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+/* A single-round chart draws one point per series: human a filled dot, Jev a larger hollow ring around it (shape, not just
+   colour, tells them apart, and neither hides the other at equal values). */
+.chart circle.point.human-line{fill:var(--chart-human);stroke:none}
+.chart circle.point.jev-line{fill:none;stroke:var(--chart-jev);stroke-width:2;stroke-dasharray:none;vector-effect:non-scaling-stroke}
 .legend-line{display:inline-block;width:15px;height:2px;vertical-align:middle}
 .legend-line.human-line{background:var(--chart-human)}.legend-line.jev-line{background:none;height:0;border-top:2px dashed var(--chart-jev)}
 .heatmap-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-bottom:var(--s5)}

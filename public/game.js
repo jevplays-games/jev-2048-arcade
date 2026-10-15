@@ -265,7 +265,10 @@ function chart(id, series, lines, label) {
     svg.append(svgElement('polyline', {points: points.join(' '), class: line.class}));
     if (series.length === 1) {
       const value = series[0][line.key];
-      if (Number.isFinite(value)) svg.append(svgElement('circle', {cx: left, cy: top + (1 - value / max) * (height - top - bottom), r: 3, fill: 'currentColor'}));
+      // A lone point takes its series colour from CSS (D8 chart tokens), never the ink text colour. Jev's hollow ring is
+      // larger than the human dot, so equal values still show both.
+      if (Number.isFinite(value)) svg.append(svgElement('circle', {cx: left, cy: top + (1 - value / max) * (height - top - bottom),
+        r: line.class === 'jev-line' ? 6 : 3, class: `${line.class} point`}));
     }
   }
   svg.append(svgElement('text', {x: left, y: height - 4}, 'ROUND 1'), svgElement('text', {x: width - right, y: height - 4, 'text-anchor': 'end'}, `ROUND ${series.at(-1).round}`));

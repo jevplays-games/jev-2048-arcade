@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slide Score — jevplay.games</title>
+<style>
+@font-face{font-family:Inter;src:url('../../public/brand/inter-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:block}
+@font-face{font-family:VT323;src:url('../../public/brand/vt323.woff2') format('woff2');font-weight:400;font-style:normal;font-display:block}
+:root{--pink:#f386a1;--ink:#1e1e1e;--paper:#fefefe;--panel:#dedede;--magenta:#e551ba}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:420px;overflow:hidden;background:var(--pink)}
+body{position:relative;color:var(--ink);font-family:VT323,'JetBrains Mono',monospace}
+.frame{position:absolute;inset:24px;border:1px solid var(--ink);overflow:hidden}
+.texture{position:absolute;inset:0;width:100%;height:100%;fill:var(--ink);opacity:.4}
+.crop{position:absolute;width:10px;height:10px;border:0 solid var(--ink)}
+.tl{left:10px;top:10px;border-left-width:1px;border-top-width:1px}
+.tr{right:10px;top:10px;border-right-width:1px;border-top-width:1px}
+.bl{left:10px;bottom:10px;border-left-width:1px;border-bottom-width:1px}
+.br{right:10px;bottom:10px;border-right-width:1px;border-bottom-width:1px}
+.tag{position:absolute;left:60px;top:50px;padding:4px 9px;background:var(--ink);color:var(--pink);font-size:20px;line-height:22px;letter-spacing:1px}
+h1{position:absolute;left:60px;top:112px;font:700 92px/1.1 Inter,sans-serif;letter-spacing:-4.5px}
+.subtitle{position:absolute;left:64px;top:227px;padding:4px 8px;background:var(--ink);color:var(--paper);font-size:24px;line-height:28px;white-space:nowrap}
+.chips{position:absolute;left:64px;top:287px;display:flex;gap:8px;font-size:22px;line-height:26px}
+.chips span{padding:2px 7px;border:1px solid var(--ink);background:var(--panel)}
+.window{position:absolute;background:var(--panel);border:1px solid var(--ink);box-shadow:inset 0 0 0 2px var(--paper),3px 3px 0 var(--ink)}
+.titlebar{display:flex;justify-content:space-between;background:var(--ink);color:var(--paper);padding:2px 7px;font-size:20px;line-height:21px}
+.you{left:710px;top:65px;width:210px}
+.jev{left:914px;top:145px;width:210px}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:10px}
+.board span{height:37px;display:grid;place-items:center;background:var(--panel);border:1px solid var(--ink);font-size:25px;line-height:1}
+.board span:empty{background:var(--paper)}
+.board .winner{background:var(--magenta)}
+.robot{position:absolute;right:22px;top:-61px;width:80px;height:64px;fill:var(--ink)}
+.score{left:700px;top:286px;width:204px}
+.score-body{padding:8px 10px;display:flex;gap:10px;align-items:end}
+.chart{display:flex;gap:3px;align-items:end;height:51px;width:48px;border-bottom:1px solid var(--ink);flex-shrink:0}
+.chart i{width:9px;background:var(--ink);border:1px solid var(--ink)}
+.chart i:nth-child(even){background:var(--pink)}
+.chart i:nth-child(1){height:12px}.chart i:nth-child(2){height:24px}.chart i:nth-child(3){height:36px}.chart i:nth-child(4){height:48px}
+.readout{font-size:18px;line-height:23px;white-space:pre}
+</style>
+</head>
+<body>
+<div class="crop tl"></div><div class="crop tr"></div><div class="crop bl"></div><div class="crop br"></div>
+<div class="frame" aria-hidden="true">
+<svg class="texture" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r=".65"/></pattern></defs><rect width="100%" height="100%" fill="url(#dots)"/><g id="blobs"></g></svg>
+</div>
+<div class="tag">JEVPLAY.GAMES/SLIDE-SCORE</div>
+<h1>Slide Score</h1>
+<p class="subtitle">Two boards. Same spawns. Jev scores every slide.</p>
+<div class="chips"><span>+2048 rules</span><span>+matched spawns</span><span>+typed Score</span><span>+replay audit</span></div>
+<section class="window you" aria-label="Your tile board">
+<div class="titlebar"><span>YOU</span><span aria-hidden="true">_ x</span></div>
+<div class="board"><span>2</span><span>4</span><span>8</span><span>16</span><span>4</span><span>8</span><span>32</span><span>64</span><span>8</span><span>16</span><span>128</span><span>256</span><span>2</span><span></span><span></span><span>4</span></div>
+</section>
+<section class="window jev" aria-label="Jev's tile board">
+<svg class="robot" viewBox="0 0 80 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jev pixel robot peeking over the window" shape-rendering="crispEdges">
+<path d="M36 0h8v8h-2v8h24v6h6v32H8V22h6v-6h24V8h-2zM2 30h6v18H2zm70 0h6v18h-6z"/>
+<path fill="var(--pink)" d="M16 20h48v30H16z"/>
+<path fill="var(--panel)" d="M21 25h38v20H21z"/>
+<path d="M26 29h6v7h-6zm22 0h6v7h-6zM32 39h16v3H32zM12 52h14v12H12zm42 0h14v12H54z"/>
+<path fill="var(--pink)" d="M16 55h6v5h-6zm42 0h6v5h-6z"/>
+</svg>
+<div class="titlebar"><span>JEV</span><span aria-hidden="true">_ x</span></div>
+<div class="board"><span>4</span><span>8</span><span>16</span><span>32</span><span>8</span><span>64</span><span>128</span><span>256</span><span>2</span><span>16</span><span>64</span><span class="winner">2048</span><span></span><span>2</span><span>4</span><span></span></div>
+</section>
+<section class="window score" aria-label="Move scores">
+<div class="titlebar"><span>SCORE</span><span aria-hidden="true">_ x</span></div>
+<div class="score-body"><div class="chart" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="readout">[x] LEFT  0.62
+[ ] UP    0.21</div></div>
+</section>
+<script>
+// Soft halftone silhouettes made only from ink dots, without gradients or blur.
+const blobs = document.getElementById('blobs');
+for (const [cx, cy, rx, ry] of [[95, 335, 210, 135], [1100, 95, 190, 150]]) {
+  for (let y = 3; y < 370; y += 6) {
+    for (let x = 3; x < 1230; x += 6) {
+      const distance = ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2;
+      if (distance >= 1) continue;
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', x);
+      dot.setAttribute('cy', y);
+      dot.setAttribute('r', (1.9 * (1 - distance) ** 1.5).toFixed(3));
+      blobs.appendChild(dot);
+    }
+  }
+}
+</script>
+</body>
+</html>
