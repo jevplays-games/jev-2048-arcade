@@ -84,10 +84,16 @@ def capture(browser, origin, name, width, height):
         page.evaluate("() => window.scrollTo(0, 0)")
         page.wait_for_function("() => window.scrollY === 0")
         page.wait_for_timeout(100)
+        # A full_page capture restarted the opponent board's tile animations mid-capture, so its newest
+        # tile came out half-popped. Grow the viewport to the page height instead, let every animation
+        # settle, and capture that viewport.
+        full_height = page.evaluate("() => document.documentElement.scrollHeight")
+        page.set_viewport_size({"width": width, "height": full_height})
+        page.wait_for_timeout(100)
         page.wait_for_function(
             "() => document.getAnimations().every(a => a.playState !== 'running')"
         )
-        png = page.screenshot(full_page=True, type="png", animations="disabled")
+        png = page.screenshot(full_page=False, type="png", animations="disabled")
         assert not errors, f"{name}: page errors: {errors}"
         output = ROOT / "docs" / "screenshots" / f"{name}.png"
         output.parent.mkdir(parents=True, exist_ok=True)
