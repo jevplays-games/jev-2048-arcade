@@ -24,7 +24,7 @@ button,select,input{font:inherit}button,select{cursor:pointer}button,a,input,sel
 .select-label select{font:var(--fs-sm)/1.4 var(--font);letter-spacing:0}
 select{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);color:var(--text);padding:0 var(--s5) 0 var(--s3);min-height:var(--tap);max-width:min(15rem,100%)}
 .button{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);background:var(--raised);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--drop-sm);min-height:var(--tap);padding:0 var(--s4);font-size:var(--fs-sm);font-weight:700;transition:background .15s,transform .15s}
-@media(hover:hover){.button:hover:not(:disabled){background:var(--grey)}.button.primary:hover:not(:disabled){background:var(--accent);outline:1px solid var(--ink);outline-offset:1px}.jv-link-btn:hover{color:var(--text)}.direction:hover{color:var(--accent);border-color:var(--accent)}}
+@media(hover:hover){.button:hover:not(:disabled){background:var(--grey)}.button.primary:hover:not(:disabled){background:var(--accent);outline:1px solid var(--ink);outline-offset:1px}.jv-link-btn:hover{color:var(--text)}.direction:hover:not(:disabled){background:var(--grey)}}
 .button:active:not(:disabled){transform:translate(2px,2px);box-shadow:none;background:var(--grey)}
 .button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--ink);font-weight:700}
 .button.primary span{padding-left:var(--s4);font-size:var(--fs-lg)}
