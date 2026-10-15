@@ -3,7 +3,7 @@
 // bearer session token in memory. Nothing here changes the normal browser sign-in.
 import {randomHex, sha256} from '../public/core/crypto.js';
 import {HttpError} from './db.js';
-import {activityOrigin, discordConfigured, discordIdentity, upsertDiscordUser} from './auth.js';
+import {activityOrigin, requestOrigin, discordConfigured, discordIdentity, upsertDiscordUser} from './auth.js';
 export const ACTIVITY_SESSION_MS = 24 * 3600 * 1000;
 // Discord shows an Activity inside its own iframe. Only a page loaded with Discord's frame_id may be framed, and only by Discord.
 export const ACTIVITY_FRAME_ANCESTORS = 'frame-ancestors https://discord.com https://ptb.discord.com https://canary.discord.com';
@@ -14,7 +14,7 @@ export function activityConfig(env) {
 export async function createActivitySession(request, body, store, env) {
   if (!discordConfigured(env)) throw new HttpError(503, 'Discord has not been configured by the host.', 'discord_not_configured');
   const origin = request.headers.get('origin');
-  if (!origin || (origin !== activityOrigin(env) && origin !== env.PUBLIC_ORIGIN)) throw new HttpError(403, 'Origin check failed.', 'csrf');
+  if (!origin || (origin !== activityOrigin(env) && origin !== requestOrigin(request))) throw new HttpError(403, 'Origin check failed.', 'csrf');
   const ip = request.headers.get('CF-Connecting-IP') || env.LOCAL_CLIENT_IP || 'local';
   await store.limit('activity-session:' + await sha256(env.APP_SIGNING_KEY + ip), 60, 3600);
   const {code} = body;

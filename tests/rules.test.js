@@ -46,7 +46,7 @@ test('both start identically; caps finish both; invalid direction consumes nothi
   assert.deepEqual(out.state.human,out.state.jev);assert.equal(out.state.winner,'draw');
   assert.equal(out.state.status,'complete');assert.equal(state.round,0);
 });
-test('finished human board freezes while JEV continues',async()=>{
+test('finished human board freezes while Jev continues',async()=>{
   const initial=await initialCells('cd'.repeat(32)),state=createDuel(initial);
   state.human.status='blocked';const before=canonical(state.human);
   const out=advanceRound(state,{humanAction:null,jevAction:getLegalActions(initial)[0],spawnEvent:await deriveSpawn('cd'.repeat(32),0)});

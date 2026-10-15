@@ -54,5 +54,5 @@ const server = http.createServer(async (req, res) => {
     res.end(req.method === 'HEAD' ? undefined : await readFile(path));
   } catch { if (!res.headersSent) res.writeHead(500); res.end('Request failed'); }
 });
-server.listen(port, host, () => console.log(`JEV Arcade: ${origin}\nOpponent: ${env.TYPESAFE_API_KEY ? 'JEV available' : 'local heuristic practice (no API key)'}\nData: ${dataDir}`));
+server.listen(port, host, () => console.log(`jevplay.games · Slide Score: ${origin}\nOpponent: ${env.TYPESAFE_API_KEY ? 'Jev available' : 'local heuristic practice (no API key)'}\nData: ${dataDir}`));
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.close(() => { DB.close(); process.exit(0); }));

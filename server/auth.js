@@ -5,6 +5,39 @@ function cookieName(env) { return env.DEV_LOCAL === 'true' ? 'jev_session' : '__
 export function sessionCookie(env, token, maxAge = SESSION_MS / 1000) {
   return `${cookieName(env)}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${env.DEV_LOCAL === 'true' ? '' : '; Secure'}`;
 }
+// Every origin this Worker answers on: PUBLIC_ORIGIN (canonical) plus LEGACY_PUBLIC_ORIGINS, a comma-separated list
+// of old hostnames that stay served until the cutover (slide-score.jevplay.games was 2048.jevplay.games).
+// Legacy-origin allowlist (orchestrator decision D9). An entry is admitted ONLY if it is a bare origin: it parses, its
+// protocol is https: (http: only for loopback hosts, as server/local.js allows for local dev), the entry minus one
+// trailing "/" equals url.origin exactly (so no userinfo, path, query or fragment), and it contains no "@", "?", "#" or "*".
+// Anything else is skipped with one structured warning and never throws: 'https://user:pw@evil.example' or
+// 'https://evil.example#@2048.jevplay.games' must never admit evil.example. A bad entry fails closed (421).
+const LOOPBACK_HOSTS = ['127.0.0.1', 'localhost', '[::1]'];
+function legacyOrigin(entry) {
+  if (/[@?#*]/.test(entry)) return {reason: 'forbidden_character'};
+  let url;
+  try { url = new URL(entry); } catch { return {reason: 'unparseable'}; }
+  if (!(url.protocol === 'https:' || (url.protocol === 'http:' && LOOPBACK_HOSTS.includes(url.hostname))))
+    return {reason: 'protocol_not_allowed'};
+  if (entry.replace(/\/$/, '') !== url.origin) return {reason: 'not_bare_origin'};
+  return {origin: url.origin};
+}
+export function appOrigins(env) {
+  const legacy = [];
+  for (const entry of (env.LEGACY_PUBLIC_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean)) {
+    const {origin, reason} = legacyOrigin(entry);
+    if (origin) legacy.push(origin);
+    else console.warn(JSON.stringify({event: 'legacy_origin_rejected', variable: 'LEGACY_PUBLIC_ORIGINS', entry, reason}));
+  }
+  return [...new Set([env.PUBLIC_ORIGIN, ...legacy].filter(Boolean))];
+}
+// The origin the request was sent to. Session cookies are host-only, so OAuth and redirects stay on that host.
+export const requestOrigin = request => new URL(request.url).origin;
+// Launch proofs: new proofs keep the original audience so tokens minted on either side of a deploy verify;
+// the Slide Score audience is accepted too.
+export const LAUNCH_AUDIENCES = ['jev-2048', 'jev-slide-score'];
+// Slash command names this game answers. /2048 stays the registered command; /slide-score is accepted if it is added.
+export const COMMAND_NAMES = ['2048', 'slide-score'];
 export const activityOrigin = env => /^\d{5,25}$/.test(env.DISCORD_CLIENT_ID || '') ? `https://${env.DISCORD_CLIENT_ID}.discordsays.com` : null;
 // Inside a Discord Activity the browser will not send our SameSite cookie, so the game holds the session token in memory.
 function bearerToken(request) { const m = /^Bearer ([a-f0-9]{64})$/.exec(request.headers.get('authorization') || ''); return m ? m[1] : null; }
@@ -24,7 +57,7 @@ export async function getSession(request, store, env, create = false) {
 }
 export function requireWrite(request, session, env) {
   const origin = request.headers.get('origin'), framed = session.via === 'bearer' ? activityOrigin(env) : null;
-  if ((origin !== env.PUBLIC_ORIGIN && !(framed && origin === framed)) || request.headers.get('x-csrf-token') !== session.csrf)
+  if ((origin !== requestOrigin(request) && !(framed && origin === framed)) || request.headers.get('x-csrf-token') !== session.csrf)
     throw new HttpError(403, 'Origin or CSRF check failed.', 'csrf');
 }
 export function discordConfigured(env) { return Boolean(env.DISCORD_CLIENT_ID && env.DISCORD_CLIENT_SECRET); }
@@ -36,7 +69,7 @@ export async function beginOAuth(request, store, env) {
     [await sha256(state), 'oauth', session.id, '{}', Date.now() + 600000]);
   const url = new URL('https://discord.com/oauth2/authorize');
   url.search = new URLSearchParams({client_id: env.DISCORD_CLIENT_ID, response_type: 'code',
-    redirect_uri: env.PUBLIC_ORIGIN + '/api/auth/discord/callback', scope: 'identify', state}).toString();
+    redirect_uri: requestOrigin(request) + '/api/auth/discord/callback', scope: 'identify', state}).toString();
   return new Response(null, {status: 302, headers: {Location: url.toString(), ...(cookie ? {'Set-Cookie': cookie} : {})}});
 }
 // Exchanges an authorization code for the verified Discord identity. The OAuth redirect flow passes its
@@ -71,7 +104,7 @@ export async function finishOAuth(request, store, env) {
   const proof = await store.get(`UPDATE proofs SET consumed_at=? WHERE id=? AND kind='oauth' AND session_id=?
     AND expires_at>? AND consumed_at IS NULL RETURNING id`, [Date.now(), await sha256(state), session.id, Date.now()]);
   if (!proof) throw new HttpError(403, 'OAuth state is expired, already used, or bound to another browser.', 'oauth_state');
-  const {user} = await discordIdentity(env, code, env.PUBLIC_ORIGIN + '/api/auth/discord/callback'), now = Date.now();
+  const {user} = await discordIdentity(env, code, requestOrigin(request) + '/api/auth/discord/callback'), now = Date.now();
   const fresh = randomHex(), id = await sha256(fresh), csrf = randomHex();
   await store.batch([
     upsertDiscordUser(user, now),
@@ -80,7 +113,7 @@ export async function finishOAuth(request, store, env) {
     ['UPDATE matches SET session_id=? WHERE session_id=? AND user_id IS NULL', [id, session.id]],
     ['DELETE FROM sessions WHERE id=?', [session.id]]
   ]);
-  return new Response(null, {status: 302, headers: {Location: env.PUBLIC_ORIGIN + '/', 'Set-Cookie': sessionCookie(env, fresh)}});
+  return new Response(null, {status: 302, headers: {Location: requestOrigin(request) + '/', 'Set-Cookie': sessionCookie(env, fresh)}});
 }
 export async function handleInteraction(request, store, env) {
   if (!env.DISCORD_PUBLIC_KEY) throw new HttpError(503, 'Discord interactions are not configured.');
@@ -105,28 +138,28 @@ export async function handleInteraction(request, store, env) {
   if (!valid) throw new HttpError(401, 'Invalid interaction signature.');
   const interaction = JSON.parse(body);
   if (interaction.type === 1) return Response.json({type: 1});
-  if (interaction.type !== 2 || interaction.data?.name !== '2048' || !interaction.guild_id ||
+  if (interaction.type !== 2 || !COMMAND_NAMES.includes(interaction.data?.name) || !interaction.guild_id ||
       !interaction.channel_id || !interaction.member?.user?.id || (interaction.channel?.type ?? 0) !== 0)
     return Response.json({type: 4, data: {flags: 64, content: 'Use /2048 in an approved server text channel.'}});
   const allowed = (env.DISCORD_ALLOWED_CHANNELS || '').split(',').map(s => s.trim()).filter(Boolean);
   if (!allowed.includes(`${interaction.guild_id}:${interaction.channel_id}`))
     return Response.json({type: 4, data: {flags: 64, content: 'This channel is not enabled by the arcade host.'}});
-  const payload = {v: 1, aud: 'jev-2048', sub: interaction.member.user.id, guildId: interaction.guild_id,
+  const payload = {v: 1, aud: LAUNCH_AUDIENCES[0], sub: interaction.member.user.id, guildId: interaction.guild_id,
     channelId: interaction.channel_id, nonce: randomHex(16), exp: Date.now() + 300000};
   try {
     await store.run('INSERT INTO proofs(id,kind,payload_json,expires_at) VALUES(?,?,?,?)',
       ['interaction:' + interaction.id, 'interaction', '{}', Date.now() + 600000]);
   } catch { throw new HttpError(409, 'Interaction was already processed.'); }
   const token = await signToken(env.APP_SIGNING_KEY, payload);
-  return Response.json({type: 4, data: {flags: 64, content: 'Play 2048 on your own board against JEV.',
-    components: [{type: 1, components: [{type: 2, style: 5, label: 'Play 2048 vs JEV',
+  return Response.json({type: 4, data: {flags: 64, content: 'Play Slide Score on your own board against Jev.',
+    components: [{type: 1, components: [{type: 2, style: 5, label: 'Play Slide Score vs Jev',
       url: env.PUBLIC_ORIGIN + '/#launch=' + token}]}]}});
 }
 export async function consumeContext(token, session, store, env) {
   if (!session.user_id) throw new HttpError(401, 'Sign in with the Discord account that launched this game.', 'login_required');
   let payload;
   try { payload = await verifyToken(env.APP_SIGNING_KEY, token); } catch { throw new HttpError(403, 'Launch token is invalid or expired.'); }
-  if (payload.aud !== 'jev-2048' || payload.v !== 1 || payload.sub !== session.user_id ||
+  if (!LAUNCH_AUDIENCES.includes(payload.aud) || payload.v !== 1 || payload.sub !== session.user_id ||
       !/^\d{5,24}$/.test(payload.guildId) || !/^\d{5,24}$/.test(payload.channelId) || !/^[a-f0-9]{32}$/.test(payload.nonce))
     throw new HttpError(403, 'Launch token does not match this Discord account.');
   const context = {guildId: payload.guildId, channelId: payload.channelId, subject: session.user_id, expiresAt: Date.now() + 900000};

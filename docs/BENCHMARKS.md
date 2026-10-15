@@ -1,12 +1,12 @@
 # Benchmarks and independent evaluation
 
-The benchmark uses the exact production rules, seed derivation, candidate evaluation, and JEV adapter. It is independent of the browser UI.
+The benchmark uses the exact production rules, seed derivation, candidate evaluation, and Jev adapter. It is independent of the browser UI.
 
 ## Executed sample
 
 `examples/baseline-smoke/report.json` and `runs.csv` contain nine actual measured runs: three development seeds × random/greedy/heuristic opponents, compared with a greedy scripted player, each capped at 64 successful moves. Every run includes a manifest, fsynced event journal, full audit bundle and derived analytics. Each replay was verified.
 
-This is a smoke experiment demonstrating the harness, not a sample size sufficient for a general gameplay-quality conclusion. It contains **zero live JEV requests**. Measured timings apply to the build sandbox, not your server or the TypeSafe service. The cap censors marathon performance.
+This is a smoke experiment demonstrating the harness, not a sample size sufficient for a general gameplay-quality conclusion. It contains **zero live Jev requests**. Measured timings apply to the build sandbox, not your server or the TypeSafe service. The cap censors marathon performance.
 
 `examples/mock-provider` is a different evidence class: a synthetic four-round contract example, not an experiment. Its fixture probabilities, confidence, usage and request latency must never be pooled with genuine model measurements.
 
@@ -52,6 +52,6 @@ Failed runs remain in the report, with their evidence and failure event. They ar
 
 Separate development, held-out and calibration seed namespaces. Do not tune and report on the same held-out seeds. Compare identical move caps, rule/RNG versions, model pins, input rubrics and search budgets. Retain all candidate sets and provider attempts, including invalid responses and retries.
 
-The important ablation is the same deterministic features/search without JEV versus JEV-assisted candidate ranking. Additional ablations can remove one rubric dimension or change depth while versioning the policy. Repeat identical requests over a calibration subset to quantify response variability; replay itself never reruns a model.
+The important ablation is the same deterministic features/search without Jev versus Jev-assisted candidate ranking. Additional ablations can remove one rubric dimension or change depth while versioning the policy. Repeat identical requests over a calibration subset to quantify response variability; replay itself never reruns a model.
 
-No claim that JEV beats the baselines, that a profile is strongest, or that its confidence is calibrated is supported by the bundled smoke results. Those questions require the live experiment above or an equivalent independently measured study.
+No claim that Jev beats the baselines, that a profile is strongest, or that its confidence is calibrated is supported by the bundled smoke results. Those questions require the live experiment above or an equivalent independently measured study.

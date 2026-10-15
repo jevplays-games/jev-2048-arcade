@@ -27,8 +27,8 @@ export async function createMatch(body, session, store, env) {
   const difficulty = body.difficulty ?? 'normal', mode = body.mode ?? (env.TYPESAFE_API_KEY ? 'jev' : 'local');
   if (!Object.hasOwn(PROFILES, difficulty) || !['jev', 'local'].includes(mode) || typeof body.ranked !== 'boolean')
     throw new HttpError(400, 'Invalid difficulty, opponent mode, or ranked flag.');
-  if (body.ranked && (!session.user_id || mode !== 'jev')) throw new HttpError(403, 'Ranked play requires Discord and JEV.');
-  if (mode === 'jev' && !env.TYPESAFE_API_KEY) throw new HttpError(503, 'JEV is not configured. Local practice remains available.', 'jev_not_configured');
+  if (body.ranked && (!session.user_id || mode !== 'jev')) throw new HttpError(403, 'Ranked play requires Discord and Jev.');
+  if (mode === 'jev' && !env.TYPESAFE_API_KEY) throw new HttpError(503, 'Jev is not configured. Local practice remains available.', 'jev_not_configured');
   const owner = session.user_id || session.id;
   await store.limit('starts:' + owner, 20, 3600);
   await store.run(`UPDATE matches SET status='expired',ranked=0,lease_token=NULL,lease_expires=NULL WHERE expires_at<? AND status='active'`, [Date.now()]);

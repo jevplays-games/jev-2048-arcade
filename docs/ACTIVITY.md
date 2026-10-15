@@ -15,8 +15,8 @@ Endpoints: `GET /api/activity/config` (returns the public client id; 503 when Di
 ## Developer Portal settings (manual)
 
 1. Application settings: enable **Activities**.
-2. Activities, URL Mappings: prefix `/` maps to `2048.jevplay.games` (the host in `PUBLIC_ORIGIN`, no scheme).
+2. Activities, URL Mappings: prefix `/` maps to `slide-score.jevplay.games` (the host in `PUBLIC_ORIGIN`, no scheme). Before the cutover it pointed at the legacy host `2048.jevplay.games`; change the mapping when the new hostname is live.
 3. Add OAuth2 scope `identify` (already used by the web sign-in). No redirect URI is needed for Activity sign-in.
-4. Enabling Activities makes Discord create a primary **Entry Point** command. Preserve it: `npm run discord:register` only POSTs the `/2048` command and does not bulk-overwrite, so it is safe. Any future switch to a bulk `PUT` must include the Entry Point command.
+4. Enabling Activities makes Discord create a primary **Entry Point** command. Preserve it: `npm run discord:register` only POSTs the `/2048` command (kept as the Slide Score command name) and does not bulk-overwrite, so it is safe. Any future switch to a bulk `PUT` must include the Entry Point command.
 
 Ranked play, leaderboards and provenance are unchanged; the Activity is another way to hold a Discord-authenticated session.

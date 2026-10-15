@@ -71,7 +71,7 @@ test('session creation rejects foreign origins, missing codes, unknown fields an
   try {assert.equal((await raw(failing,'/api/activity/session',{method:'POST',origin:ACTIVITY,body:{code:'c'}})).status,502);} finally {failing.DB.close();}
 });
 test('only a page loaded with frame_id may be framed, and only by Discord',async()=>{
-  const url=s=>new URL('https://2048.jevplay.games'+s),plain=documentHeaders(url('/'),HEADERS),framed=documentHeaders(url('/?frame_id=1&instance_id=2'),HEADERS);
+  const url=s=>new URL('https://slide-score.jevplay.games'+s),plain=documentHeaders(url('/'),HEADERS),framed=documentHeaders(url('/?frame_id=1&instance_id=2'),HEADERS);
   assert.match(plain['Content-Security-Policy'],/frame-ancestors 'none'/);assert.equal(plain['X-Frame-Options'],undefined);
   const csp=framed['Content-Security-Policy'];assert.ok(csp.includes(ACTIVITY_FRAME_ANCESTORS));assert.ok(!csp.includes("frame-ancestors 'none'"));assert.equal(framed['X-Frame-Options'],undefined);
   assert.match(csp,/script-src 'self'/);assert.match(csp,/connect-src 'self'/);assert.match(csp,/form-action 'self' https:\/\/discord.com/,'the rest of the policy is unchanged');
@@ -82,7 +82,7 @@ test('only a page loaded with frame_id may be framed, and only by Discord',async
 });
 test('the Worker applies the framing headers to the document only when frame_id is present',async()=>{
   const env={ASSETS:{fetch:async()=>new Response('<html></html>',{headers:{'Content-Type':'text/html'}})}};
-  const plain=await worker.fetch(new Request('https://2048.jevplay.games/'),env),framed=await worker.fetch(new Request('https://2048.jevplay.games/?frame_id=1'),env);
+  const plain=await worker.fetch(new Request('https://slide-score.jevplay.games/'),env),framed=await worker.fetch(new Request('https://slide-score.jevplay.games/?frame_id=1'),env);
   assert.match(plain.headers.get('content-security-policy'),/frame-ancestors 'none'/);
   assert.ok(framed.headers.get('content-security-policy').includes(ACTIVITY_FRAME_ANCESTORS));assert.equal(framed.headers.get('x-frame-options'),null);
 });

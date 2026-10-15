@@ -6,11 +6,11 @@ Analytics version: `analytics-v1`. Every number must be traceable to a recorded 
 
 There are three distinct evidence classes in this package:
 
-1. `server-recorded`: actual app sessions, possibly local or JEV according to the manifest and each move source. This label alone does not prove that an external provider is genuine.
-2. `scripted-baseline-benchmark`: actual measured baseline experiments with no live JEV requests.
-3. `mocked-provider-contract-fixture`: synthetic provider responses used to exercise the contract/export pathway. Their confidence, usage, and latency are not JEV measurements.
+1. `server-recorded`: actual app sessions, possibly local or Jev according to the manifest and each move source. This label alone does not prove that an external provider is genuine.
+2. `scripted-baseline-benchmark`: actual measured baseline experiments with no live Jev requests.
+3. `mocked-provider-contract-fixture`: synthetic provider responses used to exercise the contract/export pathway. Their confidence, usage, and latency are not Jev measurements.
 
-A match manifest binds rules, RNG, difficulty, complete profile configuration, policy version, model ID, move cap, original eligibility/mode, creation time, build hash, and evidence classification. The user's Discord identity and community IDs are not sent to JEV and are not necessary in exported decision evidence.
+A match manifest binds rules, RNG, difficulty, complete profile configuration, policy version, model ID, move cap, original eligibility/mode, creation time, build hash, and evidence classification. The user's Discord identity and community IDs are not sent to Jev and are not necessary in exported decision evidence.
 
 ## Event envelope
 
@@ -70,7 +70,7 @@ All board snapshot averages use the board **after its own successful move and sp
 | Spawn values | Counts of 2 and 4 spawns; initialization is excluded |
 | Heuristic comparison | Compared moves, agreement with deterministic best baseline candidate, nonnegative baseline-utility gap distribution |
 
-Heuristic comparison is **not** optimal-play regret or evidence that a human/JEV decision was incorrect. Human candidates use the documented cheap Easy proxy, while opponent candidates can have deeper search. Those proxy gaps are not directly interchangeable across actors or difficulty cohorts.
+Heuristic comparison is **not** optimal-play regret or evidence that a human/Jev decision was incorrect. Human candidates use the documented cheap Easy proxy, while opponent candidates can have deeper search. Those proxy gaps are not directly interchangeable across actors or difficulty cohorts.
 
 Tile entropy is Shannon entropy of the occupied exponent-frequency distribution, in bits. It is a descriptive board feature, not uncertainty about the true game state.
 
@@ -80,7 +80,7 @@ One row per legal root candidate includes action/name, selected flag, afterstate
 
 Search summaries include requested depth, greatest reached depth, assigned node budget, admitted state count, frontier evaluation count, value, and whether deeper expansion was truncated. Frontier evaluations preserve probability mass and can cause actual work beyond the admitted-node counter. All root moves are retained and each receives the same floor-divided share of the configured budget. Subtree traversal is deterministic, not unbiased sampling of every possible continuation.
 
-For every JEV candidate/dimension, retain the raw five-level rubric score, probability of each level, rubric legend, and provider confidence. Derived metrics include:
+For every Jev candidate/dimension, retain the raw five-level rubric score, probability of each level, rubric legend, and provider confidence. Derived metrics include:
 
 - Weighted policy utility and the selected-versus-runner-up utility margin.
 - Weighted selected-candidate confidence; distribution of individual-question confidence.

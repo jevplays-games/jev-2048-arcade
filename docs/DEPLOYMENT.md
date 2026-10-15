@@ -25,7 +25,7 @@ Generate new keys with `npm run secrets`. Do not paste generated secrets into so
 
 The Dockerfile is optional and was not built in this environment. It uses Node's built-in server and expects a `/data` volume. Pass credentials through your orchestrator's secret mechanism; `.dockerignore` excludes local secrets.
 
-## TypeSafe/JEV
+## TypeSafe/Jev
 
 Set TYPESAFE_API_KEY and a versioned JEV_MODEL, initially `jev-1.13.0`. The endpoint is `https://api.typesafe.ai/v1/systemone`; the server uses Bearer authentication and structured Score questions. Verify that this model is available for your account. No fallback alias is silently used.
 
@@ -39,11 +39,11 @@ Create/use your own Discord application. This package does not create an applica
 2. Login uses `identify` only; it does not request email, guild listing or a privileged bot permission.
 3. Configure the interaction endpoint `https://your-host/api/discord/interactions`, set the application's verification public key in DISCORD_PUBLIC_KEY, and complete Discord's PING/signature check.
 4. Enable guild installation with the `applications.commands` scope. A continuously connected bot user is not required for this HTTP interaction design.
-5. Register only the `/2048` command using `npm run discord:register`. Optional DISCORD_TEST_GUILD_ID registers a test-guild command first. The script uses client credentials with `applications.commands.update` and does not bulk-overwrite unrelated commands.
+5. Register only the `/2048` command (Slide Score keeps this command name; the handler also accepts `/slide-score`) using `npm run discord:register`. Optional DISCORD_TEST_GUILD_ID registers a test-guild command first. The script uses client credentials with `applications.commands.update` and does not bulk-overwrite unrelated commands.
 6. Set DISCORD_ALLOWED_CHANNELS to comma-separated `guild-id:channel-id` pairs. Only ordinary guild text channels in this allowlist can issue game launch links.
 7. Invoke `/2048` in a test channel, follow the ephemeral link, and log in as the invoking account. Forwarding that token to a different account must fail.
 
-A successful login alone gives World eligibility. A current signed channel launch adds Server/Channel attribution when a **new ranked JEV match** is created. It does not upgrade earlier guest or local matches. Context expires after fifteen minutes for new use, while existing match attribution is retained.
+A successful login alone gives World eligibility. A current signed channel launch adds Server/Channel attribution when a **new ranked Jev match** is created. It does not upgrade earlier guest or local matches. Context expires after fifteen minutes for new use, while existing match attribution is retained.
 
 ## Cloudflare Worker, Static Assets and D1
 
@@ -55,7 +55,9 @@ From the project directory, using an authenticated Wrangler installation:
 npx wrangler d1 create jev-2048
 ```
 
-Copy the returned database ID into `wrangler.jsonc`, replacing the explicit placeholder. Set PUBLIC_ORIGIN to the exact deployed HTTPS URL; keep DEV_LOCAL unset/false. Apply the migration:
+The D1 database keeps its original name `jev-2048` after the rename to Slide Score (owner decision 2026-10-14; D1 databases cannot be renamed, and no data migration is needed). Copy the returned database ID into `wrangler.jsonc`, replacing the explicit placeholder. Set PUBLIC_ORIGIN to the exact deployed HTTPS URL (production: `https://slide-score.jevplay.games`); keep DEV_LOCAL unset/false.
+
+`LEGACY_PUBLIC_ORIGINS` lists old origins the same Worker keeps answering on (production: `https://2048.jevplay.games`). Each host is self-contained: a write must carry the Origin of the host it is sent to, and Discord OAuth uses that host's own `/api/auth/discord/callback`, so register both callback URLs in the Discord portal until the old host becomes a 301 redirect. Session cookies are host-only, so players moving from the old host to the new one sign in once and lose local preferences (`telemetry`, `lastMatch`, `difficulty`) once. Apply the migration:
 
 ```sh
 npx wrangler d1 migrations apply jev-2048 --remote
@@ -80,7 +82,7 @@ The included CPU limit of 30,000 ms requires a compatible plan; confirm your pla
 
 ## Memory and storage planning
 
-Detailed raw responses plus candidate/board data can produce large traces. The supplied 64-move baseline sample is intentionally much smaller than a 2,048-move native-JEV session. Server-side full JSON exports and replay verification read bounded event pages. The normal analytics endpoint still materializes the trace and derived cell/candidate tables, and browser inspection must parse the JSON.
+Detailed raw responses plus candidate/board data can produce large traces. The supplied 64-move baseline sample is intentionally much smaller than a 2,048-move native-Jev session. Server-side full JSON exports and replay verification read bounded event pages. The normal analytics endpoint still materializes the trace and derived cell/candidate tables, and browser inspection must parse the JSON.
 
 For high-volume or long-trace research use, prefer the Node service with adequate memory and run offline exports; treat Worker analytics memory limits as a staging/load-test requirement. Do not claim a production capacity from the small included smoke experiment. Keep D1 row sizes, statement limits, read/write costs and storage retention under observation.
 
@@ -103,7 +105,7 @@ Release changes should regenerate `npm run fingerprint`, preserve old replay ver
 
 The same `server/local.js` entry runs as a plain Node.js app (`npm run build` is a no-op, `npm start` loads `.env` via `--env-file-if-exists=.env`). Zip layout: repository root files (`package.json`, `server/`, `public/`, `migrations/`, `.env`) at the zip root.
 
-- The platform injects `PORT`; set `HOST=0.0.0.0` (the shim defaults to loopback otherwise). Set `PUBLIC_ORIGIN=https://2048.jevplay.games`; a non-loopback origin turns `DEV_LOCAL` off, so ranked play, Discord interactions and Discord sign-in behave as on the Worker, and startup fails unless `APP_SIGNING_KEY` and `SEED_ENCRYPTION_KEY` (64 hex characters, `npm run secrets`) are configured.
+- The platform injects `PORT`; set `HOST=0.0.0.0` (the shim defaults to loopback otherwise). Set `PUBLIC_ORIGIN=https://slide-score.jevplay.games`; a non-loopback origin turns `DEV_LOCAL` off, so ranked play, Discord interactions and Discord sign-in behave as on the Worker, and startup fails unless `APP_SIGNING_KEY` and `SEED_ENCRYPTION_KEY` (64 hex characters, `npm run secrets`) are configured.
 - Other keys: `TYPESAFE_API_KEY`, `JEV_MODEL`, `JEV_TIMEOUT_MS`, `JEV_REQUESTS_PER_DAY`, `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_PUBLIC_KEY`, `DISCORD_ALLOWED_CHANNELS` (empty rejects all interactions), optional `ADMIN_API_KEY`. Real process env vars override `.env`.
-- Set `TRUST_PROXY=1` behind the platform's single reverse proxy so per-client quotas use the last `X-Forwarded-For` entry; otherwise all clients share the proxy address. CSRF/origin checks are unchanged and compare against `PUBLIC_ORIGIN`.
+- Set `TRUST_PROXY=1` behind the platform's single reverse proxy so per-client quotas use the last `X-Forwarded-For` entry; otherwise all clients share the proxy address. CSRF/origin checks are unchanged: the request must carry the Origin of the host it was sent to, which must be `PUBLIC_ORIGIN` or one of `LEGACY_PUBLIC_ORIGINS`.
 - SQLite lives in `DATA_DIR` (default `.data/arcade.sqlite`, outside `public/`, never served). Storage is ephemeral: matches and analytics are lost on redeploy. There are no scheduled jobs; run `npm run maintenance` manually if needed.

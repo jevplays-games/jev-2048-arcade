@@ -2,7 +2,7 @@
 
 ## User-provided requirements
 
-The supplied “JEV Single-Page Game — Architecture & Implementation Planning Prompt” requested vanilla browser code, a minimal trusted backend, explicit legal candidates, structured JEV decisions, Discord identity plus verified channel/server context, verified leaderboards, replay, observability and benchmarking. The follow-up requested separate 2048 boards and exhaustive analytics. The conversation's 2048 architecture established synchronized active boards, matched randomness, a 2,048-move competitive cap and a score-based duel.
+The supplied “JEV Single-Page Game — Architecture & Implementation Planning Prompt” requested vanilla browser code, a minimal trusted backend, explicit legal candidates, structured Jev decisions, Discord identity plus verified channel/server context, verified leaderboards, replay, observability and benchmarking. The follow-up requested separate 2048 boards and exhaustive analytics. The conversation's 2048 architecture established synchronized active boards, matched randomness, a 2,048-move competitive cap and a score-based duel.
 
 This package implements those concepts rather than copying an existing game's source. The observability expansion includes detailed event/metric dictionaries, evidence exports, normalized tables, offline checking and seed-paired experiments. “Exhaustive” is bounded to the implemented game/decision pipeline; unsupported infrastructure, biological or billing measurements are explicitly not invented.
 
@@ -22,11 +22,12 @@ Consulted for the implementation contract on 2026-09-22. Recheck these when depl
 - D1 database/batch interface: https://developers.cloudflare.com/d1/worker-api/d1-database/
 - Workers Web Crypto: https://developers.cloudflare.com/workers/runtime-apis/web-crypto/
 - Node SQLite: https://nodejs.org/api/sqlite.html
+- Slide Score is a two-board duel built on the rules of 2048 by Gabriele Cirulli.
 - Original 2048 game manager, referenced for conventional gameplay semantics: https://github.com/gabrielecirulli/2048/blob/master/js/game_manager.js
 
 ## Implementation decisions, not external facts
 
-The competitive move cap, paired priority-permutation spawn coupling, profile weights, risk penalty, lookahead ceilings, lease/session/context lifetimes, quotas and local fallback ordering are explicit application choices. They are not claims about conventional multiplayer 2048, an optimal JEV strategy or provider recommendations.
+The competitive move cap, paired priority-permutation spawn coupling, profile weights, risk penalty, lookahead ceilings, lease/session/context lifetimes, quotas and local fallback ordering are explicit application choices. They are not claims about conventional multiplayer 2048, an optimal Jev strategy or provider recommendations.
 
 The delivered application uses a native Node/SQLite entry point in addition to the proposed Worker/D1 adapter, allowing immediate execution without cloud setup. Search budgets count admitted states including leaves; root moves receive equal budget shares. This is more precisely bounded than an internal-node-only counter but does not guarantee identical work across every subtree.
 

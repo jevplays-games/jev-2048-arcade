@@ -75,11 +75,11 @@ function renderMatch(details = null) {
   const state = match?.state;
   renderBoard('human', state?.human, details?.human); renderBoard('jev', state?.jev, details?.jev);
   const local = match?.mode === 'local' || (!match && $('opponent').value === 'local');
-  $('opponent-label').textContent = local ? 'LOCAL HEURISTIC' : 'JEV';
+  $('opponent-label').textContent = local ? 'LOCAL HEURISTIC' : 'Jev';
   $('jev-caption').textContent = local ? 'Practice, clearly labeled.' : 'Structured, not scripted.';
   $('round-label').textContent = `ROUND ${fmt(state?.round || 0)} / ${fmt(state?.moveLimit || 2048)}`;
   $('eligibility').textContent = imported ? 'IMPORTED EVIDENCE' : match?.verified ? (match.ranked ? 'VERIFIED · RANKED' : 'VERIFIED · UNRANKED') :
-    match?.ranked ? 'RANKED · DISCORD' : match ? (local ? 'LOCAL PRACTICE · UNRANKED' : 'JEV PRACTICE · UNRANKED') : 'READY TO PLAY';
+    match?.ranked ? 'RANKED · DISCORD' : match ? (local ? 'LOCAL PRACTICE · UNRANKED' : 'Jev · PRACTICE · UNRANKED') : 'READY TO PLAY';
   $('eligibility').classList.toggle('verified', Boolean(match?.verified));
   document.querySelectorAll('.direction').forEach(button => {
     button.disabled = busy || !active() || state?.human.status !== 'playing' || Boolean(match?.pending);
@@ -93,12 +93,12 @@ function renderMatch(details = null) {
   if (state && !busy && replayRound === null) {
     if (imported) status('Inspecting an imported audit bundle. Gameplay is disabled.');
     else if (match.status === 'complete') status(state.winner === 'draw' ? `Draw · ${fmt(state.human.score)} each. ${match.verified ? 'Replay verified.' : 'Verification pending.'}` :
-      `${state.winner === 'human' ? 'You win' : local ? 'The local opponent wins' : 'JEV wins'} · ${fmt(state.human.score)} to ${fmt(state.jev.score)}. ${match.verified ? 'Replay verified.' : 'Verification pending.'}`);
+      `${state.winner === 'human' ? 'You win' : local ? 'The local opponent wins' : 'Jev wins'} · ${fmt(state.human.score)} to ${fmt(state.jev.score)}. ${match.verified ? 'Replay verified.' : 'Verification pending.'}`);
     else if (match.status === 'resigned') status('Match resigned. The recorded moves remain available for inspection.');
     else if (match.status === 'expired') status('Match expired. Start a new duel to continue playing.');
     else if (match.pending) status('A move is reserved. Retry it, or explicitly switch to local practice.');
     else if (state.human.status !== 'playing') status('Your board is finished. The opponent can continue; final score decides the match.');
-    else status(local ? 'Local heuristic practice. Play your board to advance both boards.' : 'Your move. JEV evaluates its own board after your direction is locked.');
+    else status(local ? 'Local heuristic practice. Play your board to advance both boards.' : 'Your move. Jev evaluates its own board after your direction is locked.');
   }
   if (state && !busy && replayRound === null) {
     const done = match.status === 'complete' && !imported;
@@ -115,7 +115,7 @@ function renderMatch(details = null) {
 function cell(text) { const td = document.createElement('td'); td.textContent = text; return td; }
 function renderDecision() {
   const decision = latestRound()?.data.decision;
-  $('metric-source').textContent = decision ? ({jev: 'JEV model', heuristic: 'Local heuristic', forced: 'Forced legal move', finished: 'Board finished'}[decision.source] || decision.source) : 'Not started';
+  $('metric-source').textContent = decision ? ({jev: 'Jev model', heuristic: 'Local heuristic', forced: 'Forced legal move', finished: 'Board finished'}[decision.source] || decision.source) : 'Not started';
   $('metric-candidates').textContent = decision?.candidates?.length ?? '—';
   $('metric-confidence').textContent = percent(decision?.confidence);
   $('metric-latency').textContent = Number.isFinite(decision?.latencyMs) ? `${dec(decision.latencyMs, 0)} ms` : '—';
@@ -168,7 +168,7 @@ async function syncEvents() {
       after = response.nextAfter;
       if (busy && response.events.length) {
         const event = response.events.at(-1);
-        if (event.type === 'jev_requested') status(`JEV request dispatched · attempt ${event.data.attempt}. Your direction is locked.`);
+        if (event.type === 'jev_requested') status(`Jev request dispatched · attempt ${event.data.attempt}. Your direction is locked.`);
         else if (event.type === 'candidates_generated') status(`${event.data.candidates.length} legal candidates recorded. Evaluating positional evidence.`);
         else if (event.type === 'jev_response') status('Provider response recorded. Validating before applying a move.');
         else if (event.type === 'round_committed') status('Round committed. Updating the authoritative boards.');
@@ -215,7 +215,7 @@ async function move(action, retry = false) {
     const preview = simulateMove(state.human, body.humanAction);
     renderBoard('human', {...state.human, cells: preview.cells}, null, true);
   }
-  status(match.mode === 'local' ? 'Committing the round against the local heuristic…' : 'Your move is locked. Waiting for JEV’s decision…');
+  status(match.mode === 'local' ? 'Committing the round against the local heuristic…' : 'Your move is locked. Waiting for Jev’s decision…');
   const start = performance.now(), polling = setInterval(() => syncEvents().catch(() => {}), 800);
   try {
     const response = await api(`/api/matches/${match.id}/step`, {method: 'POST', body}); match = response.match;
@@ -284,7 +284,7 @@ async function refreshAnalytics() {
     const a = analytics, human = a.actors.human, opponent = a.actors.jev;
     $('analytics-kpis').replaceChildren(makeMetric('SCORE DIFFERENCE', fmt(human.finalScore - opponent.finalScore), 'You minus opponent'),
       makeMetric('YOUR SCORE / MOVE', dec(human.scorePerMove, 1), `${fmt(human.moves)} committed moves`),
-      makeMetric('JEV PROVIDER REQUESTS', fmt(a.model.requests), `${a.model.retries} retries · ${a.model.failures} failure events`),
+      makeMetric('Jev PROVIDER REQUESTS', fmt(a.model.requests), `${a.model.retries} retries · ${a.model.failures} failure events`),
       makeMetric('KNOWN INPUT TOKENS', fmt(a.model.usage.inputTokensKnown), `${a.model.usage.attemptsWithoutUsage} attempts without usage`));
     chart('score-chart', a.series, [{key: 'humanScore', class: 'human-line'}, {key: 'jevScore', class: 'jev-line'}], 'Score by round for both boards');
     chart('space-chart', a.series, [{key: 'humanEmpty', class: 'human-line'}, {key: 'jevEmpty', class: 'jev-line'}], 'Empty cells by round for both boards');
@@ -296,7 +296,7 @@ async function refreshAnalytics() {
       for (const value of [['↑','→','↓','←'][i], human.actions[i], opponent.actions[i]]) { const span = document.createElement('span'); span.textContent = value; row.append(span); }
       row.setAttribute('aria-label', `${name}: you ${human.actions[i]}, opponent ${opponent.actions[i]}`); return row;
     }));
-    definitionList('reliability', {'Recorded events': a.eventCount, 'Live JEV decisions': a.model.decisions, 'Forced moves': a.model.forced,
+    definitionList('reliability', {'Recorded events': a.eventCount, 'Live Jev decisions': a.model.decisions, 'Forced moves': a.model.forced,
       'Local heuristic moves': a.model.heuristic, 'Decision p50': `${dec(a.model.decisionLatencyMs.p50, 0)} ms`,
       'Decision p95': `${dec(a.model.decisionLatencyMs.p95, 0)} ms`, 'Mean rubric confidence': percent(a.model.confidence.mean),
       'Question entropy': `${dec(a.model.questionEntropyBits.mean)} bits`, 'Search nodes': fmt(a.model.searchNodes),
@@ -394,7 +394,7 @@ async function refreshIdentity() {
 function renderHistory() {
   $('history-list').replaceChildren(...(me?.matches?.length ? me.matches.map(m => {
     const row = document.createElement('div'); row.className = 'history-row';
-    const label = document.createElement('div'); label.textContent = `${m.mode === 'jev' ? 'JEV' : 'Local practice'} · ${fmt(m.humanScore)} — ${fmt(m.jevScore)}`;
+    const label = document.createElement('div'); label.textContent = `${m.mode === 'jev' ? 'Jev' : 'Local practice'} · ${fmt(m.humanScore)} — ${fmt(m.jevScore)}`;
     const small = document.createElement('small'); small.textContent = `${new Date(m.createdAt).toLocaleString()} · ${m.status} · ${m.ranked ? 'ranked' : 'unranked'}`; label.append(small);
     const button = document.createElement('button'); button.className = 'button small'; button.textContent = m.status === 'active' ? 'Resume' : 'Inspect';
     button.addEventListener('click', () => loadMatch(m.id).then(() => switchTab(m.status === 'active' ? 'decision' : 'replay')).catch(showError));
@@ -515,7 +515,7 @@ async function boot() {
     // resumed first, so a reload rejoins rather than opening a second one and
     // the server's active-match check still owns duplicate prevention.
     // startMatch() reads $('opponent'), which is already pinned to 'local' when
-    // the JEV key is absent, so an auto-started game is never labeled jev
+    // the Jev key is absent, so an auto-started game is never labeled jev
     // unless it really ran against the model; ranked stays gated on me.user.
     if (me.activeMatchId) await loadMatch(me.activeMatchId);
     else await startMatch();

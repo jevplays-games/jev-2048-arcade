@@ -95,7 +95,7 @@ export async function chooseJevAction({board, difficulty = 'normal', model = DEF
       candidates, featureMs, latencyMs: performance.now() - started, model: null, policyVersion: POLICY_VERSION,
       confidence: null, usage: null, requestCount: 0, retryCount: 0};
   }
-  if (!apiKey) throw new JevError('JEV is not configured. Choose local practice or configure the server key.', 'jev_not_configured');
+  if (!apiKey) throw new JevError('Jev is not configured. Choose local practice or configure the server key.', 'jev_not_configured');
   const request = buildRequest(board, candidates, difficulty, model, remainingMoves), requestHash = await sha256(request);
   let response, successfulLatency = null;
   const attempts = [];
@@ -134,7 +134,7 @@ export async function chooseJevAction({board, difficulty = 'normal', model = DEF
           await new Promise(r => setTimeout(r, Math.max(300, (retryAfter || .6) * 1000)));
           continue;
         }
-        throw new JevError(`JEV HTTP ${res.status}; no substitute move was applied.`);
+        throw new JevError(`Jev HTTP ${res.status}; no substitute move was applied.`);
       }
       response = validateResponse(parsed, request); successfulLatency = latencyMs; break;
     } catch (error) {
@@ -144,7 +144,7 @@ export async function chooseJevAction({board, difficulty = 'normal', model = DEF
       // provider is nondeterministic, so one retry usually returns a well-formed one.
       // Everything else keeps the original semantics and is never retried here.
       const resample = error instanceof JevError && error.code === 'jev_invalid' && attempt === 1;
-      if (!resample && (error instanceof JevError || attempt === 2)) throw error instanceof JevError ? error : new JevError('JEV timed out or the network failed.');
+      if (!resample && (error instanceof JevError || attempt === 2)) throw error instanceof JevError ? error : new JevError('Jev timed out or the network failed.');
       await new Promise(r => setTimeout(r, 500));
     }
   }

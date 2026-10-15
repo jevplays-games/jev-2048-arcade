@@ -1,9 +1,10 @@
 {
-  "name": "jev-2048-arcade",
+  "name": "jev-slide-score",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Two-board 2048 with JEV, Discord and auditable analytics",
+  "description": "Slide Score: a two-board duel on 2048 rules against Jev with matched spawns, verified leaderboards and replay analytics",
+  "license": "MIT",
   "engines": {
     "node": ">=22.16.0"
   },

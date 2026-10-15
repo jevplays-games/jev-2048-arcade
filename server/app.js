@@ -1,6 +1,6 @@
 import {Store, HttpError} from './db.js';
 import {getSession, requireWrite, discordConfigured, beginOAuth, finishOAuth,
-  handleInteraction, consumeContext, sessionContext, sessionCookie} from './auth.js';
+  handleInteraction, consumeContext, sessionContext, sessionCookie, appOrigins} from './auth.js';
 import {activityConfig, createActivitySession} from './activity.js';
 import {createMatch, getMatch, ownedMatch, stepMatch, controlMatch, matchBundle, bundleMetadata, partition} from './matches.js';
 import {analyze, csv} from '../public/core/analytics.js';
@@ -112,7 +112,7 @@ async function adminAnalytics(request, url, store, env) {
 }
 async function route(request, env) {
   const url = new URL(request.url), path = url.pathname, method = request.method, store = new Store(env.DB);
-  if (!env.PUBLIC_ORIGIN || url.origin !== env.PUBLIC_ORIGIN) throw new HttpError(421, 'Unexpected application origin.');
+  if (!env.PUBLIC_ORIGIN || !appOrigins(env).includes(url.origin)) throw new HttpError(421, 'Unexpected application origin.');
   if (!env.APP_SIGNING_KEY || !env.SEED_ENCRYPTION_KEY) throw new HttpError(503, 'Server secrets are not configured.');
   if (path === '/api/health' && method === 'GET') return json({ok: true, jevConfigured: Boolean(env.TYPESAFE_API_KEY), discordConfigured: discordConfigured(env)});
   if (path === '/api/discord/interactions' && method === 'POST') return handleInteraction(request, store, env);
