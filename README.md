@@ -55,7 +55,7 @@ Choose **Jev** as the opponent and start a duel. The server calls the documented
 
 Jev receives only its own board, remaining move budget, legal candidate afterstates, exact features, and bounded lookahead summaries. It does not receive your identity, board, pending move, seed, or future spawn. Scores and arithmetic come from code. Jev rates merge structure, space recovery, and anchor stability.
 
-A provider failure pauses the reserved round. Retry preserves the human action. “Continue as local practice” is explicit and permanently removes eligibility; it never silently substitutes a model. Forced moves require no provider request.
+A provider failure pauses the reserved round. Retry preserves the human action. “Switch to local practice” is explicit and permanently removes eligibility; it never silently substitutes a model. Forced moves require no provider request.
 
 ## How it works
 
@@ -103,7 +103,7 @@ Local practice is **not Jev**. Its UI and records say so. Difficulty controls it
 
 ## Analytics and replay
 
-Open **Analytics** for score/space/latency curves, per-player statistics and heatmaps. Open **Decision evidence** for current legal candidates and structured model outputs. **Replay & audit** supports round-by-round inspection, verification, importing a bundle, and exports.
+Open **Analytics** for score/space/latency curves, per-player statistics and heatmaps. Open **Decision lab** for current legal candidates and structured model outputs. **Replay & audit** supports round-by-round inspection, verification, importing a bundle, and exports.
 
 ```sh
 # Check an exported audit without contacting Jev or Discord.
