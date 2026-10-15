@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "algorithm": "SHA-256",
-  "sourceSHA256": "930a71d98803da63f975a88ed502b7cf2bd419e6dc4d0b02a3e85d4e8ad147a7",
+  "sourceSHA256": "70068e54024aa03b71a9d13590bdf5a37c078dcf4d1b4a6ed75c887a6ad9ddd6",
   "files": [
     {
       "path": "bench/run.js",
@@ -115,8 +115,8 @@
     },
     {
       "path": "public/core/analytics.js",
-      "bytes": 14653,
-      "sha256": "7da9249b50ab37c18a191da4e4515848932875aa911e4616fa2457e5d73909f4"
+      "bytes": 14658,
+      "sha256": "9217a7c9411895f9a8b2da5b957c3dc96374d1c6042011d2bdb52c48afce8069"
     },
     {
       "path": "public/core/audit.js",
@@ -290,8 +290,8 @@
     },
     {
       "path": "tests/rename.test.js",
-      "bytes": 10571,
-      "sha256": "b79a2624cf2b92dc8388febf992bbbb5132fd3119e1772608bdf122cc5273a98"
+      "bytes": 11030,
+      "sha256": "59df05bde857bf4f73799bdc14fc1ace0beb98f1090dbafdeb527ab41545ef57"
     },
     {
       "path": "tests/rules.test.js",

@@ -10,6 +10,7 @@ import {fixture} from './http-fixture.js';
 import {signToken, hex} from '../public/core/crypto.js';
 import {handleApi} from '../server/app.js';
 import {appOrigins, LAUNCH_AUDIENCES, COMMAND_NAMES} from '../server/auth.js';
+import {analyze} from '../public/core/analytics.js';
 const NEW='https://slide-score.jevplay.games',OLD='https://2048.jevplay.games';
 const hosts={PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:OLD};
 const discordFetch=url=>{
@@ -143,6 +144,12 @@ test('the /2048 command keeps working and /slide-score is accepted; launch links
     }
     assert.match((await signed(interaction('333333333333','tic-tac-toe'))).body.data.content,/Use \/2048/);
   } finally {f.DB.close();}
+});
+test('local practice analytics never call the opponent Jev',async()=>{
+  const bundle=JSON.parse(await readFile(fileURLToPath(new URL('../examples/baseline-smoke/0001-0-heuristic/audit.json',import.meta.url)),'utf8'));
+  assert.equal(bundle.manifest.mode,'local');
+  const report=analyze(bundle);
+  for(const text of [...report.caveats,report.integrity.note])assert.doesNotMatch(text,/\bjev\b/i,text);
 });
 test('an audit bundle exported before the rename still passes scripts/verify.js',async()=>{
   const bundle=fileURLToPath(new URL('../examples/baseline-smoke/0001-0-heuristic/audit.json',import.meta.url));
