@@ -12,7 +12,10 @@ button,select,input{font:inherit}button,select{cursor:pointer}button,a,input,sel
 .jv-title{font-weight:700}.jv-status strong{color:var(--accent)}.jv-sheet-item{font-weight:600}
 .intro{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s5);padding:var(--s3) 0 var(--s2)}
 .intro>*{min-width:0}
-.eyebrow{font:var(--fs-xs)/1.5 var(--mono);letter-spacing:.12em;color:var(--muted);display:flex;align-items:center;gap:var(--s2)}
+/* Pixel-caps labels (eyebrows, pills, metric labels) are uppercased by CSS, like the brand's wordmark and tags, so the
+   name keeps its owner-approved spelling "Jev" in the markup while reading JEV in an all-caps label (it showed as
+   "Jev PROVIDER REQUESTS" and "Jev · PRACTICE · UNRANKED"). */
+.eyebrow{font:var(--fs-xs)/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:var(--s2)}
 .tiny-line{width:1.5rem;height:1px;background:var(--subtle);display:inline-block}
 .intro p{font-size:var(--fs-sm)}
 .hero-tagline{font-size:var(--fs-xs);letter-spacing:var(--track-caps);color:var(--subtle);margin-top:var(--s2)}
@@ -29,7 +32,7 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:var(
 .button.small{font-size:var(--fs-xs);padding:0 var(--s3);min-height:var(--tap)}.jv-link-btn span{margin-left:var(--s2);display:inline-grid;place-items:center;border:1px solid var(--subtle);border-radius:50%;width:1rem;height:1rem;font:var(--fs-xs) var(--mono)}
 .match-strip{display:flex;justify-content:space-between;gap:var(--s2);align-items:center}
 .pills{display:flex;gap:var(--s2);flex-wrap:wrap}
-.pill{font:var(--fs-sm)/1.3 var(--mono);letter-spacing:.08em;color:var(--ink);padding:var(--s1) var(--s2);border:1px solid var(--ink);border-radius:var(--radius-sm);background:var(--paper)}
+.pill{font:var(--fs-sm)/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);padding:var(--s1) var(--s2);border:1px solid var(--ink);border-radius:var(--radius-sm);background:var(--paper)}
 .pill.subdued{color:var(--ink);border-color:var(--line);background:var(--grey)}
 .pill.verified{color:var(--ink);border-color:var(--ink);background:var(--magenta)}
 .arena{display:grid;grid-template-columns:1fr;gap:var(--s4);position:relative;border-radius:var(--radius-lg)}.board-card{display:flex;flex-direction:column}
@@ -86,7 +89,7 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:var(
 input[type=checkbox]{accent-color:var(--accent);width:1.1rem;height:1.1rem}
 .decision-metrics,.analytics-kpis{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-bottom:var(--s5)}
 .metric{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:var(--s4);min-width:0}
-.metric>span{display:block;font:var(--fs-xs) var(--mono);letter-spacing:.06em;color:var(--subtle);margin-bottom:var(--s2)}
+.metric>span{display:block;font:var(--fs-xs) var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);margin-bottom:var(--s2)}
 .metric>strong{font-size:var(--fs-xl);font-weight:550;letter-spacing:-.03em}
 .metric>small{display:block;font-size:var(--fs-xs);margin-top:var(--s1);color:var(--muted)}
 #metric-source{font-size:var(--fs-lg)}
