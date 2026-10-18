@@ -31,4 +31,4 @@ jobs:
       - run: node scripts/godaddy-deploy.js deploy.zip
         env:
           GODADDY_PAT: ${{ secrets.GODADDY_PAT }}
-          GODADDY_APP_ID: ${{ vars.GODADDY_APP_ID || 'cthdfczuwe' }}
+          GODADDY_APP_ID: ${{ vars.GODADDY_APP_ID || 'NODEJS-cthdfczuwe' }}

@@ -117,7 +117,7 @@ The same `server/local.js` entry runs as a plain Node.js app (`npm run build` is
 One-time setup:
 
 - Create a Personal Access Token at https://developer.godaddy.com/personal-access-token with `hosting.application:read`, `hosting.source:write` and `hosting.deployment:execute`, and store it as the repository (or `production` environment) secret `GODADDY_PAT`. Tokens expire; renew the secret before the expiry date.
-- The workflow targets app `cthdfczuwe` (jev-2048). Set the repository variable `GODADDY_APP_ID` to deploy a different app.
+- The workflow targets app `NODEJS-cthdfczuwe` (jev-2048; API app IDs carry the `NODEJS-` prefix). Set the repository variable `GODADDY_APP_ID` to deploy a different app.
 - Runtime configuration is not in the zip: set `HOST`, `PUBLIC_ORIGIN`, `TRUST_PROXY`, the signing/encryption keys and the integration keys under the app's **Settings → Secrets** for both Preview and Publish.
 
 To deploy from a workstation instead, put `GODADDY_PAT` in `.env` (`GODADDY_APP_ID` is preset in `.env.example`), then: `git archive --format=zip -o deploy.zip HEAD package.json package-lock.json server public migrations && npm run deploy:godaddy -- deploy.zip`.
