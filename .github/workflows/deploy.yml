@@ -1,0 +1,34 @@
+name: Deploy to GoDaddy Node.js Hosting
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: godaddy-deploy
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - run: npm test
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      # Runtime files only, from the committed tree; secrets live in the app's GoDaddy Secrets, never in the zip.
+      - run: git archive --format=zip -o deploy.zip HEAD package.json package-lock.json server public migrations
+      - run: node scripts/godaddy-deploy.js deploy.zip
+        env:
+          GODADDY_PAT: ${{ secrets.GODADDY_PAT }}
+          GODADDY_APP_ID: ${{ vars.GODADDY_APP_ID || 'cthdfczuwe' }}

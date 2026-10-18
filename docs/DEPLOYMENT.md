@@ -109,3 +109,15 @@ The same `server/local.js` entry runs as a plain Node.js app (`npm run build` is
 - Other keys: `TYPESAFE_API_KEY`, `JEV_MODEL`, `JEV_TIMEOUT_MS`, `JEV_REQUESTS_PER_DAY`, `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_PUBLIC_KEY`, `DISCORD_ALLOWED_CHANNELS` (empty rejects all interactions), optional `ADMIN_API_KEY`. Real process env vars override `.env`.
 - Set `TRUST_PROXY=1` behind the platform's single reverse proxy so per-client quotas use the last `X-Forwarded-For` entry; otherwise all clients share the proxy address. CSRF/origin checks are unchanged: the request must carry the Origin of the host it was sent to, which must be `PUBLIC_ORIGIN` or one of `LEGACY_PUBLIC_ORIGINS`.
 - SQLite lives in `DATA_DIR` (default `.data/arcade.sqlite`, outside `public/`, never served). Storage is ephemeral: matches and analytics are lost on redeploy. There are no scheduled jobs; run `npm run maintenance` manually if needed.
+
+### Continuous deployment
+
+`.github/workflows/deploy.yml` runs on every push to `main` (and manually via **Run workflow**): it runs `npm test`, zips the committed runtime files (`package.json`, `package-lock.json`, `server/`, `public/`, `migrations/`) with `git archive`, and `scripts/godaddy-deploy.js` uploads the zip through the GoDaddy Hosting API (`https://api.godaddy.com/v1/hosting`), waits for the import, then deploys it to the published app. A failed test, import or build stops the run and leaves the live app unchanged.
+
+One-time setup:
+
+- Create a Personal Access Token at https://developer.godaddy.com/personal-access-token with `hosting.application:read`, `hosting.source:write` and `hosting.deployment:execute`, and store it as the repository (or `production` environment) secret `GODADDY_PAT`. Tokens expire; renew the secret before the expiry date.
+- The workflow targets app `cthdfczuwe` (jev-2048). Set the repository variable `GODADDY_APP_ID` to deploy a different app.
+- Runtime configuration is not in the zip: set `HOST`, `PUBLIC_ORIGIN`, `TRUST_PROXY`, the signing/encryption keys and the integration keys under the app's **Settings → Secrets** for both Preview and Publish.
+
+To deploy from a workstation instead: `git archive --format=zip -o deploy.zip HEAD package.json package-lock.json server public migrations && GODADDY_PAT=... GODADDY_APP_ID=cthdfczuwe node scripts/godaddy-deploy.js deploy.zip`.
