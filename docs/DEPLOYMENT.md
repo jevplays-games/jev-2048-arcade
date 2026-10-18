@@ -120,4 +120,4 @@ One-time setup:
 - The workflow targets app `cthdfczuwe` (jev-2048). Set the repository variable `GODADDY_APP_ID` to deploy a different app.
 - Runtime configuration is not in the zip: set `HOST`, `PUBLIC_ORIGIN`, `TRUST_PROXY`, the signing/encryption keys and the integration keys under the app's **Settings → Secrets** for both Preview and Publish.
 
-To deploy from a workstation instead: `git archive --format=zip -o deploy.zip HEAD package.json package-lock.json server public migrations && GODADDY_PAT=... GODADDY_APP_ID=cthdfczuwe node scripts/godaddy-deploy.js deploy.zip`.
+To deploy from a workstation instead, put `GODADDY_PAT` in `.env` (`GODADDY_APP_ID` is preset in `.env.example`), then: `git archive --format=zip -o deploy.zip HEAD package.json package-lock.json server public migrations && npm run deploy:godaddy -- deploy.zip`.
