@@ -17,6 +17,7 @@
     "verify": "node scripts/verify.js",
     "export": "node scripts/export.js",
     "discord:register": "node --env-file-if-exists=.env scripts/register-discord.js",
+    "deploy:godaddy": "node --env-file-if-exists=.env scripts/godaddy-deploy.js",
     "secrets": "node scripts/secrets.js",
     "fingerprint": "node scripts/fingerprint.js",
     "maintenance": "node scripts/maintenance.js"
