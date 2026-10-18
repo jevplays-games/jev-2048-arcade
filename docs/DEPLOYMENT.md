@@ -110,14 +110,11 @@ The same `server/local.js` entry runs as a plain Node.js app (`npm run build` is
 - Set `TRUST_PROXY=1` behind the platform's single reverse proxy so per-client quotas use the last `X-Forwarded-For` entry; otherwise all clients share the proxy address. CSRF/origin checks are unchanged: the request must carry the Origin of the host it was sent to, which must be `PUBLIC_ORIGIN` or one of `LEGACY_PUBLIC_ORIGINS`.
 - SQLite lives in `DATA_DIR` (default `.data/arcade.sqlite`, outside `public/`, never served). Storage is ephemeral: matches and analytics are lost on redeploy. There are no scheduled jobs; run `npm run maintenance` manually if needed.
 
-### Continuous deployment
+## Continuous deployment to GoDaddy
 
-`.github/workflows/deploy.yml` runs on every push to `main` (and manually via **Run workflow**): it runs `npm test`, zips the committed runtime files (`package.json`, `package-lock.json`, `server/`, `public/`, `migrations/`) with `git archive`, and `scripts/godaddy-deploy.js` uploads the zip through the GoDaddy Hosting API (`https://api.godaddy.com/v1/hosting`), waits for the import, then deploys it to the published app. A failed test, import or build stops the run and leaves the live app unchanged.
+`.github/workflows/deploy.yml` runs `npm test` on every pull request and push. On a push to `main` (or **Run workflow**) it then zips the committed tree with `git archive` and `scripts/godaddy-deploy.js` uploads it through the GoDaddy Hosting API (`https://api.godaddy.com/v1/hosting`), waits for the import, and deploys it to the published app `NODEJS-cthdfczuwe`. A failed test, import or build stops the run and leaves the live app unchanged.
 
-One-time setup:
-
-- Create a Personal Access Token at https://developer.godaddy.com/personal-access-token with `hosting.application:read`, `hosting.source:write` and `hosting.deployment:execute`, and store it as the repository (or `production` environment) secret `GODADDY_PAT`. Tokens expire; renew the secret before the expiry date.
-- The workflow targets app `NODEJS-cthdfczuwe` (jev-2048; API app IDs carry the `NODEJS-` prefix). Set the repository variable `GODADDY_APP_ID` to deploy a different app.
-- Runtime configuration is not in the zip: set `HOST`, `PUBLIC_ORIGIN`, `TRUST_PROXY`, the signing/encryption keys and the integration keys under the app's **Settings → Secrets** for both Preview and Publish.
-
-To deploy from a workstation instead, put `GODADDY_PAT` in `.env` (`GODADDY_APP_ID` is preset in `.env.example`), then: `git archive --format=zip -o deploy.zip HEAD package.json package-lock.json server public migrations && npm run deploy:godaddy -- deploy.zip`.
+- Repository secret `GODADDY_PAT`: a GoDaddy Personal Access Token with `hosting.application:read`, `hosting.source:write` and `hosting.deployment:execute`. Without it the deploy step is skipped with a warning.
+- Optional repository variable `GODADDY_APP_ID` overrides the target app (API IDs carry the `NODEJS-` prefix).
+- Runtime configuration is not in the zip: keep it under the app's **Settings → Secrets** (Preview and Publish) in GoDaddy.
+- Manual deploy: put `GODADDY_APP_ID` and `GODADDY_PAT` in `.env`, then `git archive --format=zip -o deploy.zip HEAD && npm run deploy:godaddy -- deploy.zip`.
